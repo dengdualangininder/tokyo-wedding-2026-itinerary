@@ -20,10 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
           lat: 35.7646,
           lng: 140.3264,
           type: 'airport',
-          arriveTime: '14:30',
+          arriveTime: '06:00',
           departTime: '',
           transport: '國際航班 TPE → NRT',
-          detail: '從台灣桃園機場飛抵東京成田機場，入境後領取行李',
+          detail: '早上6點抵達成田機場，入境後領取行李',
           cost: '機票含機票總價',
           day: 1
         },
@@ -33,24 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
           lat: 35.7265,
           lng: 139.7730,
           type: 'transport',
-          arriveTime: '16:10',
-          departTime: '15:30',
+          arriveTime: '07:40',
+          departTime: '07:00',
           transport: 'Skyliner 快速電車',
           detail: '從成田機場第 3 航廈搭乘 Skyliner 至日暮里站，約 36 分鐘，無需轉乘',
           cost: '¥2,580 / 人',
-          day: 1
-        },
-        {
-          name: '和ごころ日暮里',
-          code: 'Wagokoro',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'hotel',
-          arriveTime: '16:40',
-          departTime: '',
-          transport: '從日暮里站步行 8 分鐘',
-          detail: '入住和ごころ日暮里旅館，辦理入住手續並休息，為翌日婚紗試穿儲備體力',
-          cost: '住宿已預訂',
           day: 1
         },
         {
@@ -59,11 +46,24 @@ document.addEventListener('DOMContentLoaded', function() {
           lat: 35.7265,
           lng: 139.7730,
           type: 'activity',
-          arriveTime: '19:30',
-          departTime: '19:00',
-          transport: '從旅館前往婚紗店',
-          detail: '19:30 與婚紗店預約試穿，確認婚紗與西裝款式（店名需確認）',
+          arriveTime: '08:30',
+          departTime: '08:00',
+          transport: '從日暮里站步行/搭車前往婚紗店',
+          detail: '一到日本就先去試婚紗，確認婚紗與西裝款式（店名需確認，請提前預約）',
           cost: '預約中',
+          day: 1
+        },
+        {
+          name: '和ごころ日暮里',
+          code: 'Wagokoro',
+          lat: 35.7265,
+          lng: 139.7730,
+          type: 'hotel',
+          arriveTime: '12:00',
+          departTime: '',
+          transport: '從婚紗店返回旅館',
+          detail: '試穿結束後返回和ごころ日暮里旅館，辦理入住並休息',
+          cost: '住宿已預訂',
           day: 1
         }
       ]
@@ -174,16 +174,16 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 3
         },
         {
-          name: '人形町今半',
-          code: 'Imahan',
-          lat: 35.6895,
-          lng: 139.7822,
+          name: '叙々苑 新宿店',
+          code: 'Jojoen',
+          lat: 35.6911,
+          lng: 139.6993,
           type: 'restaurant',
           arriveTime: '18:00',
           departTime: '20:00',
-          transport: '地鐵日比谷線',
-          detail: '壽喜燒晚餐 17:30，TableCheck 已預約，人形町今半本店',
-          cost: '¥15,000-20,000 / 人',
+          transport: '地鐵丸之內線',
+          detail: '壽喜燒晚餐，叙々苑 新宿店，多家分店較容易訂位，價格親民',
+          cost: '¥8,000-12,000 / 人',
           day: 3
         }
       ]

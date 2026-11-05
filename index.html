@@ -3,11 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="claude:viewport-fit-sides" content="cover">
   <title>東京婚紗之旅 2026 完整手冊</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Leaflet 地圖 CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
@@ -26,50 +23,70 @@
       <p>包含機票、住宿、婚紗試穿、富士山婚紗攝影、東京深度遊、購物攻略與餐廳預約</p>
     </header>
 
-    <!-- 時間軸 -->
     <section class="card">
-      <h3>📅 每日行程時間軸</h3>
-      <p class="subtitle">點擊任一節點查看當天詳細行程與路線</p>
-      <div class="timeline-container" id="timeline-container"></div>
+      <h3>📅 五日行程總覽</h3>
+      <table class="schedule-table">
+        <thead>
+          <tr><th>日期</th><th>主題</th><th>亮點活動</th><th>前往詳情</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>12/02 (三)</td>
+            <td>抵達・婚紗試穿</td>
+            <td>成田抵達 → セントレービル婚紗店 → 和ごころ日暮里入住</td>
+            <td><a href="day1.html" class="day-link">查看詳情 →</a></td>
+          </tr>
+          <tr>
+            <td>12/03 (四)</td>
+            <td>富士山婚紗攝影</td>
+            <td>河口湖／精華湖全天婚紗攝影</td>
+            <td><a href="day2.html" class="day-link">查看詳情 →</a></td>
+          </tr>
+          <tr>
+            <td>12/04 (五)</td>
+            <td>東京市區深度遊</td>
+            <td>小網神社 → 東京站 → 銀座 → 豪德寺 → 叙々苑 新宿店</td>
+            <td><a href="day3.html" class="day-link">查看詳情 →</a></td>
+          </tr>
+          <tr>
+            <td>12/05 (六)</td>
+            <td>鎌倉・橫濱</td>
+            <td>鶴岡八幡宮 → 小町通 → 港未來 → 中華街</td>
+            <td><a href="day4.html" class="day-link">查看詳情 →</a></td>
+          </tr>
+          <tr>
+            <td>12/06 (日)</td>
+            <td>返程採買</td>
+            <td>池袋購物 → 巢鴨銅鑼燒 → 成田機場返國</td>
+            <td><a href="day5.html" class="day-link">查看詳情 →</a></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
-    <!-- Leaflet 交互式地圖 -->
-    <section class="card">
-      <h3>🗺️ 交通路線圖</h3>
-      <p class="subtitle">👆 手指可縮放、拖動地圖；點擊站點查看幾點搭乘哪班車、去哪裡</p>
-      <div class="map-wrapper">
-        <div id="map-container" style="height: 420px; width: 100%; border-radius: 12px; border: 1px solid var(--border);"></div>
-        <div class="map-legend" id="map-legend"></div>
-      </div>
-    </section>
-
-    <!-- 每日行程卡片 -->
-    <section class="card">
-      <h3>📋 每日詳細行程</h3>
-      <p class="subtitle">每個景點包含幾點出發、交通工具、詳細說明與費用</p>
-      <div class="day-grid" id="day-grid"></div>
-    </section>
-
-    <!-- 交通總表 -->
     <section class="card">
       <h3>🚂 交通總表 (雙人)</h3>
       <table class="schedule-table">
         <thead>
           <tr><th>日期</th><th>主要路線</th><th>工具</th><th>費用</th></tr>
         </thead>
-        <tbody id="transport-table-body"></tbody>
+        <tbody>
+          <tr><td>12/02</td><td>桃園 → 成田 → 日暮里</td><td>國際航班 + Skyliner</td><td>機票 + ¥2,580 / 人</td></tr>
+          <tr><td>12/03</td><td>日暮里 ↔ 富士山 (河口湖)</td><td>電巴士</td><td>¥10,000-20,000 / 人</td></tr>
+          <tr><td>12/04</td><td>東京市區巡迴</td><td>地鐵</td><td>~¥1,000 / 人</td></tr>
+          <tr><td>12/05</td><td>日暮里 ↔ 鎌倉 ↔ 橫濱</td><td>JR+江之電</td><td>~¥1,800 / 人</td></tr>
+          <tr><td>12/06</td><td>池袋 → 成田 → 桃園</td><td>JR+Skyliner + 國際航班</td><td>~¥3,000 / 人 + 機票</td></tr>
+        </tbody>
       </table>
-      <p><strong>總交通費 (雙人)</strong>：~¥35,000-45,000</p>
+      <p><strong>總交通費 (雙人)</strong>：~¥35,000-45,000 + 機票</p>
     </section>
 
     <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; text-align: center;">
-      <p>東京婚紗之旅 2026 | 生成日期: 2026-10-27 | 依據: itinerary.csv, restaurant-research.md, shopping-list.md, research-sources.md</p>
+      <p>東京婚紗之旅 2026 | 生成日期: 2026-10-27</p>
       <p>固定限制: 機票 TPE↔NRT、住宿和ごころ日暮里、婚紗店優先、富士山攝影 12/3、鎌倉/橫濱 12/5、返程 12/6</p>
     </footer>
   </div>
 
-  <!-- Leaflet 地圖 JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

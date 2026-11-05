@@ -560,6 +560,43 @@ section.card h3 {
   }
 }
 
+/* 返回總覽按鈕 */
+.back-btn {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 6px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--fg);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: var(--border);
+  color: var(--accent);
+}
+
+/* 天數連結按鈕 */
+.day-link {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--accent);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.day-link:hover {
+  background: var(--secondary);
+  color: white;
+}
+
 /* Leaflet 地圖深色主題支援 */
 [data-theme="dark"] .leaflet-container {
   background: #1e1e1e !important;

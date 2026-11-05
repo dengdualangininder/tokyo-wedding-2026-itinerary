@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>12/03 富士山婚紗攝影 - 東京婚紗之旅 2026</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="切換亮/暗主題">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      <path d="M12 2v20M8 12h16"/>
+    </svg>
+    <span class="sun">☀</span><span class="moon">🌙</span>
+  </button>
+
+  <div class="container">
+    <a href="index.html" class="back-btn">← 回總覽</a>
+
+    <header class="hero">
+      <span class="tag">12/03 (四) · Day 2</span>
+      <h1>富士山婚紗攝影</h1>
+      <p>日暮里出發 → 河口湖／精華湖全天婚紗攝影 → 返回日暮里</p>
+    </header>
+
+    <section class="card">
+      <h3>📋 當天詳細行程</h3>
+      <div class="day-stations">
+        <div class="station-item">
+          <div class="station-time">07:00 出發</div>
+          <div class="station-info">
+            <div class="station-name">和ごころ日暮里</div>
+            <div class="station-transport">從旅館出發前往富士山</div>
+            <div class="station-detail">清晨從旅館出發，前往富士山婚紗攝影場地，保暖衣物必備</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">09:30 抵達</div>
+          <div class="station-info">
+            <div class="station-name">河口湖 / 精華湖</div>
+            <div class="station-transport">電巴士 / 租車</div>
+            <div class="station-detail">富士山婚紗攝影全天，河口湖或精華湖取景，富士山為背景拍攝婚紗照</div>
+            <div class="station-cost">💰 ¥10,000-20,000 / 人（電巴士）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">17:00 出發</div>
+          <div class="station-info">
+            <div class="station-name">返回日暮里</div>
+            <div class="station-transport">電巴士返回東京</div>
+            <div class="station-detail">攝影結束後返回日暮里旅館，晚餐補充體力</div>
+            <div class="station-cost">💰 包含在電巴士費用</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">19:00 抵達</div>
+          <div class="station-info">
+            <div class="station-name">和ごころ日暮里</div>
+            <div class="station-transport">電巴士抵達</div>
+            <div class="station-detail">回到旅館，休息為翌日東京市區遊做準備</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>🗺️ 當天路線圖</h3>
+      <p class="subtitle">👆 手指可縮放、拖動地圖；點擊站點查看幾點搭乘哪班車</p>
+      <div class="map-wrapper">
+        <div id="map-container" style="height: 380px; width: 100%; border-radius: 12px; border: 1px solid var(--border);"></div>
+      </div>
+    </section>
+
+    <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; text-align: center;">
+      <p>東京婚紗之旅 2026 | 第 2 天 · 12/03 (四)</p>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const day2Stations = [
+        { name: '和ごころ日暮里', lat: 35.7265, lng: 139.7730, type: 'hotel', time: '07:00 出發', transport: '從旅館出發', detail: '清晨從旅館出發，前往富士山婚紗攝影場地', cost: '' },
+        { name: '河口湖 / 精華湖', lat: 35.5149, lng: 138.7530, type: 'location', time: '09:30 抵達', transport: '電巴士 / 租車', detail: '富士山婚紗攝影全天，富士山為背景拍攝婚紗照', cost: '¥10,000-20,000 / 人（電巴士）' },
+        { name: '和ごころ日暮里', lat: 35.7265, lng: 139.7730, type: 'hotel', time: '19:00 抵達', transport: '電巴士返回', detail: '攝影結束後返回日暮里旅館', cost: '包含在電巴士費用' }
+      ];
+
+      const map = L.map('map-container', {
+        center: [35.6, 139.2],
+        zoom: 9,
+        touchZoom: true,
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 13
+      }).addTo(map);
+
+      const typeColors = {
+        airport: '#e74c3c', hotel: '#27ae60', transport: '#d1495b',
+        location: '#3498db', shrine: '#f39c12', station: '#95a5a6',
+        shopping: '#2c3e50', temple: '#f39c12', restaurant: '#2ecc71', food: '#f1c40f'
+      };
+
+      const latlngs = [];
+      day2Stations.forEach(station => {
+        const latlng = [station.lat, station.lng];
+        latlngs.push(latlng);
+        const marker = L.circleMarker(latlng, {
+          radius: 8, fillColor: typeColors[station.type] || '#d1495b',
+          color: '#ffffff', weight: 2, opacity: 1, fillOpacity: 0.9
+        });
+        marker.bindPopup(`
+          <div style="min-width: 200px;">
+            <h4 style="margin:0 0 6px 0; color: var(--accent); font-size: 0.95rem;">${station.name}</h4>
+            <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 4px;">${station.time}<br>${station.transport}</div>
+            <div style="font-size: 0.8rem; color: var(--fg); margin-bottom: 4px;">${station.detail}</div>
+            ${station.cost ? `<div style="font-size: 0.8rem; color: var(--success); font-weight: 600;">💰 ${station.cost}</div>` : ''}
+          </div>
+        `);
+        marker.addTo(map);
+      });
+
+      if (latlngs.length > 1) {
+        L.polyline(latlngs, { color: '#3498db', weight: 3, opacity: 0.8, dashArray: '8, 8' }).addTo(map);
+        map.fitBounds(latlngs, { padding: [50, 50] });
+      }
+    });
+  </script>
+</body>
+</html>

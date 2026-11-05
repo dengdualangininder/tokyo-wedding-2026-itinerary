@@ -6,10 +6,11 @@
   <meta name="claude:viewport-fit-sides" content="cover">
   <title>東京婚紗之旅 2026 完整手冊</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Leaflet 地圖 CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
-  <!-- 主題切換按鈕 -->
   <button class="theme-toggle" id="themeToggle" aria-label="切換亮/暗主題">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -25,37 +26,28 @@
       <p>包含機票、住宿、婚紗試穿、富士山婚紗攝影、東京深度遊、購物攻略與餐廳預約</p>
     </header>
 
-    <!-- 互動每日行程時間軸 -->
+    <!-- 時間軸 -->
     <section class="card">
       <h3>📅 每日行程時間軸</h3>
       <p class="subtitle">點擊任一節點查看當天詳細行程與路線</p>
-      <div class="timeline-container" id="timeline-container">
-        <!-- 由 JS 動態產生 -->
-      </div>
+      <div class="timeline-container" id="timeline-container"></div>
     </section>
 
-    <!-- 交通路線 SVG 地圖 -->
+    <!-- Leaflet 交互式地圖 -->
     <section class="card">
       <h3>🗺️ 交通路線圖</h3>
-      <p class="subtitle">點擊地圖上的站點，可查看幾點搭乘哪班交通工具、去哪裡</p>
+      <p class="subtitle">👆 手指可縮放、拖動地圖；點擊站點查看幾點搭乘哪班車、去哪裡</p>
       <div class="map-wrapper">
-        <div class="map-container" id="map-container">
-          <!-- SVG 地圖由 JS 動態產生 -->
-        </div>
-        <!-- 路線圖例 -->
-        <div class="map-legend" id="map-legend">
-          <!-- 由 JS 動態產生 -->
-        </div>
+        <div id="map-container" style="height: 420px; width: 100%; border-radius: 12px; border: 1px solid var(--border);"></div>
+        <div class="map-legend" id="map-legend"></div>
       </div>
     </section>
 
-    <!-- 每日詳細行程卡片 -->
+    <!-- 每日行程卡片 -->
     <section class="card">
       <h3>📋 每日詳細行程</h3>
       <p class="subtitle">每個景點包含幾點出發、交通工具、詳細說明與費用</p>
-      <div class="day-grid" id="day-grid">
-        <!-- 由 JS 動態產生 -->
-      </div>
+      <div class="day-grid" id="day-grid"></div>
     </section>
 
     <!-- 交通總表 -->
@@ -65,9 +57,7 @@
         <thead>
           <tr><th>日期</th><th>主要路線</th><th>工具</th><th>費用</th></tr>
         </thead>
-        <tbody id="transport-table-body">
-          <!-- 由 JS 動態產生 -->
-        </tbody>
+        <tbody id="transport-table-body"></tbody>
       </table>
       <p><strong>總交通費 (雙人)</strong>：~¥35,000-45,000</p>
     </section>
@@ -78,6 +68,8 @@
     </footer>
   </div>
 
+  <!-- Leaflet 地圖 JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

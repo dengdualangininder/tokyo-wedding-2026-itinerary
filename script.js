@@ -364,167 +364,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const legendContainer = document.getElementById('map-legend');
     if (!mapContainer || !legendContainer) return;
 
-    const svgNS = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('width', '100%');
-    svg.setAttribute('height', '420');
-    svg.setAttribute('viewBox', '0 0 1000 700');
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    svg.setAttribute('style', 'overflow: visible; background: var(--surface); border-radius: 8px;');
-
-    // 經緯度正規化到 0-1000 SVG 座標
-    // 東京地區經緯度範圍（包含富士山/河口湖、鎌倉、橫濱、成田）
-    const MAP_BOUNDS = {
-      minLng: 138.6,  // 西邊：河口湖附近
-      maxLng: 140.5,  // 東邊：成田機場
-      minLat: 35.2,   // 南邊：鎌倉/橫濱
-      maxLat: 35.8    // 北邊：成田機場
-    };
-
-    function project(station) {
-      // 經度 -> x (0-1000)，緯度 -> y (0-700，SVG y 向下所以用 maxLat - lat)
-      const x = ((station.lng - MAP_BOUNDS.minLng) / (MAP_BOUNDS.maxLng - MAP_BOUNDS.minLng)) * 1000;
-      const y = ((MAP_BOUNDS.maxLat - station.lat) / (MAP_BOUNDS.maxLat - MAP_BOUNDS.minLat)) * 700;
-      return { x, y };
-    }
-
-    // 背景矩形
-    const bg = document.createElementNS(svgNS, 'rect');
-    bg.setAttribute('width', '1000');
-    bg.setAttribute('height', '700');
-    bg.setAttribute('fill', 'var(--surface)');
-    bg.setAttribute('rx', '16');
-    svg.appendChild(bg);
-
-    // 收集所有站點
-    const allStations = [];
-    itinerary.forEach(day => {
-      day.stations.forEach(station => {
-        const exists = allStations.find(s => s.name === station.name && s.day === station.day);
-        if (!exists) allStations.push(station);
-      });
+    // 初始化 Leaflet 地圖（中心點約在東京附近）
+    const map = L.map('map-container', {
+      center: [35.68, 139.70],
+      zoom: 8,
+      zoomControl: true,
+      touchZoom: true,
+      scrollWheelZoom: false
     });
 
-    // 繪製路線線條（每日）
-    itinerary.forEach((day, dayIdx) => {
-      const stations = day.stations.filter(s => s.type === 'transport' || s.type === 'location');
-      for (let i = 0; i < stations.length - 1; i++) {
-        const s1 = stations[i];
-        const s2 = stations[i + 1];
-        const p1 = project(s1);
-        const p2 = project(s2);
+    // 加入 OpenStreetMap 圖磚（免費，無需 API Key）
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 13
+    }).addTo(map);
 
-        const line = document.createElementNS(svgNS, 'line');
-        line.setAttribute('x1', p1.x);
-        line.setAttribute('y1', p1.y);
-        line.setAttribute('x2', p2.x);
-        line.setAttribute('y2', p2.y);
-        line.setAttribute('stroke', dayIdx % 2 === 0 ? 'var(--accent)' : 'var(--secondary)');
-        line.setAttribute('stroke-width', '3');
-        line.setAttribute('fill', 'none');
-        line.setAttribute('class', 'transport-line');
-        line.setAttribute('data-day', day.id);
-        line.style.strokeDasharray = '20,10';
-        line.style.animation = 'dashFlow 3s linear infinite';
-        svg.appendChild(line);
-      }
-    });
+    // 存放每日路線圖層與標記
+    const dayLayers = {};
+    const markers = {};
 
-    // 繪製站點標記
-    allStations.forEach(station => {
-      const p = project(station);
-      const circle = document.createElementNS(svgNS, 'circle');
-      const r = station.type === 'airport' || station.type === 'hotel' ? 7 : 5;
-      circle.setAttribute('cx', p.x);
-      circle.setAttribute('cy', p.y);
-      circle.setAttribute('r', r);
-      circle.setAttribute('fill', getStationColor(station.type));
-      circle.setAttribute('class', 'station-marker');
-      circle.setAttribute('data-station', station.name);
-      circle.setAttribute('data-day', station.day);
-      circle.setAttribute('tabindex', '0');
-      circle.setAttribute('role', 'button');
-      circle.setAttribute('aria-label', `${station.name} - 第 ${station.day} 天`);
-
-      // 點擊站點切換當天
-      circle.addEventListener('click', () => activateDay(station.day));
-      circle.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          activateDay(station.day);
-        }
-      });
-
-      // 懸停放大
-      if (!prefersReducedMotion) {
-        circle.addEventListener('mouseenter', () => {
-          circle.setAttribute('r', r + 4);
-          circle.setAttribute('stroke', 'var(--accent)');
-          circle.setAttribute('stroke-width', '3');
-        });
-        circle.addEventListener('mouseleave', () => {
-          circle.setAttribute('r', r);
-          circle.removeAttribute('stroke');
-        });
-      }
-
-      svg.appendChild(circle);
-
-      // 站點標籤（偏移避免蓋住圓點）
-      const text = document.createElementNS(svgNS, 'text');
-      text.setAttribute('x', p.x + 8);
-      text.setAttribute('y', p.y - 8);
-      text.setAttribute('font-size', '11');
-      text.setAttribute('fill', 'var(--muted)');
-      text.setAttribute('class', 'station-label');
-      text.textContent = station.name.length > 5 ? station.name.substring(0, 5) + '…' : station.name;
-      svg.appendChild(text);
-    });
-
-    mapContainer.innerHTML = '';
-    mapContainer.appendChild(svg);
-
-    // 產生地圖圖例
+    // 地圖圖例顏色
     const typeColors = {
-      airport: 'var(--danger)',
-      hotel: 'var(--success)',
-      transport: 'var(--accent)',
-      location: 'var(--secondary)',
-      shrine: 'var(--warning)',
-      station: 'var(--muted)',
-      shopping: 'var(--primary)',
-      temple: 'var(--warning)',
-      restaurant: 'var(--success)',
-      food: 'var(--warning)'
-    };
-
-    const typeLabels = {
-      airport: '機場',
-      hotel: '住宿',
-      transport: '交通',
-      location: '景點',
-      shrine: '神社',
-      station: '車站',
-      shopping: '購物',
-      temple: '寺院',
-      restaurant: '餐廳',
-      food: '美食'
-    };
-
-    let legendHtml = '<div class="legend-title">圖例</div>';
-    Object.entries(typeColors).forEach(([type, color]) => {
-      legendHtml += `
-        <div class="legend-item">
-          <span class="legend-dot" style="background: ${color}"></span>
-          <span class="legend-text">${typeLabels[type]}</span>
-        </div>
-      `;
-    });
-    legendContainer.innerHTML = legendHtml;
-  }
-
-  function getStationColor(type) {
-    const colors = {
       airport: '#e74c3c',
       hotel: '#27ae60',
       transport: '#d1495b',
@@ -536,7 +396,106 @@ document.addEventListener('DOMContentLoaded', function() {
       restaurant: '#2ecc71',
       food: '#f1c40f'
     };
-    return colors[type] || '#d1495b';
+
+    const typeLabels = {
+      airport: '機場', hotel: '住宿', transport: '交通', location: '景點',
+      shrine: '神社', station: '車站', shopping: '購物', temple: '寺院',
+      restaurant: '餐廳', food: '美食'
+    };
+
+    // 建立每日路線與標記
+    itinerary.forEach((day, dayIdx) => {
+      const lineColor = dayIdx % 2 === 0 ? '#d1495b' : '#3498db';
+      const latlngs = [];
+      const dayMarkers = [];
+
+      day.stations.forEach(station => {
+        const latlng = [station.lat, station.lng];
+        latlngs.push(latlng);
+
+        // 建立標記
+        const markerColor = typeColors[station.type] || '#d1495b';
+        const marker = L.circleMarker(latlng, {
+          radius: 8,
+          fillColor: markerColor,
+          color: '#ffffff',
+          weight: 2,
+          opacity: 1,
+          fillOpacity: 0.9
+        });
+
+        // Popup 內容（包含四個資訊欄位）
+        const popupContent = `
+          <div style="min-width: 200px;">
+            <h4 style="margin:0 0 6px 0; color: var(--accent); font-size: 0.95rem;">
+              ${station.name}
+            </h4>
+            <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 4px;">
+              ${station.arriveTime || station.departTime || '--:--'}
+              ${station.transport ? '<br>' + station.transport : ''}
+            </div>
+            <div style="font-size: 0.8rem; color: var(--fg); margin-bottom: 4px;">
+              ${station.detail}
+            </div>
+            ${station.cost ? `<div style="font-size: 0.8rem; color: var(--success); font-weight: 600;">💰 ${station.cost}</div>` : ''}
+          </div>
+        `;
+
+        marker.bindPopup(popupContent);
+        marker.on('click', () => activateDay(station.day));
+        marker.addTo(map);
+        dayMarkers.push(marker);
+        markers[station.name + station.day] = marker;
+      });
+
+      // 建立路線線條
+      if (latlngs.length > 1) {
+        const polyline = L.polyline(latlngs, {
+          color: lineColor,
+          weight: 3,
+          opacity: 0.8,
+          dashArray: '8, 8'
+        }).addTo(map);
+        dayLayers[day.id] = { polyline, markers: dayMarkers };
+      } else {
+        dayLayers[day.id] = { polyline: null, markers: dayMarkers };
+      }
+    });
+
+    // 顯示指定天數的地圖圖層
+    window.showDayOnMap = function(dayNum) {
+      Object.entries(dayLayers).forEach(([dayId, layer]) => {
+        const isActive = parseInt(dayId) === dayNum;
+        if (layer.polyline) {
+          isActive ? layer.polyline.addTo(map) : map.removeLayer(layer.polyline);
+          layer.polyline.setStyle(isActive ? { opacity: 0.8 } : { opacity: 0.2 });
+        }
+        layer.markers.forEach(m => {
+          isActive ? m.setStyle({ radius: 8, opacity: 1 }) : m.setStyle({ radius: 5, opacity: 0.4 });
+        });
+      });
+
+      // 地圖中心移到當天第一個站點
+      const firstDay = itinerary.find(d => d.id === dayNum);
+      if (firstDay && firstDay.stations[0]) {
+        map.setView([firstDay.stations[0].lat, firstDay.stations[0].lng], 10, { animate: true, duration: 1 });
+      }
+    };
+
+    // 地圖圖例
+    let legendHtml = '<div class="legend-title">圖例</div>';
+    Object.entries(typeColors).forEach(([type, color]) => {
+      legendHtml += `
+        <div class="legend-item">
+          <span class="legend-dot" style="background: ${color}"></span>
+          <span class="legend-text">${typeLabels[type]}</span>
+        </div>
+      `;
+    });
+    legendContainer.innerHTML = legendHtml;
+
+    // 初始顯示第 1 天
+    setTimeout(() => window.showDayOnMap(1), 100);
   }
 
   function initDayCards() {
@@ -621,27 +580,10 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    // 地圖路線高亮
-    document.querySelectorAll('.transport-line').forEach(line => {
-      if (parseInt(line.getAttribute('data-day')) === dayNum) {
-        line.style.opacity = '1';
-        line.style.strokeWidth = '4';
-      } else {
-        line.style.opacity = '0.3';
-        line.style.strokeWidth = '2';
-      }
-    });
-
-    // 地圖站點高亮
-    document.querySelectorAll('.station-marker').forEach(marker => {
-      if (parseInt(marker.getAttribute('data-day')) === dayNum) {
-        marker.setAttribute('fill', 'var(--secondary)');
-        marker.setAttribute('r', '8');
-      } else {
-        marker.removeAttribute('fill');
-        marker.setAttribute('r', '5');
-      }
-    });
+    // 地圖路線與站點高亮（Leaflet）
+    if (typeof window.showDayOnMap === 'function') {
+      window.showDayOnMap(dayNum);
+    }
 
     // 交通表切換
     document.querySelectorAll('#transport-table-body tr').forEach(row => {

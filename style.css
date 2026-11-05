@@ -559,3 +559,46 @@ section.card h3 {
     padding: 6px 10px;
   }
 }
+
+/* Leaflet 地圖深色主題支援 */
+[data-theme="dark"] .leaflet-container {
+  background: #1e1e1e !important;
+}
+
+/* Leaflet Popup 自定義樣式 */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.leaflet-popup-content {
+  margin: 10px 14px;
+  font-size: 0.9rem;
+}
+
+.leaflet-popup-content h4 {
+  margin: 0 0 6px 0;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.leaflet-popup-content p {
+  margin: 4px 0;
+  font-size: 0.85rem;
+  color: var(--fg);
+}
+
+.leaflet-popup-content .station-time {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.leaflet-popup-content .station-cost {
+  color: var(--success);
+  font-weight: 600;
+}
+
+/* 確保地圖容器在響應式下正確顯示 */
+#map-container {
+  min-height: 300px;
+}

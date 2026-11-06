@@ -104,7 +104,7 @@
   <script src="script.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const day4Stations = [
+      const day3Stations = [
         { name: '日暮里 → 鎌倉', lat: 35.3176, lng: 139.4596, type: 'transport', time: '08:00 出發', transport: 'JR 常磐線 + 橫須賀線', detail: '從日暮里站搭乘 JR 至鎌倉站，約 1.5 小時', cost: '~¥1,000 / 人' },
         { name: '鶴岡八幡宮', lat: 35.3274, lng: 139.5395, type: 'shrine', time: '10:00 抵達', transport: '從鎌倉站步行 10 分鐘', detail: '參拜並祈求婚姻美滿', cost: '免費' },
         { name: '小町通', lat: 35.3189, lng: 139.5355, type: 'shopping', time: '12:00 出發', transport: '步行', detail: '鎌倉小町通美食街，購買伴手禮', cost: '自由消費' },
@@ -131,7 +131,7 @@
       };
 
       const latlngs = [];
-      day4Stations.forEach(station => {
+      day3Stations.forEach(station => {
         const latlng = [station.lat, station.lng];
         latlngs.push(latlng);
         const marker = L.circleMarker(latlng, {

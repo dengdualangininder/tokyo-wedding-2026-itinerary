@@ -448,6 +448,30 @@ section.card h3 {
   margin-top: 0.25rem;
 }
 
+/* 附近熱門景點區塊 */
+.nearby-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nearby-list li {
+  font-size: 0.9rem;
+  color: var(--fg);
+  padding: 0.6rem 0.8rem;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.nearby-list li:hover {
+  border-color: var(--secondary);
+  transform: translateX(4px);
+}
+
 /* 交通表 */
 .schedule-table {
   width: 100%;

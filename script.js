@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
           arriveTime: '09:00',
           departTime: '08:30',
           transport: '從日暮里站步行/搭車前往婚紗店',
-          detail: '一下飛機就先去セントレービル看禮服，確認婚紗與西裝款式',
-          cost: '預約中',
+          detail: '⚠️ セントレービル婚紗店尚無法於公開資料確認，請於出發前查證實際存在的婚紗店並預約試穿',
+          cost: '未確認',
           day: 1
         },
         {
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         {
           name: '小網神社',
-          code: 'Okunitama',
+          code: 'Komainami',
           lat: 35.6892,
           lng: 139.7737,
           type: 'shrine',
@@ -298,19 +298,6 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 4
         },
         {
-          name: '東京鐵塔',
-          code: 'TokyoTower',
-          lat: 35.6586,
-          lng: 139.7454,
-          type: 'location',
-          arriveTime: '18:30',
-          departTime: '20:00',
-          transport: '地鐵日比谷線 神谷町站',
-          detail: '東京象徵性地標觀景台，夜景拍照，欣賞都市全景',
-          cost: '大觀景台 ¥1,200 / 人',
-          day: 4
-        },
-        {
           name: '丸之內步行',
           code: 'Marunouchi',
           lat: 35.6758,
@@ -334,6 +321,19 @@ document.addEventListener('DOMContentLoaded', function() {
           transport: '地鐵銀座線',
           detail: '銀座通步行，精品櫥窗拍照',
           cost: '地鐵 ¥170 / 人',
+          day: 4
+        },
+        {
+          name: '東京鐵塔',
+          code: 'TokyoTower',
+          lat: 35.6586,
+          lng: 139.7454,
+          type: 'location',
+          arriveTime: '18:30',
+          departTime: '20:00',
+          transport: '地鐵日比谷線 神谷町站',
+          detail: '東京象徵性地標觀景台，夜景拍照，欣賞都市全景',
+          cost: '大觀景台 ¥1,500 / 人（2026 年官方票價）',
           day: 4
         },
         {
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function() {
           lat: 35.7646,
           lng: 140.3864,
           type: 'transport',
-          arriveTime: '19:55',
+          arriveTime: '18:50',
           departTime: '17:10',
           transport: 'JR 山手線 + Skyliner',
           detail: '17:10 從池袋站出發，搭乘 JR 至日暮里，轉乘 Skyliner 前往成田機場，19:55 飛往桃園（23:10 抵達）',
@@ -441,8 +441,8 @@ document.addEventListener('DOMContentLoaded', function() {
           lat: 35.7646,
           lng: 140.3864,
           type: 'airport',
-          arriveTime: '19:55',
-          departTime: '',
+          arriveTime: '',
+          departTime: '19:55',
           transport: '國際航班 → 桃園 (TPE)',
           detail: '19:55 從成田機場起飛，23:10 抵達桃園機場',
           cost: '機票含機票總價',

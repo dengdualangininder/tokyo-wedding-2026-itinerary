@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
           name: '成田機場',
           code: 'NRT',
           lat: 35.7646,
-          lng: 140.3264,
+          lng: 140.3864,
           type: 'airport',
           arriveTime: '06:35',
           departTime: '02:30',
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 1
         },
         {
-          name: '成田 → 日暮里',
+          name: '日暮里站',
           code: 'Skyliner',
           lat: 35.7265,
           lng: 139.7730,
@@ -81,10 +81,36 @@ document.addEventListener('DOMContentLoaded', function() {
           lng: 139.7730,
           type: 'hotel',
           arriveTime: '07:00',
-          departTime: '07:30',
+          departTime: '07:00',
           transport: '從旅館出發前往富士山',
           detail: '清晨從旅館出發，前往富士山婚紗攝影場地，保暖衣物必備',
           cost: '',
+          day: 2
+        },
+        {
+          name: '日暮里站',
+          code: 'Nippori',
+          lat: 35.7265,
+          lng: 139.7730,
+          type: 'transport',
+          arriveTime: '',
+          departTime: '07:15',
+          transport: 'JR 山手線內環線',
+          detail: '日暮里 → 新宿，約 25 分鐘，無需轉乘',
+          cost: '¥210 / 人',
+          day: 2
+        },
+        {
+          name: '新宿站',
+          code: 'Shinjuku',
+          lat: 35.6896,
+          lng: 139.7006,
+          type: 'transport',
+          arriveTime: '',
+          departTime: '07:45',
+          transport: 'JR 中央線 + 富士急行線',
+          detail: '新宿 → 大月 → 河口湖，約 1 小時 55 分鐘',
+          cost: '約 ¥2,250 / 人',
           day: 2
         },
         {
@@ -100,9 +126,8 @@ document.addEventListener('DOMContentLoaded', function() {
           cost: '¥10,000-20,000 / 人（電巴士）',
           day: 2
         },
-        {
-          name: '返回日暮里',
-          code: 'Return',
+        { name: '和ごころ日暮里',
+          code: 'WagokoroReturn',
           lat: 35.7265,
           lng: 139.7730,
           type: 'transport',
@@ -118,79 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
     {
       id: 3,
       date: '12/04 (五)',
-      theme: '東京市區深度遊',
-      weather: '晴 10-16°C',
-      stations: [
-        {
-          name: '小網神社',
-          code: 'Okunitama',
-          lat: 35.6923,
-          lng: 139.7644,
-          type: 'shrine',
-          arriveTime: '10:00',
-          departTime: '11:30',
-          transport: '地鐵銀座線',
-          detail: '參拜小網神社，祈求姻緣美滿，體驗洗錢儀式（錢幣清洗祈福）',
-          cost: '免費 / 洗錢儀式 ¥100',
-          day: 3
-        },
-        {
-          name: '東京站',
-          code: 'TokyoSta',
-          lat: 35.6812,
-          lng: 139.7671,
-          type: 'station',
-          arriveTime: '12:00',
-          departTime: '13:30',
-          transport: '地鐵 / 步行',
-          detail: '東京站紅磚車站建築拍照，丸之內地下街購物與午餐',
-          cost: '地鐵 ¥200 / 人',
-          day: 3
-        },
-        {
-          name: '銀座',
-          code: 'Ginza',
-          lat: 35.6712,
-          lng: 139.7274,
-          type: 'shopping',
-          arriveTime: '14:00',
-          departTime: '16:00',
-          transport: '地鐵銀座線',
-          detail: '銀座通步行，觀看 Chanel 精品櫥窗，銀座六丁目交叉路口拍照',
-          cost: '地鐵 ¥170 / 人',
-          day: 3
-        },
-        {
-          name: '豪德寺',
-          code: 'Gotokuji',
-          lat: 35.7162,
-          lng: 139.7128,
-          type: 'temple',
-          arriveTime: '16:30',
-          departTime: '17:30',
-          transport: '小田急線',
-          detail: '豪德寺招財貓發祥地，參拜並購買招財貓護身符',
-          cost: '免費',
-          day: 3
-        },
-        {
-          name: '叙々苑 新宿店',
-          code: 'Jojoen',
-          lat: 35.6911,
-          lng: 139.6993,
-          type: 'restaurant',
-          arriveTime: '18:00',
-          departTime: '20:00',
-          transport: '地鐵丸之內線',
-          detail: '壽喜燒晚餐，叙々苑 新宿店，多家分店較容易訂位，價格親民',
-          cost: '¥8,000-12,000 / 人',
-          day: 3
-        }
-      ]
-    },
-    {
-      id: 4,
-      date: '12/05 (六)',
       theme: '鎌倉・橫濱',
       weather: '晴 10-15°C',
       stations: [
@@ -200,12 +152,12 @@ document.addEventListener('DOMContentLoaded', function() {
           lat: 35.3176,
           lng: 139.4596,
           type: 'transport',
-          arriveTime: '09:30',
-          departTime: '08:00',
-          transport: 'JR 常磐線 + 橫須賀線',
-          detail: '從日暮里站搭乘 JR 至鎌倉站，約 1.5 小時，轉乘 1 次',
+          arriveTime: '10:00',
+          departTime: '08:15',
+          transport: 'JR 常磐線快速「上野東京ライン」直達鎌倉（或 山手線→品川→橫須賀線）',
+          detail: '從日暮里站搭乘 JR 常磐線快速「上野東京ライン」直達鎌倉站，約 1 小時（部份班次於大船站轉橫須賀線）；或 JR 山手線至品川轉橫須賀線，約 1 小時 15 分',
           cost: '~¥1,000 / 人',
-          day: 4
+          day: 3
         },
         {
           name: '鶴岡八幡宮',
@@ -218,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
           transport: '從鎌倉站步行 10 分鐘',
           detail: '鎌倉最重要的神社，參拜並祈求婚姻美滿，年輕情侶熱門拍照點',
           cost: '免費',
-          day: 4
+          day: 3
         },
         {
           name: '小町通',
@@ -231,7 +183,20 @@ document.addEventListener('DOMContentLoaded', function() {
           transport: '步行',
           detail: '鎌倉小町通美食街，嘗試鎌倉名物（如：吉次餅、晒煎餅），購買伴手禮',
           cost: '自由消費',
-          day: 4
+          day: 3
+        },
+        {
+          name: '御成站',
+          code: 'Onari',
+          lat: 35.3167,
+          lng: 139.5430,
+          type: 'transport',
+          arriveTime: '13:30',
+          departTime: '',
+          transport: '江之島電鐵 鎌倉→御成',
+          detail: '從鎌倉站搭乘江之島電鐵至御成站，約 2 分鐘（御成站為江之電車站，並非 JR 車站）',
+          cost: '¥200 / 人（江之電）',
+          day: 3
         },
         {
           name: '港未來',
@@ -241,10 +206,10 @@ document.addEventListener('DOMContentLoaded', function() {
           type: 'location',
           arriveTime: '15:00',
           departTime: '17:00',
-          transport: '江之電 + JR 至橫濱',
-          detail: '橫濱港未來地區，欣賞海港夜景，橫濱摩天輪拍照',
+          transport: '江之島電鐵 御成→鎌倉，JR 橫須賀線 鎌倉→橫濱，みなとみらい線 橫濱→港未來',
+          detail: '從御成站搭乘江之島電鐵返回鎌倉站，轉乘 JR 橫須賀線至橫濱站，再轉乘 みなとみらい線至港未來站，欣賞海港夜景與橫濱摩天輪',
           cost: 'JR+江之電 ~¥800 / 人',
-          day: 4
+          day: 3
         },
         {
           name: '中華街',
@@ -254,9 +219,147 @@ document.addEventListener('DOMContentLoaded', function() {
           type: 'restaurant',
           arriveTime: '18:00',
           departTime: '20:00',
-          transport: '步行',
+          transport: '步行 / みなとみらい線',
           detail: '橫濱中華街晚餐 17:30，點選正宗廣東料理或上海小籠包',
           cost: '¥5,000-8,000 / 人',
+          day: 3
+        },
+        {
+          name: '和ごころ日暮里',
+          code: 'Wagokoro',
+          lat: 35.7265,
+          lng: 139.7730,
+          type: 'hotel',
+          arriveTime: '22:00',
+          departTime: '',
+          transport: 'JR 京濱東北線 / 山手線',
+          detail: '中華街 → 日暮里站 → 步行返回旅館',
+          cost: '~¥1,000 / 人（JR+地鐵）',
+          day: 3
+        }
+      ]
+    },
+    {
+      id: 4,
+      date: '12/05 (六)',
+      theme: '東京市區深度遊',
+      weather: '晴 10-16°C',
+      stations: [
+        {
+          name: '豪德寺',
+          code: 'Gotokuji',
+          lat: 35.6566,
+          lng: 139.6481,
+          type: 'temple',
+          arriveTime: '08:30',
+          departTime: '09:00',
+          transport: 'JR 山手線→小田急小田原線 各站停車',
+          detail: 'JR 山手線 日暮里→新宿，轉小田急線各站停車至豪德寺站（快速/急行不停靠豪德寺）',
+          cost: '~¥400 / 人',
+          day: 4
+        },
+        {
+          name: '小網神社',
+          code: 'Okunitama',
+          lat: 35.6892,
+          lng: 139.7737,
+          type: 'shrine',
+          arriveTime: '10:30',
+          departTime: '11:30',
+          transport: '小田急線→JR 山手線→步行（人形町 日比谷線／淺草線）',
+          detail: '從豪德寺站搭乘小田急線各站停車至新宿站，轉乘 JR 山手線至有樂町站，步行約 15–20 分鐘至小網神社',
+          cost: '免費 / 洗錢儀式 ¥100',
+          day: 4
+        },
+        {
+          name: '東京站',
+          code: 'TokyoSta',
+          lat: 35.6812,
+          lng: 139.7671,
+          type: 'station',
+          arriveTime: '12:00',
+          departTime: '13:30',
+          transport: '地鐵日比谷線 / 步行',
+          detail: '從人形町站搭乘 東京メトロ日比谷線至東京站，紅磚車站建築拍照，丸之內地下街',
+          cost: '地鐵 ¥200 / 人',
+          day: 4
+        },
+        {
+          name: '叙々苑 銀座コリドー店',
+          code: 'Jojoen',
+          lat: 35.6712,
+          lng: 139.7620,
+          type: 'restaurant',
+          arriveTime: '13:30',
+          departTime: '15:30',
+          transport: '地鐵銀座站 / 東銀座站',
+          detail: '午間燒肉套餐（週六請確認店內午餐供應），CP值高，避免晚餐高價時段',
+          cost: '午餐 約 ¥3,500-4,000 / 人',
+          day: 4
+        },
+        {
+          name: '東京鐵塔',
+          code: 'TokyoTower',
+          lat: 35.6586,
+          lng: 139.7454,
+          type: 'location',
+          arriveTime: '18:30',
+          departTime: '20:00',
+          transport: '地鐵日比谷線 神谷町站',
+          detail: '東京象徵性地標觀景台，夜景拍照，欣賞都市全景',
+          cost: '大觀景台 ¥1,200 / 人',
+          day: 4
+        },
+        {
+          name: '丸之內步行',
+          code: 'Marunouchi',
+          lat: 35.6758,
+          lng: 139.7630,
+          type: 'location',
+          arriveTime: '15:30',
+          departTime: '15:30',
+          transport: '步行',
+          detail: '東京站周邊丸之內地區散步',
+          cost: '免費',
+          day: 4
+        },
+        {
+          name: '銀座通',
+          code: 'GinzaDori',
+          lat: 35.6712,
+          lng: 139.7620,
+          type: 'shopping',
+          arriveTime: '17:00',
+          departTime: '17:00',
+          transport: '地鐵銀座線',
+          detail: '銀座通步行，精品櫥窗拍照',
+          cost: '地鐵 ¥170 / 人',
+          day: 4
+        },
+        {
+          name: '銀座晚餐',
+          code: 'GinzaDinner',
+          lat: 35.6712,
+          lng: 139.7620,
+          type: 'restaurant',
+          arriveTime: '20:00',
+          departTime: '20:00',
+          transport: '地鐵 / 步行',
+          detail: '銀座地區晚餐，推薦銀座牛排或壽司',
+          cost: '約 ¥8,000-15,000 / 人',
+          day: 4
+        },
+        {
+          name: '和ごころ日暮里',
+          code: 'Wagokoro',
+          lat: 35.7265,
+          lng: 139.7730,
+          type: 'hotel',
+          arriveTime: '22:45',
+          departTime: '',
+          transport: '地鐵銀座線 / 日比谷線 → JR 山手線',
+          detail: '銀座 → 日暮里站 → 步行返回旅館',
+          cost: '~¥300 / 人（地鐵+JR）',
           day: 4
         }
       ]
@@ -301,22 +404,48 @@ document.addEventListener('DOMContentLoaded', function() {
           type: 'food',
           arriveTime: '15:30',
           departTime: '16:30',
-          transport: 'JR 山手線 1 站',
+          transport: 'JR 山手線 2 站（經大塚）',
           detail: '巢鴨地藏通り商店街，品嚐銅鑼燒與傳統和菓子',
           cost: '¥500-1,000 / 人',
+          day: 5
+        },
+        {
+          name: '巢鴨 → 池袋',
+          code: 'SugamoReturn',
+          lat: 35.7292,
+          lng: 139.7102,
+          type: 'transport',
+          arriveTime: '17:10',
+          departTime: '17:00',
+          transport: 'JR 山手線 2 站（返回，經大塚）',
+          detail: '從巢鴨站搭乘 JR 山手線返回池袋站，2 站經大塚，約 5 分鐘',
+          cost: '~¥170 / 人',
           day: 5
         },
         {
           name: '池袋 → 成田機場',
           code: 'Skyliner',
           lat: 35.7646,
-          lng: 140.3264,
+          lng: 140.3864,
           type: 'transport',
           arriveTime: '19:55',
-          departTime: '17:00',
+          departTime: '17:10',
           transport: 'JR 山手線 + Skyliner',
-          detail: '17:00 從池袋站出發，搭乘 JR 至日暮里，轉乘 Skyliner 前往成田機場，19:55 飛往桃園（23:10 抵達）',
+          detail: '17:10 從池袋站出發，搭乘 JR 至日暮里，轉乘 Skyliner 前往成田機場，19:55 飛往桃園（23:10 抵達）',
           cost: '~¥3,000 / 人',
+          day: 5
+        },
+        {
+          name: '成田機場',
+          code: 'NRT',
+          lat: 35.7646,
+          lng: 140.3864,
+          type: 'airport',
+          arriveTime: '19:55',
+          departTime: '',
+          transport: '國際航班 → 桃園 (TPE)',
+          detail: '19:55 從成田機場起飛，23:10 抵達桃園機場',
+          cost: '機票含機票總價',
           day: 5
         }
       ]

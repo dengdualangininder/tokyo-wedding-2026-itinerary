@@ -51,7 +51,7 @@
           <div class="station-time">07:30 出發</div>
           <div class="station-info">
             <div class="station-name">成田機場 → 日暮里</div>
-            <div class="station-transport">Keisei Skyliner 快速電車（成田機場第 3 航廈站 → 日暮里站）</div>
+            <div class="station-transport">Keisei Skyliner 快速電車（空港第2ビル站 → 日暮里站）</div>
             <div class="station-detail">搭乘 Skyliner 快速電車，約 36 分鐘直達日暮里站，無需轉乘，座位全指定席，建議提前線上預約</div>
             <div class="station-cost">💰 ¥2,580 / 人（雙人 ¥5,160）</div>
           </div>
@@ -66,10 +66,10 @@
           </div>
         </div>
         <div class="station-item">
-          <div class="station-time">09:00 開始</div>
+          <div class="station-time">08:25 抵達</div>
           <div class="station-info">
             <div class="station-name">セントレービル婚紗店</div>
-            <div class="station-transport">從日暮里站步行 / 搭車</div>
+            <div class="station-transport">從日暮里站步行</div>
             <div class="station-detail">一下飛機就先去セントレービル看禮服，確認婚紗與西裝款式（請提前預約試穿）</div>
             <div class="station-cost">💰 預約中</div>
           </div>
@@ -90,12 +90,12 @@
       <h3>🚂 當天交通詳情</h3>
       <table class="schedule-table">
         <thead>
-          <tr><th>路線</th><th>交通工具</th><th>車程</th><th>費用（雙人）</th><th>備註</th></tr>
+          <tr><th>路線</th><th>交通工具</th><th>班次時間</th><th>車程</th><th>費用（雙人）</th><th>備註</th></tr>
         </thead>
         <tbody>
-          <tr><td>成田機場 NRT → 日暮里</td><td>Keisei Skyliner 快速電車</td><td>約 36 分鐘</td><td>¥5,160（¥2,580 × 2）</td><td>第 3 航廈站直達，無轉乘，建議提前預約指定席</td></tr>
-          <tr><td>日暮里站 → セントレービル</td><td>步行 / 計程車</td><td>約 8 分鐘（步行）</td><td>免費 / 約 ¥800</td><td>步行即可達，或搭短程計程車</td></tr>
-          <tr><td>セントレービル → 和ごころ日暮里</td><td>步行</td><td>約 5 分鐘</td><td>免費</td><td>同區域，步行即可</td></tr>
+          <tr><td>成田機場 NRT → 日暮里</td><td>Keisei Skyliner 快速電車（空港第2ビル站 → 日暮里站）</td><td>約 07:30 發車，08:15 抵達</td><td>約 36 分鐘</td><td>¥5,160（¥2,580 × 2）</td><td>全席指定席，建議提前預約指定席</td></tr>
+          <tr><td>日暮里站 → セントレービル</td><td>步行 / 計程車</td><td>約 08:25 抵達</td><td>約 8 分鐘（步行）</td><td>免費 / 約 ¥800</td><td>步行即可達，或搭短程計程車</td></tr>
+          <tr><td>セントレービル → 和ごころ日暮里</td><td>步行</td><td>約 12:30 抵達</td><td>約 5 分鐘</td><td>免費</td><td>同區域，步行即可</td></tr>
         </tbody>
       </table>
     </section>
@@ -163,14 +163,7 @@
           radius: 8, fillColor: typeColors[station.type] || '#d1495b',
           color: '#ffffff', weight: 2, opacity: 1, fillOpacity: 0.9
         });
-        marker.bindPopup(`
-          <div style="min-width: 200px;">
-            <h4 style="margin:0 0 6px 0; color: var(--accent); font-size: 0.95rem;">${station.name}</h4>
-            <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 4px;">${station.time}<br>${station.transport}</div>
-            <div style="font-size: 0.8rem; color: var(--fg); margin-bottom: 4px;">${station.detail}</div>
-            ${station.cost ? `<div style="font-size: 0.8rem; color: var(--success); font-weight: 600;">💰 ${station.cost}</div>` : ''}
-          </div>
-        `);
+        marker.bindPopup(`\n          <div style="min-width: 200px;">\n            <h4 style="margin:0 0 6px 0; color: var(--accent); font-size: 0.95rem;">${station.name}</h4>\n            <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 4px;">${station.time}<br>${station.transport}</div>\n            <div style="font-size: 0.8rem; color: var(--fg); margin-bottom: 4px;">${station.detail}</div>\n            ${station.cost ? `<div style="font-size: 0.8rem; color: var(--success); font-weight: 600;">💰 ${station.cost}</div>` : ''}\n          </div>\n        `);
         marker.addTo(map);
       });
 

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>12/02 抵達・婚紗試穿 - 東京婚紗之旅 2026</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="切換亮/暗主題">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      <path d="M12 2v20M8 12h16"/>
+    </svg>
+    <span class="sun">☀</span><span class="moon">🌙</span>
+  </button>
+
+  <div class="container">
+    <a href="index.html" class="back-btn">← 回總覽</a>
+
+    <header class="hero">
+      <span class="tag">12/02 (三) · Day 1</span>
+      <h1>抵達・婚紗試穿</h1>
+      <p>成田機場抵達 → セントレービル婚紗店 → 和ごころ日暮里入住</p>
+    </header>
+
+    <section class="card">
+      <h3>📋 當天詳細行程</h3>
+      <div class="day-stations">
+        <div class="station-item">
+          <div class="station-time">02:30 出發</div>
+          <div class="station-info">
+            <div class="station-name">桃園機場 (TPE)</div>
+            <div class="station-transport">國際航班 → 成田 (NRT)</div>
+            <div class="station-detail">桃園機場起飛，飛往東京成田機場，建議提前 3 小時抵達辦理登機</div>
+            <div class="station-cost">💰 機票含機票總價</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">06:35 抵達</div>
+          <div class="station-info">
+            <div class="station-name">成田機場 (NRT)</div>
+            <div class="station-transport">國際航班抵達，第 3 航廈</div>
+            <div class="station-detail">入境後領取行李，於航廈內購買 Suica/Pasmo 儲值卡（可於 JR 票務處或自動販賣機購買，按金 ¥500 + 充值金額）</div>
+            <div class="station-cost">💰 機票含機票總價</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">07:30 出發</div>
+          <div class="station-info">
+            <div class="station-name">成田機場 → 日暮里</div>
+            <div class="station-transport">Keisei Skyliner 快速電車（空港第2ビル站 → 日暮里站）</div>
+            <div class="station-detail">搭乘 Skyliner 快速電車，約 36 分鐘直達日暮里站，無需轉乘，座位全指定席，建議提前線上預約</div>
+            <div class="station-cost">💰 ¥2,580 / 人（雙人 ¥5,160）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">08:15 抵達</div>
+          <div class="station-info">
+            <div class="station-name">日暮里站</div>
+            <div class="station-transport">Skyliner 抵達，JR 山手線 / 京成本線</div>
+            <div class="station-detail">出站後步行約 8 分鐘前往 セントレービル婚紗店，或搭乘短程計程車約 3 分鐘</div>
+            <div class="station-cost">💰 免費（步行）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">08:25 抵達</div>
+          <div class="station-info">
+            <div class="station-name">セントレービル婚紗店 ⚠️ 待確認</div>
+            <div class="station-transport">從日暮里站步行（地址/電話/官網待查證）</div>
+            <div class="station-detail">⚠️ 本店名與地址尚無法於公開資料確認，請於出發前確認是否為實際存在的婚紗店，或替換為日暮里/上野地區已確認的婚紗店（例：フォーシス アンド カンパニー、TAKAMI BRIDAL 等），並完成試穿預約</div>
+            <div class="station-cost">💰 未確認</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">12:30 抵達</div>
+          <div class="station-info">
+            <div class="station-name">和ごころ日暮里</div>
+            <div class="station-transport">從婚紗店步行返回旅館</div>
+            <div class="station-detail">試穿結束後返回和ごころ日暮里旅館，辦理入住並休息，整理行李並稍微小憩</div>
+            <div class="station-cost">💰 住宿已預訂</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">14:00 出發</div>
+          <div class="station-info">
+            <div class="station-name">和ごころ日暮里 → 谷中銀座商店街</div>
+            <div class="station-transport">步行</div>
+            <div class="station-detail">從旅館步行約 10-15 分鐘前往谷中銀座商店街，逛逛懷舊昭和風情商店街，適合婚紗試穿後輕鬆散步</div>
+            <div class="station-cost">💰 免費（步行）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">15:00 抵達</div>
+          <div class="station-info">
+            <div class="station-name">谷中銀座商店街</div>
+            <div class="station-transport">步行</div>
+            <div class="station-detail">夕陽階梯打卡點，逛逛店家，買些伴手禮或小吃</div>
+            <div class="station-cost">💰 自由消費</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">16:30 出發</div>
+          <div class="station-info">
+            <div class="station-name">谷中銀座 → 和ごころ日暮里</div>
+            <div class="station-transport">步行</div>
+            <div class="station-detail">返回旅館休息，為晚餐做準備</div>
+            <div class="station-cost">💰 免費（步行）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">17:00 抵達</div>
+          <div class="station-info">
+            <div class="station-name">和ごころ日暮里</div>
+            <div class="station-transport">步行返回</div>
+            <div class="station-detail">回旅館休息、整理，為晚餐與翌日富士山婚紗攝影儲備體力</div>
+            <div class="station-cost">💰 免費</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">18:30 出發</div>
+          <div class="station-info">
+            <div class="station-name">和ごころ日暮里 → 日暮里地區晚餐</div>
+            <div class="station-transport">步行</div>
+            <div class="station-detail">日暮里站周邊有多家餐廳，可選擇日式定食、拉麵或居酒屋，約 ¥1,500-2,500/人</div>
+            <div class="station-cost">💰 約 ¥1,500-2,500/人</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">19:00 抵達</div>
+          <div class="station-info">
+            <div class="station-name">日暮里晚餐</div>
+            <div class="station-transport">步行</div>
+            <div class="station-detail">第一天在日本的晚餐，建議輕鬆用餐，不要吃太飽，避免影響睡眠</div>
+            <div class="station-cost">💰 約 ¥1,500-2,500/人</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">20:30 出發</div>
+          <div class="station-info">
+            <div class="station-name">晚餐 → 和ごころ日暮里</div>
+            <div class="station-transport">步行</div>
+            <div class="station-detail">用餐完畢後返回旅館，準備就寢</div>
+            <div class="station-cost">💰 免費（步行）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">21:00 抵達</div>
+          <div class="station-info">
+            <div class="station-name">和ごころ日暮里</div>
+            <div class="station-transport">步行返回旅館</div>
+            <div class="station-detail">返館休息，為翌日 07:00 出發前往富士山婚紗攝影儲備體力</div>
+            <div class="station-cost">💰 免費</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>🚂 當天交通詳情</h3>
+      <table class="schedule-table">
+        <thead>
+          <tr><th>路線</th><th>交通工具</th><th>班次時間</th><th>車程</th><th>費用（雙人）</th><th>備註</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>成田機場 NRT → 日暮里</td><td>Keisei Skyliner 快速電車（空港第2ビル站 → 日暮里站）</td><td>約 07:30 發車，08:15 抵達</td><td>約 36 分鐘</td><td>¥5,160（¥2,580 × 2）</td><td>全席指定席，建議提前預約指定席</td></tr>
+          <tr><td>日暮里站 → セントレービル</td><td>步行 / 計程車</td><td>約 08:25 抵達</td><td>約 8 分鐘（步行）</td><td>免費 / 約 ¥800</td><td>步行即可達，或搭短程計程車</td></tr>
+          <tr><td>セントレービル → 和ごころ日暮里</td><td>步行</td><td>約 12:30 抵達</td><td>約 5 分鐘</td><td>免費</td><td>同區域，步行即可</td></tr>
+          <tr><td>和ごころ日暮里 → 谷中銀座商店街</td><td>步行</td><td>約 14:00 出發，15:00 抵達</td><td>約 10-15 分鐘</td><td>免費</td><td>婚紗試穿後輕鬆散步</td></tr>
+          <tr><td>谷中銀座商店街 → 和ごころ日暮里</td><td>步行</td><td>約 16:30 出發，17:00 抵達</td><td>約 10-15 分鐘</td><td>免費</td><td>返回旅館休息</td></tr>
+          <tr><td>和ごころ日暮里 → 日暮里晚餐</td><td>步行</td><td>約 18:30 出發，19:00 抵達</td><td>約 10 分鐘</td><td>約 ¥1,500-2,500/人</td><td>第一天在日本的晚餐</td></tr>
+          <tr><td>日暮里晚餐 → 和ごころ日暮里</td><td>步行</td><td>約 20:30 出發，21:00 抵達</td><td>約 10 分鐘</td><td>免費</td><td>返回旅館就寢</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h3>🗺️ 當天路線圖</h3>
+      <p class="subtitle">👆 手指可縮放、拖動地圖；點擊站點查看幾點搭乘哪班車</p>
+      <div class="map-wrapper">
+        <div id="map-container" style="height: 380px; width: 100%; border-radius: 12px; border: 1px solid var(--border);"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>📍 附近熱門景點（日暮里・谷根千地區）</h3>
+      <ul class="nearby-list">
+        <li><strong>谷中銀座商店街</strong> — 約 10:00-19:00（各店不同，週一部分店家休店）· 免費入場 · 懷舊昭和風情商店街，夕陽階梯打卡點</li>
+        <li><strong>根津神社</strong> — 境內全天可參拜（全年無休）· 境內免費；杜鵑花苑僅 4 月花祭期間開放 9:30-17:30，入苑費 ¥500-1,000（僅現金）· 千本鳥居與重要文化財社殿</li>
+        <li><strong>日暮里纖維街</strong> — 約 10:00-19:00（各店不同）· 免費 · 東京最大規模紡織品街，手工與縫紉愛好者聖地</li>
+        <li><strong>斎藤湯（錢湯）</strong> — 約 15:00-24:00（各店不同）· 約 ¥500 · 體驗東京懷舊錢湯文化</li>
+        <li><strong>谷根千散步</strong> — 全天可散步 · 免費 · 谷中·根津·千駄木老街，在地人最愛散步路線</li>
+        <li><strong>東京藝術大學</strong> — 全天可外觀 · 免費 · 藝術大學校園，建築與藝術氛圍</li>
+        <li><strong>守則寺</strong> — 約 9:00-16:00 · 免費 · 江戶六地藏尊之一，歷史悠久的寺院</li>
+      </ul>
+    </section>
+
+    <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; text-align: center;">
+      <p>東京婚紗之旅 2026 | 第 1 天 · 12/02 (三)</p>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const day1Stations = [
+        { name: '成田機場', lat: 35.7646, lng: 140.3864, type: 'airport', time: '06:35 抵達', transport: '國際航班 TPE → NRT', detail: '桃園 02:30 起飛，成田 06:35 抵達', cost: '機票含機票總價' },
+        { name: '日暮里站', lat: 35.7265, lng: 139.7730, type: 'transport', time: '08:15 抵達', transport: 'Keisei Skyliner 快速電車', detail: '成田機場第 3 航廈 → 日暮里站，約 36 分鐘，無轉乘', cost: '¥2,580 / 人' },
+        { name: 'セントレービル婚紗店', lat: 35.7265, lng: 139.7730, type: 'activity', time: '09:00 開始', transport: '從日暮里站步行 8 分鐘（⚠️ 店名待確認）', detail: '⚠️ セントレービル婚紗店尚無法於公開資料確認，請於出發前查證實際存在的婚紗店並預約試穿', cost: '未確認' },
+        { name: '和ごころ日暮里', lat: 35.7265, lng: 139.7730, type: 'hotel', time: '12:30 抵達', transport: '從婚紗店步行返回', detail: '試穿結束後返回和ごころ日暮里旅館，辦理入住並休息', cost: '住宿已預訂' }
+      ];
+
+      const map = L.map('map-container', {
+        center: [35.7265, 139.7730],
+        zoom: 13,
+        touchZoom: true,
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 13
+      }).addTo(map);
+
+      const typeColors = {
+        airport: '#e74c3c', hotel: '#27ae60', transport: '#d1495b',
+        location: '#3498db', shrine: '#f39c12', station: '#95a5a6',
+        shopping: '#2c3e50', temple: '#f39c12', restaurant: '#2ecc71', food: '#f1c40f'
+      };
+
+      const latlngs = [];
+      day1Stations.forEach(station => {
+        const latlng = [station.lat, station.lng];
+        latlngs.push(latlng);
+        const marker = L.circleMarker(latlng, {
+          radius: 8, fillColor: typeColors[station.type] || '#d1495b',
+          color: '#ffffff', weight: 2, opacity: 1, fillOpacity: 0.9
+        });
+        marker.bindPopup(`\n          <div style="min-width: 200px;">\n            <h4 style="margin:0 0 6px 0; color: var(--accent); font-size: 0.95rem;">${station.name}</h4>\n            <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 4px;">${station.time}<br>${station.transport}</div>\n            <div style="font-size: 0.8rem; color: var(--fg); margin-bottom: 4px;">${station.detail}</div>\n            ${station.cost ? `<div style="font-size: 0.8rem; color: var(--success); font-weight: 600;">💰 ${station.cost}</div>` : ''}\n          </div>\n        `);
+        marker.addTo(map);
+      });
+
+      if (latlngs.length > 1) {
+        L.polyline(latlngs, { color: '#d1495b', weight: 3, opacity: 0.8, dashArray: '8, 8' }).addTo(map);
+        map.fitBounds(latlngs, { padding: [50, 50] });
+      }
+    });
+  </script>
+</body>
+</html>

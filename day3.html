@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>12/04 鎌倉・橫濱 - 東京婚紗之旅 2026</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="切換亮/暗主題">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      <path d="M12 2v20M8 12h16"/>
+    </svg>
+    <span class="sun">☀</span><span class="moon">🌙</span>
+  </button>
+
+  <div class="container">
+    <a href="index.html" class="back-btn">← 回總覽</a>
+
+    <header class="hero">
+      <span class="tag">12/04 (五) · Day 3</span>
+      <h1>鎌倉・橫濱</h1>
+      <p>鶴岡八幡宮 → 小町通 → 港未來 → 中華街</p>
+    </header>
+
+    <section class="card">
+      <h3>📋 當天詳細行程</h3>
+      <div class="day-stations">
+        <div class="station-item">
+          <div class="station-time">08:00 出發</div>
+          <div class="station-info">
+            <div class="station-name">和ごころ日暮里 → 日暮里站</div>
+            <div class="station-transport">步行</div>
+            <div class="station-detail">從和ごころ日暮里旅館步行約 8 分鐘至日暮里站</div>
+            <div class="station-cost">💰 免費（步行）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">08:15 出發</div>
+          <div class="station-info">
+            <div class="station-name">日暮里 → 品川 → 鎌倉</div>
+            <div class="station-transport">JR 常磐線快速「上野東京ライン」日暮里→上野（約 5 分鐘），轉 JR 山手線 上野→品川（約 10 分鐘），轉 JR 橫須賀線 品川→鎌倉（約 45 分鐘）</div>
+            <div class="station-detail">從日暮里站約 08:20 抵達上野，約 08:35 抵達品川，約 09:20 抵達鎌倉站。全程約 1 小時 5 分，需於品川站轉乘</div>
+            <div class="station-cost">💰 ~¥1,000 / 人（Suica 儲值卡）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">10:00 抵達</div>
+          <div class="station-info">
+            <div class="station-name">鎌倉站 → 鶴岡八幡宮</div>
+            <div class="station-transport">步行</div>
+            <div class="station-detail">從鎌倉站東口沿若宮大路段葛步行約 10 分鐘至鶴岡八幡宮</div>
+            <div class="station-cost">💰 免費（步行）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">12:00 出發</div>
+          <div class="station-info">
+            <div class="station-name">鶴岡八幡宮 → 小町通</div>
+            <div class="station-transport">步行</div>
+            <div class="station-detail">從鶴岡八幡宮步行約 5 分鐘至鎌倉小町通商店街</div>
+            <div class="station-cost">💰 免費（步行）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">13:30 出發</div>
+          <div class="station-info">
+            <div class="station-name">小町通 → 鎌倉站 → 御成站</div>
+            <div class="station-transport">步行（小町通→鎌倉站約 5 分鐘），江之島電鐵（鎌倉站→御成站，約 4 分鐘）</div>
+            <div class="station-detail">從小町通步行回鎌倉站，搭乘江之島電鐵至御成站（御成站為江之電車站，非 JR 車站），約 13:50 抵達</div>
+            <div class="station-cost">💰 ¥200 / 人（江之電）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">14:00 出發</div>
+          <div class="station-info">
+            <div class="station-name">御成站 → 鎌倉站 → 橫濱站 → 港未來</div>
+            <div class="station-transport">江之島電鐵 御成→鎌倉（約 4 分鐘），JR 橫須賀線 鎌倉→橫濱（約 24 分鐘），みなとみらい線 橫濱→港未來（約 3 分鐘）</div>
+            <div class="station-detail">從御成站搭乘江之島電鐵返回鎌倉站，約 14:05 抵達；轉乘 JR 橫須賀線至橫濱站，約 14:30 抵達；再轉乘 みなとみらい線至港未來站，約 14:40 抵達</div>
+            <div class="station-cost">💰 JR+江之電 ~¥800 / 人</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">18:00 用餐</div>
+          <div class="station-info">
+            <div class="station-name">港未來 → 中華街</div>
+            <div class="station-transport">步行 / みなとみらい線</div>
+            <div class="station-detail">從港未來站步行約 15 分鐘或搭乘 みなとみらい線 1 站至中華街站，橫濱中華街晚餐</div>
+            <div class="station-cost">💰 ¥5,000-8,000 / 人（餐飲）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">21:00 出發</div>
+          <div class="station-info">
+            <div class="station-name">中華街 → 日暮里旅館</div>
+            <div class="station-transport">みなとみらい線 中華街→橫濱（約 3 分鐘），JR 京濱東北線 橫濱→日暮里（約 40 分鐘）</div>
+            <div class="station-detail">從中華街站搭乘 みなとみらい線至橫濱站，約 21:05 抵達；轉乘 JR 京濱東北線至日暮里站，約 21:45 抵達；步行返回和ごころ日暮里旅館</div>
+            <div class="station-cost">💰 ~¥1,000 / 人（JR+地鐵）</div>
+          </div>
+        </div>
+        <div class="station-item">
+          <div class="station-time">22:00 抵達</div>
+          <div class="station-info">
+            <div class="station-name">和ごころ日暮里</div>
+            <div class="station-transport">日暮里站 → 步行返回旅館</div>
+            <div class="station-detail">返回和ごころ日暮里旅館，休息為翌日東京市區遊做準備</div>
+            <div class="station-cost">💰 免費（步行）</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>🚂 當天交通詳情</h3>
+      <table class="schedule-table">
+        <thead>
+          <tr><th>路線</th><th>交通工具</th><th>班次時間</th><th>車程</th><th>費用（雙人）</th><th>備註</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>和ごころ日暮里 → 日暮里站</td><td>步行</td><td>約 08:00 出發</td><td>約 8 分鐘</td><td>免費</td><td>旅館至車站步行即可</td></tr>
+          <tr><td>日暮里 → 品川 → 鎌倉</td><td>JR 常磐線快速「上野東京ライン」+ JR 山手線 + JR 橫須賀線</td><td>約 08:15 出發，09:20 抵達鎌倉</td><td>約 1 小時 5 分</td><td>~¥2,000（¥1,000 × 2）</td><td>於品川站轉乘，Suica 可用</td></tr>
+          <tr><td>鎌倉站 → 鶴岡八幡宮 → 小町通</td><td>步行</td><td>約 10:00 抵達</td><td>約 15 分鐘</td><td>免費</td><td>沿若宮大路段葛步行</td></tr>
+          <tr><td>小町通 → 鎌倉站 → 御成站 → 橫濱 → 港未來</td><td>步行 + 江之島電鐵 + JR 橫須賀線 + みなとみらい線</td><td>約 13:30 出發，14:40 抵達港未來</td><td>約 1 小時 10 分</td><td>~¥1,600（¥800 × 2）</td><td>御成站為江之電車站，非 JR</td></tr>
+          <tr><td>港未來 → 中華街</td><td>步行 / みなとみらい線</td><td>18:00 步行前往</td><td>約 15 分鐘（步行）</td><td>免費 / ¥400（地鐵）</td><td>步行較愜意，或搭 1 站地鐵</td></tr>
+          <tr><td>中華街 → 日暮里（回程）</td><td>みなとみらい線 + JR 京濱東北線 / 山手線</td><td>約 21:00 出發，22:00 抵達</td><td>約 1 小時</td><td>~¥2,000（¥1,000 × 2）</td><td>留意末班車時間，約 23:00-24:00</td></tr>
+          <tr><td>日暮里站 → 和ごころ日暮里</td><td>步行</td><td>約 22:00 抵達</td><td>約 8 分鐘</td><td>免費</td><td>車站至旅館步行即可</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h3>🗺️ 當天路線圖</h3>
+      <p class="subtitle">👆 手指可縮放、拖動地圖；點擊站點查看幾點搭乘哪班車</p>
+      <div class="map-wrapper">
+        <div id="map-container" style="height: 380px; width: 100%; border-radius: 12px; border: 1px solid var(--border);"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>📍 附近熱門景點（鎌倉・橫濱地區）</h3>
+      <ul class="nearby-list">
+        <li><strong>明月院</strong> — 9:00-16:00（6月 8:30開門）· 高校生以上 ¥500 · 繡球花寺，參道兩旁約2500株繡球花（北鎌倉，建議先訪）</li>
+        <li><strong>鶴岡八幡宮</strong> — 境內 6:00-20:00，社務所 9:00-16:30 · 免費 · 鎌倉最重要的神社，參拜並祈求婚姻美滿（鎌倉站東側） · 📍神奈川県鎌倉市雪ノ下2-1-31 · 📞0467-22-0315 · hachimangu.or.jp</li>
+        <li><strong>鎌倉大佛（高德院）</strong> — 8:00-17:00（10-3月 至 17:00、4-9月 至 17:30）· ¥300（大人）· 日本第二高青銅佛像，高11.3公尺國寶（長谷地區） · 📍神奈川県鎌倉市長谷4-2-28 · 📞0467-22-0815 · kotoku-in.jp</li>
+        <li><strong>長谷寺</strong> — 10–2 月 8:00–16:30（閉山 17:00）、3–9 月 8:00–17:00（閉山 17:30）· 拝観料 ¥400（大人）· 觀音像與由比濱海景，江之電長谷站步行 5 分鐘（長谷地區；12 月適用冬季時間） · 📍神奈川県鎌倉市長谷3-11-2 · 📞0467-22-6300 · hasedera.jp</li>
+        <li><strong>灌籃高手平交道（鎌倉高校前）</strong> — 全天可拍照 · 免費 · 因動漫爆紅的拍照打卡點（鎌倉高校前，西南端）</li>
+        <li><strong>橫濱中華街</strong> — 約 11:00-21:00（各店不同）· 免費入場 · 日本最大唐人街，正宗廣東料理與上海小籠包</li>
+        <li><strong>港未來・橫濱摩天輪</strong> — 約 10:00-21:00 · 摩天輪 ¥900/人 · 橫濱海港夜景，海濱散步</li>
+        <li><strong>湘南單軌電車（大船站 ↔ 湘南江之島站）</strong> — 約 7:00-21:00 · 大人 ¥220／小人 ¥110 · 日本少見懸掛式單軌電車，車窗視野開闊，適合體驗不同交通工具 · 需從鎌倉站搭乘 JR 至大船站轉乘，會增加來回時間，建議僅在行程有餘裕時考慮 · 📍神奈川県鎌倉市 · shonan-monorail.co.jp</li>
+      </ul>
+    </section>
+
+    <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; text-align: center;">
+      <p>東京婚紗之旅 2026 | 第 3 天 · 12/04 (五)</p>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const day3Stations = [
+        { name: '日暮里 → 鎌倉', lat: 35.3176, lng: 139.4596, type: 'transport', time: '08:15 出發', transport: 'JR 常磐線快速「上野東京ライン」+ JR 山手線 + JR 橫須賀線', detail: '從日暮里站約 08:20 抵達上野，約 08:35 抵達品川，約 09:20 抵達鎌倉站，約 1 小時 5 分', cost: '~¥1,000 / 人' },
+        { name: '鶴岡八幡宮', lat: 35.3274, lng: 139.5395, type: 'shrine', time: '10:00 抵達', transport: '從鎌倉站步行 10 分鐘', detail: '參拜並祈求婚姻美滿', cost: '免費' },
+        { name: '小町通', lat: 35.3189, lng: 139.5355, type: 'shopping', time: '12:00 出發', transport: '步行', detail: '鎌倉小町通美食街，購買伴手禮', cost: '自由消費' },
+        { name: '御成站', lat: 35.3167, lng: 139.5430, type: 'transport', time: '13:50 抵達', transport: '江之島電鐵 鎌倉→御成', detail: '從鎌倉站搭乘江之島電鐵至御成站，約 4 分鐘（御成站為江之電車站，非 JR 車站）', cost: '¥200 / 人（江之電）' },
+        { name: '港未來', lat: 35.4565, lng: 139.6350, type: 'location', time: '14:40 抵達', transport: '江之島電鐵 御成→鎌倉，JR 橫須賀線 鎌倉→橫濱，みなとみらい線→港未來', detail: '從御成站搭乘江之島電鐵返回鎌倉站，轉 JR 橫須賀線至橫濱站，再轉 みなとみらい線至港未來站，欣賞海港夜景與橫濱摩天輪', cost: 'JR+江之電 ~¥800 / 人' },
+        { name: '中華街', lat: 35.4437, lng: 139.6440, type: 'restaurant', time: '18:00 用餐', transport: '步行', detail: '橫濱中華街晚餐', cost: '¥5,000-8,000 / 人' },
+        { name: '和ごころ日暮里', lat: 35.7265, lng: 139.7730, type: 'hotel', time: '22:00 抵達', transport: 'JR 京濱東北線 + 山手線', detail: '中華街 → 日暮里站 → 步行返回旅館', cost: '~¥1,000 / 人（JR+地鐵）' }
+      ];
+
+      const map = L.map('map-container', {
+        center: [35.4, 139.6],
+        zoom: 10,
+        touchZoom: true,
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 13
+      }).addTo(map);
+
+      const typeColors = {
+        airport: '#e74c3c', hotel: '#27ae60', transport: '#d1495b',
+        location: '#3498db', shrine: '#f39c12', station: '#95a5a6',
+        shopping: '#2c3e50', temple: '#f39c12', restaurant: '#2ecc71', food: '#f1c40f'
+      };
+
+      const latlngs = [];
+      day3Stations.forEach(station => {
+        const latlng = [station.lat, station.lng];
+        latlngs.push(latlng);
+        const marker = L.circleMarker(latlng, {
+          radius: 8, fillColor: typeColors[station.type] || '#d1495b',
+          color: '#ffffff', weight: 2, opacity: 1, fillOpacity: 0.9
+        });
+        marker.bindPopup(`\n          <div style="min-width: 200px;">\n            <h4 style="margin:0 0 6px 0; color: var(--accent); font-size: 0.95rem;">${station.name}</h4>\n            <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 4px;">${station.time}<br>${station.transport}</div>\n            <div style="font-size: 0.8rem; color: var(--fg); margin-bottom: 4px;">${station.detail}</div>\n            ${station.cost ? `<div style="font-size: 0.8rem; color: var(--success); font-weight: 600;">💰 ${station.cost}</div>` : ''}\n          </div>\n        `);
+        marker.addTo(map);
+      });
+
+      if (latlngs.length > 1) {
+        L.polyline(latlngs, { color: '#3498db', weight: 3, opacity: 0.8, dashArray: '8, 8' }).addTo(map);
+        map.fitBounds(latlngs, { padding: [50, 50] });
+      }
+    });
+  </script>
+</body>
+</html>

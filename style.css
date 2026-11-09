@@ -1,0 +1,665 @@
+/* Tokyo Wedding 2026 - Interactive Itinerary Styles */
+/* 方案 A：經典 SVG 路線圖 + 流動線條動畫 + 四個資訊欄位 */
+
+:root {
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --accent: #d1495b;
+  --secondary: #3498db;
+  --muted: #666666;
+  --surface: #f8f8f8;
+  --border: #e0e0e0;
+  --primary: #2c3e50;
+  --success: #27ae60;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121212;
+    --fg: #e0e0e0;
+    --accent: #ff6b8b;
+    --secondary: #5dade2;
+    --muted: #999999;
+    --surface: #1e1e1e;
+    --border: #333333;
+    --primary: #ecf0f1;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+  }
+  :root[data-theme="dark"] {
+    --bg: #121212;
+    --fg: #e0e0e0;
+    --accent: #ff6b8b;
+    --secondary: #5dade2;
+    --muted: #999999;
+    --surface: #1e1e1e;
+    --border: #333333;
+    --primary: #ecf0f1;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  padding: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px));
+  max-width: 100%;
+  overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: 2.2rem; margin-bottom: 0.8rem; }
+h2 { font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; }
+h3 { font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; }
+h4 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.6rem; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container { max-width: 960px; margin: 0 auto; }
+
+.subtitle { color: var(--muted); font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 1rem; }
+
+/* 主題切換按鈕 */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  z-index: 100;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-toggle:hover {
+  background: var(--border);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.theme-toggle .sun { display: inline; }
+.theme-toggle .moon { display: none; }
+
+[data-theme="dark"] .theme-toggle .sun { display: none; }
+[data-theme="dark"] .theme-toggle .moon { display: inline; }
+
+/* Hero 區塊 */
+.hero {
+  padding: 3rem 0 2rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  animation: fadeInDown 0.8s ease-out;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero .tag {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(209, 73, 91, 0.3);
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Section 卡片 */
+section.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  transition: all 0.3s ease;
+}
+
+section.card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 6px 24px rgba(209, 73, 91, 0.08);
+}
+
+section.card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* 時間軸 */
+.timeline-container {
+  position: relative;
+  padding: 1rem 0;
+}
+
+.timeline-points {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.timeline-point {
+  width: 64px;
+  height: 64px;
+  background: var(--surface);
+  border: 3px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  text-align: center;
+}
+
+.timeline-point:hover {
+  border-color: var(--accent);
+  transform: translateY(-6px) scale(1.1);
+  box-shadow: 0 8px 24px rgba(209, 73, 91, 0.2);
+}
+
+.timeline-point.active {
+  border-color: var(--secondary);
+  background: var(--secondary);
+  transform: scale(1.2);
+  box-shadow: 0 0 0 8px rgba(52, 152, 219, 0.2);
+}
+
+.timeline-point.active::after {
+  content: '✓';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.point-number {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.timeline-point.active .point-number {
+  color: white;
+}
+
+.point-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.timeline-point.active .point-label {
+  color: white;
+}
+
+/* 地圖區塊 */
+.map-wrapper {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.map-container {
+  height: 420px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  position: relative;
+  background: var(--surface);
+  animation: mapIn 0.8s ease-out;
+}
+
+@keyframes mapIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.map-legend {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+[data-theme="dark"] .map-legend {
+  background: rgba(30,30,30,0.95);
+}
+
+.legend-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--fg);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-text {
+  color: var(--muted);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* 日程卡片網格 */
+.day-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.day-card {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.day-card.active {
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px rgba(209, 73, 91, 0.12);
+  transform: scale(1.02);
+  z-index: 5;
+}
+
+.day-card.delay-1 { animation-delay: 0.1s; }
+.day-card.delay-2 { animation-delay: 0.2s; }
+.day-card.delay-3 { animation-delay: 0.3s; }
+.day-card.delay-4 { animation-delay: 0.4s; }
+.day-card.delay-5 { animation-delay: 0.5s; }
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.day-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--accent);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.day-card.active .day-badge {
+  background: var(--secondary);
+}
+
+.weather-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--surface);
+  color: var(--muted);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  border: 1px solid var(--border);
+}
+
+.day-card h3 {
+  margin: 0.5rem 0 0.5rem;
+  font-size: 1.2rem;
+  color: var(--fg);
+}
+
+.day-stations {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.station-item {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.station-item:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.station-time {
+  min-width: 70px;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+.station-info {
+  flex: 1;
+}
+
+.station-name {
+  font-weight: 600;
+  color: var(--fg);
+  font-size: 0.95rem;
+}
+
+.station-transport {
+  font-size: 0.8rem;
+  color: var(--secondary);
+  margin-top: 0.25rem;
+}
+
+.station-detail {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.25rem;
+  line-height: 1.4;
+}
+
+.station-cost {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--success);
+  margin-top: 0.25rem;
+}
+
+/* 附近熱門景點區塊 */
+.nearby-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nearby-list li {
+  font-size: 0.9rem;
+  color: var(--fg);
+  padding: 0.6rem 0.8rem;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.nearby-list li:hover {
+  border-color: var(--secondary);
+  transform: translateX(4px);
+}
+
+/* 交通表 */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.schedule-table th {
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.schedule-table tr:nth-child(even) td {
+  background: var(--surface);
+}
+
+.schedule-table tr {
+  transition: all 0.2s ease;
+}
+
+.schedule-table tr:hover {
+  background: rgba(209, 73, 91, 0.05);
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #ffe0e0;
+  color: var(--accent);
+  border-radius: 10px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-left: 6px;
+}
+
+.badge.green { background: #e0ffe0; color: #27ae60; }
+
+/* 流動線條動畫 */
+@keyframes dashFlow {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -60; }
+}
+
+/* 無障礙 */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 響應式 */
+@media (max-width: 640px) {
+  .timeline-points {
+    gap: 1rem;
+  }
+
+  .timeline-point {
+    width: 52px;
+    height: 52px;
+  }
+
+  .point-number {
+    font-size: 1.1rem;
+  }
+
+  .point-label {
+    font-size: 0.65rem;
+  }
+
+  .station-item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .station-time {
+    min-width: auto;
+  }
+
+  .hero h1 { font-size: 1.7rem; }
+  .container { padding: 0 12px; }
+  section.card { padding: 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .theme-toggle {
+    top: 12px;
+    right: 12px;
+    padding: 6px 10px;
+  }
+}
+
+/* 返回總覽按鈕 */
+.back-btn {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 6px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--fg);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: var(--border);
+  color: var(--accent);
+}
+
+/* 天數連結按鈕 */
+.day-link {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--accent);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.day-link:hover {
+  background: var(--secondary);
+  color: white;
+}
+
+/* Leaflet 地圖深色主題支援 */
+[data-theme="dark"] .leaflet-container {
+  background: #1e1e1e !important;
+}
+
+/* Leaflet Popup 自定義樣式 */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.leaflet-popup-content {
+  margin: 10px 14px;
+  font-size: 0.9rem;
+}
+
+.leaflet-popup-content h4 {
+  margin: 0 0 6px 0;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.leaflet-popup-content p {
+  margin: 4px 0;
+  font-size: 0.85rem;
+  color: var(--fg);
+}
+
+.leaflet-popup-content .station-time {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.leaflet-popup-content .station-cost {
+  color: var(--success);
+  font-weight: 600;
+}
+
+/* 確保地圖容器在響應式下正確顯示 */
+#map-container {
+  min-height: 300px;
+}

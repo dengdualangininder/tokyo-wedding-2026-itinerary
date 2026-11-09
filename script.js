@@ -505,6 +505,85 @@ document.addEventListener('DOMContentLoaded', function() {
   ];
 
   // ============================================================
+  // 資料結構規範（AX / DX）與驗證
+  // 每個 station 必須包含：name, code, lat, lng, type, transport, detail, day
+  // 可選：arriveTime, departTime, cost
+  // ============================================================
+  const STATION_TYPES = [
+    'airport', 'hotel', 'transport', 'location', 'shrine',
+    'station', 'shopping', 'temple', 'restaurant', 'food'
+  ];
+
+  function validateItinerary(data) {
+    const errors = [];
+    const warnings = [];
+
+    if (!Array.isArray(data)) {
+      errors.push('itinerary 必須是陣列');
+      return { errors, warnings };
+    }
+
+    data.forEach((day, dayIdx) => {
+      const dayNum = dayIdx + 1;
+
+      if (!day.id || typeof day.id !== 'number') {
+        errors.push(`Day ${dayNum}: 缺少 id 欄位`);
+      }
+      if (!day.date) {
+        errors.push(`Day ${dayNum}: 缺少 date 欄位`);
+      }
+      if (!day.theme) {
+        errors.push(`Day ${dayNum}: 缺少 theme 欄位`);
+      }
+      if (!day.weather) {
+        warnings.push(`Day ${dayNum}: 建議補充 weather 欄位`);
+      }
+
+      if (!Array.isArray(day.stations)) {
+        errors.push(`Day ${dayNum}: stations 必須是陣列`);
+        return;
+      }
+
+      day.stations.forEach((station, stationIdx) => {
+        const stationLabel = `Day ${dayNum} 站點 ${stationIdx + 1}`;
+
+        if (!station.name) {
+          errors.push(`${stationLabel}: 缺少 name 欄位`);
+        }
+        if (!station.code) {
+          warnings.push(`${stationLabel}: 建議補充 code 欄位`);
+        }
+        if (typeof station.lat !== 'number' || typeof station.lng !== 'number') {
+          errors.push(`${stationLabel}: lat/lng 必須是數字`);
+        }
+        if (!STATION_TYPES.includes(station.type)) {
+          warnings.push(`${stationLabel}: type "${station.type}" 不在規範內 ${STATION_TYPES.join(', ')}`);
+        }
+        if (!station.transport) {
+          warnings.push(`${stationLabel}: 建議補充 transport 欄位`);
+        }
+        if (!station.detail) {
+          warnings.push(`${stationLabel}: 建議補充 detail 欄位`);
+        }
+        if (!station.day) {
+          station.day = day.id;
+        }
+      });
+    });
+
+    return { errors, warnings };
+  }
+
+  // 執行驗證（開發時可見，生產環境靜默）
+  const validation = validateItinerary(itinerary);
+  if (validation.errors.length > 0) {
+    console.error('[Itinerary 驗證失敗]', validation.errors);
+  }
+  if (validation.warnings.length > 0) {
+    console.warn('[Itinerary 警告]', validation.warnings);
+  }
+
+  // ============================================================
   // 初始化：產生時間軸、地圖、日程卡片、交通表
   // ============================================================
   function initTimeline() {
@@ -722,8 +801,7 @@ document.addEventListener('DOMContentLoaded', function() {
       day.stations.forEach(station => {
         if (station.type === 'transport' && !seen.has(station.name)) {
           seen.add(station.name);
-          html += `
-            <tr data-day="${day.id}">
+          html += `\n            <tr data-day="${day.id}">
               <td>${day.date}</td>
               <td>${station.name}</td>
               <td>${station.transport}</td>
@@ -734,12 +812,30 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     tbody.innerHTML = html;
+
+    // 自動將所有 schedule-table 包入 .table-wrap，支援行動裝置橫向滾動
+    document.querySelectorAll('table.schedule-table').forEach(table => {
+      if (!table.parentElement.classList.contains('table-wrap')) {
+        const wrap = document.createElement('div');
+        wrap.className = 'table-wrap';
+        table.parentNode.insertBefore(wrap, table);
+        wrap.appendChild(table);
+      }
+    });
   }
 
   // ============================================================
   // 當天切換邏輯
   // ============================================================
   function activateDay(dayNum) {
+    // 派發狀態機變更事件（AX / DX：讓外部監聽器可響應日程切換）
+    const event = new CustomEvent('daychange', {
+      detail: { dayNum, day: itinerary.find(d => d.id === dayNum) },
+      bubbles: true,
+      cancelable: true
+    });
+    document.dispatchEvent(event);
+
     // 時間軸點擊
     document.querySelectorAll('.timeline-point').forEach((p, i) => {
       if (i + 1 === dayNum) {
@@ -787,24 +883,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
+    function updateToggle(isDark) {
+      if (isDark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        toggle.querySelector('.sun').style.display = 'none';
+        toggle.querySelector('.moon').style.display = 'inline';
+        toggle.setAttribute('aria-pressed', 'true');
+        toggle.setAttribute('aria-label', '切換至淺色主題');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        toggle.querySelector('.sun').style.display = 'inline';
+        toggle.querySelector('.moon').style.display = 'none';
+        toggle.setAttribute('aria-pressed', 'false');
+        toggle.setAttribute('aria-label', '切換至深色主題');
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
     if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      toggle.querySelector('.sun').style.display = 'none';
-      toggle.querySelector('.moon').style.display = 'inline';
+      updateToggle(true);
+    } else {
+      updateToggle(false);
     }
 
     toggle.addEventListener('click', function() {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        document.documentElement.removeAttribute('data-theme');
-        toggle.querySelector('.sun').style.display = 'inline';
-        toggle.querySelector('.moon').style.display = 'none';
-        localStorage.setItem('theme', 'light');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        toggle.querySelector('.sun').style.display = 'none';
-        toggle.querySelector('.moon').style.display = 'inline';
-        localStorage.setItem('theme', 'dark');
+      updateToggle(!isDark);
+    });
+
+    // 鍵盤 Enter/Space 支援
+    toggle.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        updateToggle(!isDark);
       }
     });
   }
@@ -846,12 +959,25 @@ document.addEventListener('DOMContentLoaded', function() {
   // 啟動所有模組
   // ============================================================
   function init() {
-    initTimeline();
-    initMap();
-    initDayCards();
-    initTransportTable();
-    initThemeToggle();
-    initAnimations();
+    document.documentElement.classList.remove('no-js');
+
+    const modules = [
+      { name: 'Timeline', fn: initTimeline },
+      { name: 'Map', fn: initMap },
+      { name: 'DayCards', fn: initDayCards },
+      { name: 'TransportTable', fn: initTransportTable },
+      { name: 'ThemeToggle', fn: initThemeToggle },
+      { name: 'Animations', fn: initAnimations }
+    ];
+
+    modules.forEach(({ name, fn }) => {
+      try {
+        fn();
+      } catch (err) {
+        console.error(`[Itinerary] 初始化失敗：${name}`, err);
+      }
+    });
+
     activateDay(1); // 預設顯示第 1 天
   }
 

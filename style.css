@@ -534,6 +534,18 @@ section.card h3 {
   outline-offset: 2px;
 }
 
+/* 無 JS 時日程卡片仍可見（優雅降級） */
+.no-js .day-card {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.no-js .day-card.active {
+  opacity: 1;
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -662,4 +674,78 @@ section.card h3 {
 /* 確保地圖容器在響應式下正確顯示 */
 #map-container {
   min-height: 300px;
+}
+
+/* 列印友善：隱藏互動元件與地圖，背景改白 */
+@media print {
+  .theme-toggle,
+  .map-wrapper,
+  .map-container,
+  .day-link,
+  .back-btn,
+  .nearby-list li a {
+    display: none !important;
+  }
+
+  section.card {
+    background: white !important;
+    border: 1px solid #999 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    margin: 1rem 0 !important;
+    padding: 1rem !important;
+  }
+
+  body {
+    background: white !important;
+    color: #000 !important;
+    overflow-x: visible !important;
+  }
+
+  .schedule-table {
+    width: 100% !important;
+    font-size: 0.85rem !important;
+  }
+
+  .schedule-table th,
+  .schedule-table td {
+    border: 1px solid #999 !important;
+    padding: 6px 8px !important;
+  }
+
+  .station-item {
+    break-inside: avoid;
+    border: 1px solid #999 !important;
+  }
+
+  .timeline-points {
+    display: none !important;
+  }
+
+  .day-card {
+    opacity: 1 !important;
+    transform: none !important;
+    break-inside: avoid;
+  }
+
+  h1, h2, h3 {
+    color: #000 !important;
+  }
+
+  a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75rem;
+    color: #666;
+  }
+
+  a[href^="#"]::after {
+    content: "";
+  }
+}
+
+/* 響應式：表格橫向滾動容器 */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1rem 0;
 }

@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ============================================================
   // 資料：每日行程（包含幾點、交通工具、詳細說明、費用）
+  // 提升為 window.itinerary，供所有頁面共用
   // ============================================================
-  const itinerary = [
+  window.itinerary = [
     {
       id: 1,
       date: '12/02 (三)',
@@ -503,8 +504,9 @@ document.addEventListener('DOMContentLoaded', function() {
       ]
     }
   ];
+const itinerary = window.itinerary;
 
-  // ============================================================
+// ============================================================
   // 資料結構規範（AX / DX）與驗證
   // 每個 station 必須包含：name, code, lat, lng, type, transport, detail, day
   // 可選：arriveTime, departTime, cost

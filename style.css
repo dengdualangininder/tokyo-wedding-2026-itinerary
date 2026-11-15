@@ -1,49 +1,189 @@
-/* Tokyo Wedding 2026 - Interactive Itinerary Styles */
-/* 方案 A：經典 SVG 路線圖 + 流動線條動畫 + 四個資訊欄位 */
+/* ==========================================================================
+   Tokyo Wedding 2026 — Design System
+   Premium Japanese Editorial Travel Design
+   Mobile First · WCAG 2.2 AA · iPhone Safe Area
+   ========================================================================== */
 
+/* --- Design Tokens : Color --- */
 :root {
-  --bg: #ffffff;
-  --fg: #1a1a1a;
-  --accent: #d1495b;
+  /* Backgrounds */
+  --color-bg: #fbfaf5;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f3f1ea;
+  --color-inverse: #1a1a1a;
+
+  /* Legacy aliases for day1-5.html and Leaflet popups */
+  --bg: var(--color-bg);
+  --fg: var(--color-text-primary);
+  --accent: var(--color-accent);
   --secondary: #3498db;
-  --muted: #666666;
-  --surface: #f8f8f8;
-  --border: #e0e0e0;
+  --muted: var(--color-text-muted);
+  --surface: var(--color-surface);
+  --border: var(--color-border);
   --primary: #2c3e50;
-  --success: #27ae60;
-  --warning: #f39c12;
-  --danger: #e74c3c;
+  --success: var(--color-success);
+  --warning: var(--color-warning);
+  --danger: var(--color-danger);
+
+  /* Text */
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #5c5448;
+  --color-text-muted: #9a8f84;
+  --color-text-on-accent: #ffffff;
+
+  /* Accent (Muted Japanese tones) */
+  --color-accent: #b55444;        /* 朱紅 (shu-iro) */
+  --color-accent-hover: #9b4237;
+  --color-accent-light: #f3e3e0;
+  --color-accent-active: #7a3329;
+
+  /* Subtle greens / greys */
+  --color-moss: #5a725c;           /* 墨綠 */
+  --color-moss-light: #e8ece8;
+  --color-ash: #8a7d73;           /* 灰褐 */
+  --color-ash-light: #edeae5;
+
+  /* Borders & dividers */
+  --color-border: #e4e0d8;
+  --color-border-light: #f0ece3;
+
+  /* Interactive */
+  --color-link: #b55444;
+  --color-link-hover: #9b4237;
+  --color-focus-ring: #b55444;
+
+  /* Semantic */
+  --color-success: #5a725c;
+  --color-warning: #b58344;
+  --color-danger: #b55444;
+
+  /* --- Design Tokens : Typography --- */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Noto Sans TC", "Noto Sans CJK TC", "PingFang TC", "Microsoft JhengHei",
+    "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-serif:
+    "Songti TC", "Noto Serif TC", "Noto Serif CJK TC", "Times New Roman", serif;
+
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 2rem;        /* 32px */
+  --text-4xl: 2.5rem;      /* 40px */
+
+  --leading-tight: 1.4;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.8;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+
+  font-weight: 400; /* normal */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* --- Design Tokens : Spacing (4px scale) --- */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+
+  /* --- Design Tokens : Radius --- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* --- Design Tokens : Shadow (minimal) --- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  /* --- Design Tokens : Breakpoints --- */
+  --bp-mobile: 375px;
+  --bp-tablet: 768px;
+  --bp-desktop: 1440px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #121212;
-    --fg: #e0e0e0;
-    --accent: #ff6b8b;
-    --secondary: #5dade2;
-    --muted: #999999;
-    --surface: #1e1e1e;
-    --border: #333333;
-    --primary: #ecf0f1;
-    --success: #2ecc71;
-    --warning: #f1c40f;
-    --danger: #e74c3c;
+    --color-bg: #14120e;
+    --color-surface: #1d1a16;
+    --color-surface-alt: #24201b;
+    --color-inverse: #fbfaf5;
+    --color-text-primary: #f3efe4;
+    --color-text-secondary: #b8aea0;
+    --color-text-muted: #7a6e5f;
+    --color-accent: #d47363;
+    --color-accent-hover: #c05d4f;
+    --color-accent-light: #3b2a25;
+    --color-accent-active: #b55444;
+    --color-moss: #8aa68c;
+    --color-moss-light: #2a332a;
+    --color-ash: #a89d90;
+    --color-ash-light: #2a2620;
+    --color-border: #2c2720;
+    --color-border-light: #24201b;
+    --color-link: #d47363;
+    --color-link-hover: #c05d4f;
+    --color-focus-ring: #d47363;
+    --color-success: #8aa68c;
+    --color-warning: #c9a06b;
+    --color-danger: #d47363;
+
+    /* Legacy aliases (dark) */
+    --bg: var(--color-bg);
+    --fg: var(--color-text-primary);
+    --accent: var(--color-accent);
+    --secondary: #3498db;
+    --muted: var(--color-text-muted);
+    --surface: var(--color-surface);
+    --border: var(--color-border);
+    --primary: #2c3e50;
+    --success: var(--color-success);
+    --warning: var(--color-warning);
+    --danger: var(--color-danger);
   }
   :root[data-theme="dark"] {
-    --bg: #121212;
-    --fg: #e0e0e0;
-    --accent: #ff6b8b;
-    --secondary: #5dade2;
-    --muted: #999999;
-    --surface: #1e1e1e;
-    --border: #333333;
-    --primary: #ecf0f1;
-    --success: #2ecc71;
-    --warning: #f1c40f;
-    --danger: #e74c3c;
+    --color-bg: #14120e;
+    --color-surface: #1d1a16;
+    --color-surface-alt: #24201b;
+    --color-inverse: #fbfaf5;
+    --color-text-primary: #f3efe4;
+    --color-text-secondary: #b8aea0;
+    --color-text-muted: #7a6e5f;
+    --color-accent: #d47363;
+    --color-accent-hover: #c05d4f;
+    --color-accent-light: #3b2a25;
+    --color-accent-active: #b55444;
+    --color-moss: #8aa68c;
+    --color-moss-light: #2a332a;
+    --color-ash: #a89d90;
+    --color-ash-light: #2a2620;
+    --color-border: #2c2720;
+    --color-border-light: #24201b;
+    --color-link: #d47363;
+    --color-link-hover: #c05d4f;
+    --color-focus-ring: #d47363;
+    --color-success: #8aa68c;
+    --color-warning: #c9a06b;
+    --color-danger: #d47363;
   }
 }
 
+/* --- Reset & Base --- */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -52,63 +192,137 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", Helvetica, Arial, sans-serif;
-  line-height: 1.6;
-  padding: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px));
-  max-width: 100%;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--leading-normal);
+  padding:
+    max(var(--space-4), env(safe-area-inset-top, 0px))
+    max(var(--space-4), env(safe-area-inset-right, 0px))
+    max(var(--space-10), env(safe-area-inset-bottom, 0px)) /* bottom nav 空間 */
+    max(var(--space-4), env(safe-area-inset-left, 0px));
+  max-width: 100vw;
   overflow-x: hidden;
   transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
-  font-weight: 700;
-  letter-spacing: -0.02em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+  line-height: var(--leading-tight);
 }
 
-h1 { font-size: 2.2rem; margin-bottom: 0.8rem; }
-h2 { font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; }
-h3 { font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; }
-h4 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.6rem; }
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+p {
+  margin-bottom: var(--space-4);
+  color: var(--color-text-secondary);
+}
 
-.container { max-width: 960px; margin: 0 auto; }
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
 
-.subtitle { color: var(--muted); font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 1rem; }
+a:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
 
-/* 主題切換按鈕 */
+ul,
+ol {
+  margin: 0 0 var(--space-4) var(--space-4);
+  color: var(--color-text-secondary);
+}
+
+strong {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* --- Utility --- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: var(--space-6);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- Theme Toggle (top-right, minimal) --- */
 .theme-toggle {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  padding: 8px 14px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  z-index: 100;
-  transition: all 0.3s ease;
-  display: flex;
+  top: max(var(--space-4), env(safe-area-inset-top, 0px));
+  right: max(var(--space-4), env(safe-area-inset-right, 0px));
+  z-index: 200;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  color: var(--color-text-primary);
 }
 
 .theme-toggle:hover {
-  background: var(--border);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-color: var(--color-ash);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
 }
 
 .theme-toggle svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .theme-toggle .sun { display: inline; }
@@ -117,305 +331,214 @@ a:hover { text-decoration: underline; }
 [data-theme="dark"] .theme-toggle .sun { display: none; }
 [data-theme="dark"] .theme-toggle .moon { display: inline; }
 
-/* Hero 區塊 */
-.hero {
-  padding: 3rem 0 2rem;
-  text-align: center;
-  border-bottom: 1px solid var(--border);
-  animation: fadeInDown 0.8s ease-out;
+/* --- Container --- */
+.container {
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* --- Hero / Header --- */
+.hero {
+  padding: var(--space-8) 0 var(--space-6);
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .hero .tag {
   display: inline-block;
-  padding: 6px 14px;
-  background: var(--accent);
-  color: white;
-  border-radius: 50px;
-  font-size: 0.8rem;
+  padding: var(--space-1) var(--space-4);
+  background: var(--color-accent-light);
+  color: var(--color-accent-active);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(209, 73, 91, 0.3);
+  margin-bottom: var(--space-3);
+}
+
+.hero h1 {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-3);
 }
 
 .hero p {
-  font-size: 1.1rem;
-  color: var(--muted);
-  max-width: 720px;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  max-width: 320px;
   margin: 0 auto;
-  line-height: 1.7;
 }
 
-/* Section 卡片 */
+/* --- Section Card (minimal, line-based) --- */
 section.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-  margin: 2rem 0;
-  transition: all 0.3s ease;
-}
-
-section.card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 6px 24px rgba(209, 73, 91, 0.08);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-8);
 }
 
 section.card h3 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-  color: var(--accent);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-4);
+  color: var(--color-text-primary);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
-/* 時間軸 */
-.timeline-container {
-  position: relative;
-  padding: 1rem 0;
+/* --- Bottom Navigation (Mobile First) --- */
+.bottom-nav {
+  position: fixed;
+  bottom: env(safe-area-inset-bottom, 0px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 56px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+  z-index: 150;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  gap: var(--space-1);
+  transition: color 0.2s ease;
+  border-radius: var(--radius-full);
+}
+
+.nav-item:hover,
+.nav-item:focus-visible {
+  outline: none;
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+}
+
+.nav-item.active {
+  color: var(--color-accent);
+}
+
+.nav-item svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-item .label {
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
+/* Desktop: hide bottom nav, show top nav instead */
+@media (min-width: 768px) {
+  .bottom-nav {
+    display: none;
+  }
+
+  .container {
+    max-width: 1000px;
+  }
+
+  body {
+    padding-top: max(var(--space-6), env(safe-area-inset-top, 0px));
+    padding-bottom: var(--space-8);
+  }
+}
+
+/* --- Timeline Point (used in dashboard) --- */
 .timeline-points {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: var(--space-4);
   flex-wrap: wrap;
-  margin-top: 1rem;
+  margin-top: var(--space-4);
 }
 
 .timeline-point {
-  width: 64px;
-  height: 64px;
-  background: var(--surface);
-  border: 3px solid var(--border);
-  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
+  transition: all 0.2s ease;
   text-align: center;
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
 }
 
 .timeline-point:hover {
-  border-color: var(--accent);
-  transform: translateY(-6px) scale(1.1);
-  box-shadow: 0 8px 24px rgba(209, 73, 91, 0.2);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  transform: translateY(-2px);
 }
 
 .timeline-point.active {
-  border-color: var(--secondary);
-  background: var(--secondary);
-  transform: scale(1.2);
-  box-shadow: 0 0 0 8px rgba(52, 152, 219, 0.2);
-}
-
-.timeline-point.active::after {
-  content: '✓';
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  color: white;
-  font-weight: bold;
-  font-size: 1.2rem;
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
 }
 
 .point-number {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--accent);
-  margin-bottom: 0.25rem;
-}
-
-.timeline-point.active .point-number {
-  color: white;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-1);
 }
 
 .point-label {
-  font-size: 0.75rem;
-  color: var(--muted);
-  font-weight: 500;
-  line-height: 1.2;
+  font-size: 0.65rem;
+  line-height: 1.1;
 }
 
-.timeline-point.active .point-label {
-  color: white;
-}
-
-/* 地圖區塊 */
-.map-wrapper {
-  position: relative;
-  margin-top: 1rem;
-}
-
-.map-container {
-  height: 420px;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  position: relative;
-  background: var(--surface);
-  animation: mapIn 0.8s ease-out;
-}
-
-@keyframes mapIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.map-legend {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 0.8rem;
-  z-index: 10;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-}
-
-[data-theme="dark"] .map-legend {
-  background: rgba(30,30,30,0.95);
-}
-
-.legend-title {
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: var(--fg);
-  margin-bottom: 8px;
-  display: block;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
-}
-
-.legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.legend-text {
-  color: var(--muted);
-  font-size: 0.75rem;
-  white-space: nowrap;
-}
-
-/* 日程卡片網格 */
-.day-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-.day-card {
-  background: var(--bg);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin: 0;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.day-card.active {
-  border-color: var(--accent);
-  box-shadow: 0 8px 32px rgba(209, 73, 91, 0.12);
-  transform: scale(1.02);
-  z-index: 5;
-}
-
-.day-card.delay-1 { animation-delay: 0.1s; }
-.day-card.delay-2 { animation-delay: 0.2s; }
-.day-card.delay-3 { animation-delay: 0.3s; }
-.day-card.delay-4 { animation-delay: 0.4s; }
-.day-card.delay-5 { animation-delay: 0.5s; }
-
-.day-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.day-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  background: var(--accent);
-  color: white;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.day-card.active .day-badge {
-  background: var(--secondary);
-}
-
-.weather-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  background: var(--surface);
-  color: var(--muted);
-  border-radius: 20px;
-  font-size: 0.75rem;
-  border: 1px solid var(--border);
-}
-
-.day-card h3 {
-  margin: 0.5rem 0 0.5rem;
-  font-size: 1.2rem;
-  color: var(--fg);
-}
-
+/* --- Day Card / Station Item --- */
 .day-stations {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .station-item {
   display: flex;
-  gap: 1rem;
-  padding: 0.75rem;
-  background: var(--surface);
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  transition: all 0.2s ease;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all 0.15s ease;
 }
 
 .station-item:hover {
-  border-color: var(--accent);
+  border-color: var(--color-accent);
   transform: translateX(4px);
 }
 
 .station-time {
-  min-width: 70px;
-  font-weight: 700;
-  color: var(--accent);
-  font-size: 0.85rem;
+  min-width: 72px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+  font-size: var(--text-sm);
 }
 
 .station-info {
@@ -423,329 +546,216 @@ section.card h3 {
 }
 
 .station-name {
-  font-weight: 600;
-  color: var(--fg);
-  font-size: 0.95rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  font-size: var(--text-base);
+  margin-bottom: var(--space-1);
 }
 
 .station-transport {
-  font-size: 0.8rem;
-  color: var(--secondary);
-  margin-top: 0.25rem;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
 }
 
 .station-detail {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-top: 0.25rem;
-  line-height: 1.4;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-1);
+  line-height: 1.5;
 }
 
 .station-cost {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--success);
-  margin-top: 0.25rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-success);
+  margin-top: var(--space-1);
 }
 
-/* 附近熱門景點區塊 */
-.nearby-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.nearby-list li {
-  font-size: 0.9rem;
-  color: var(--fg);
-  padding: 0.6rem 0.8rem;
-  background: var(--surface);
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  line-height: 1.5;
-  transition: all 0.2s ease;
-}
-
-.nearby-list li:hover {
-  border-color: var(--secondary);
-  transform: translateX(4px);
-}
-
-/* 交通表 */
+/* --- Table --- */
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
 }
 
 .schedule-table th,
 .schedule-table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
   text-align: left;
+  vertical-align: top;
 }
 
 .schedule-table th {
-  background: var(--surface);
-  color: var(--muted);
-  font-size: 0.8rem;
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--font-weight-semibold);
 }
 
-.schedule-table tr:nth-child(even) td {
-  background: var(--surface);
+.schedule-table tr:last-child td {
+  border-bottom: none;
 }
 
-.schedule-table tr {
-  transition: all 0.2s ease;
+/* --- List --- */
+.nearby-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
-.schedule-table tr:hover {
-  background: rgba(209, 73, 91, 0.05);
+.nearby-list li {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  line-height: 1.5;
 }
 
-/* Badge */
-.badge {
-  display: inline-block;
-  padding: 2px 8px;
-  background: #ffe0e0;
-  color: var(--accent);
-  border-radius: 10px;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-left: 6px;
+.nearby-list li strong {
+  color: var(--color-text-primary);
 }
 
-.badge.green { background: #e0ffe0; color: #27ae60; }
-
-/* 流動線條動畫 */
-@keyframes dashFlow {
-  0% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: -60; }
-}
-
-/* 無障礙 */
-*:focus-visible {
-  outline: 2px solid var(--accent);
+/* --- Focus states --- */
+a:focus-visible,
+button:focus-visible,
+.nav-item:focus-visible,
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
-/* 無 JS 時日程卡片仍可見（優雅降級） */
-.no-js .day-card {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
+/* --- Map wrapper (Leaflet) --- */
+.map-wrapper {
+  position: relative;
+  margin-top: var(--space-4);
 }
 
-.no-js .day-card.active {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* 響應式 */
-@media (max-width: 640px) {
-  .timeline-points {
-    gap: 1rem;
-  }
-
-  .timeline-point {
-    width: 52px;
-    height: 52px;
-  }
-
-  .point-number {
-    font-size: 1.1rem;
-  }
-
-  .point-label {
-    font-size: 0.65rem;
-  }
-
-  .station-item {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .station-time {
-    min-width: auto;
-  }
-
-  .hero h1 { font-size: 1.7rem; }
-  .container { padding: 0 12px; }
-  section.card { padding: 1.25rem; }
-}
-
-@media (max-width: 480px) {
-  .theme-toggle {
-    top: 12px;
-    right: 12px;
-    padding: 6px 10px;
-  }
-}
-
-/* 返回總覽按鈕 */
-.back-btn {
-  display: inline-block;
-  margin-bottom: 1rem;
-  padding: 6px 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--fg);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-}
-
-.back-btn:hover {
-  background: var(--border);
-  color: var(--accent);
-}
-
-/* 天數連結按鈕 */
-.day-link {
-  display: inline-block;
-  padding: 4px 10px;
-  background: var(--accent);
-  color: white;
-  border-radius: 4px;
-  text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.day-link:hover {
-  background: var(--secondary);
-  color: white;
-}
-
-/* Leaflet 地圖深色主題支援 */
-[data-theme="dark"] .leaflet-container {
-  background: #1e1e1e !important;
-}
-
-/* Leaflet Popup 自定義樣式 */
-.leaflet-popup-content-wrapper {
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-}
-
-.leaflet-popup-content {
-  margin: 10px 14px;
-  font-size: 0.9rem;
-}
-
-.leaflet-popup-content h4 {
-  margin: 0 0 6px 0;
-  color: var(--accent);
-  font-size: 1rem;
-}
-
-.leaflet-popup-content p {
-  margin: 4px 0;
-  font-size: 0.85rem;
-  color: var(--fg);
-}
-
-.leaflet-popup-content .station-time {
-  font-weight: 700;
-  color: var(--accent);
-}
-
-.leaflet-popup-content .station-cost {
-  color: var(--success);
-  font-weight: 600;
-}
-
-/* 確保地圖容器在響應式下正確顯示 */
 #map-container {
-  min-height: 300px;
+  height: 240px;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-alt);
+  overflow: hidden;
 }
 
-/* 列印友善：隱藏互動元件與地圖，背景改白 */
-@media print {
-  .theme-toggle,
-  .map-wrapper,
-  .map-container,
-  .day-link,
-  .back-btn,
-  .nearby-list li a {
-    display: none !important;
-  }
-
-  section.card {
-    background: white !important;
-    border: 1px solid #999 !important;
-    box-shadow: none !important;
-    break-inside: avoid;
-    margin: 1rem 0 !important;
-    padding: 1rem !important;
-  }
-
-  body {
-    background: white !important;
-    color: #000 !important;
-    overflow-x: visible !important;
-  }
-
-  .schedule-table {
-    width: 100% !important;
-    font-size: 0.85rem !important;
-  }
-
-  .schedule-table th,
-  .schedule-table td {
-    border: 1px solid #999 !important;
-    padding: 6px 8px !important;
-  }
-
-  .station-item {
-    break-inside: avoid;
-    border: 1px solid #999 !important;
-  }
-
-  .timeline-points {
-    display: none !important;
-  }
-
-  .day-card {
-    opacity: 1 !important;
-    transform: none !important;
-    break-inside: avoid;
-  }
-
-  h1, h2, h3 {
-    color: #000 !important;
-  }
-
-  a::after {
-    content: " (" attr(href) ")";
-    font-size: 0.75rem;
-    color: #666;
-  }
-
-  a[href^="#"]::after {
-    content: "";
-  }
+.map-legend {
+  position: absolute;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  z-index: 10;
+  box-shadow: var(--shadow-sm);
 }
 
-/* 響應式：表格橫向滾動容器 */
-.table-wrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin: 1rem 0;
+[data-theme="dark"] .map-legend {
+  background: rgba(29, 26, 22, 0.95);
+}
+
+.legend-title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-xs);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+  display: block;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-1);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-text {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Responsive adjustments --- */
+@media (max-width: 767px) {
+  h1 { font-size: var(--text-xl); }
+  h2 { font-size: var(--text-lg); }
+  h3 { font-size: var(--text-base); }
+  .hero { padding: var(--space-6) 0 var(--space-4); }
+  section.card { padding: var(--space-4); }
+  .station-item { padding: var(--space-3); }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container { max-width: 720px; }
+  #map-container { height: 320px; }
+}
+
+@media (min-width: 1024px) {
+  #map-container { height: 360px; }
 }

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>東京婚紗之旅 2026 | 五日行程總覽</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="切換亮/暗主題">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      <path d="M12 2v20M8 12h16"/>
+    </svg>
+    <span class="sun">☀</span><span class="moon">🌙</span>
+  </button>
+
+  <div class="container">
+    <header class="hero">
+      <span class="tag">五日行程總覽</span>
+      <h1>行程時間軸</h1>
+      <p>點選任一天查看詳細行程，或點選地圖標記查看該站點資訊。</p>
+    </header>
+
+    <!-- 五天 Timeline 入口 -->
+    <section class="card" aria-label="五日行程">
+      <h3>📅 五日行程快速入口</h3>
+      <div class="timeline-points" id="itinerary-timeline">
+        <!-- 由 JS 動態生成 -->
+      </div>
+    </section>
+
+    <!-- 每日詳細行程卡片 -->
+    <section class="card" id="day-detail-section" style="display:none;">
+      <h3 id="day-detail-title">Day 1</h3>
+      <div id="day-detail-stations" class="day-stations"></div>
+    </section>
+
+    <!-- 交通表 -->
+    <section class="card" aria-label="交通總表">
+      <h3>🚂 交通總表（雙人）</h3>
+      <div class="table-wrap">
+        <table class="schedule-table" id="transport-table">
+          <thead>
+            <tr><th>日期</th><th>路線</th><th>交通工具</th><th>預估費用（雙人）</th></tr>
+          </thead>
+          <tbody id="transport-table-body">
+            <!-- 由 JS 生成 -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="主要導覽">
+    <a href="index.html" class="nav-item" aria-label="首頁">
+      <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/></svg>
+      <span class="label">Home</span>
+    </a>
+    <a href="itinerary.html" class="nav-item active" aria-label="行程總覽，目前頁面">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <span class="label">Itinerary</span>
+    </a>
+    <a href="map.html" class="nav-item" aria-label="地圖">
+      <svg viewBox="0 0 24 24"><polygon fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="3 6 12 2 21 6 12 23 3 6"/></svg>
+      <span class="label">Map</span>
+    </a>
+    <a href="budget.html" class="nav-item" aria-label="預算">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      <span class="label">Budget</span>
+    </a>
+    <a href="info.html" class="nav-item" aria-label="資訊">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+      <span class="label">Info</span>
+    </a>
+  </nav>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. 產生五天 timeline point
+      const container = document.getElementById('itinerary-timeline');
+      if (container && window.itinerary) {
+        let html = '';
+        window.itinerary.forEach((day, i) => {
+          html += `
+            <div class="timeline-point ${i === 0 ? 'active' : ''}"
+                 role="button" tabindex="0"
+                 aria-label="前往 ${day.date} - ${day.theme}"
+                 data-day="${day.id}">
+              <div class="point-number">${i + 1}</div>
+              <div class="point-label">${day.date}</div>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+
+        // 點擊切換
+        document.querySelectorAll('.timeline-point').forEach((point, i) => {
+          point.addEventListener('click', () => showDay(i + 1));
+          point.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              showDay(i + 1);
+            }
+          });
+        });
+      }
+
+      // 2. 顯示指定天的詳細行程
+      function showDay(dayNum) {
+        const dayData = window.itinerary.find(d => d.id === dayNum);
+        if (!dayData) return;
+
+        // 更新 active state
+        document.querySelectorAll('.timeline-point').forEach((p, i) => {
+          if (i + 1 === dayNum) {
+            p.classList.add('active');
+          } else {
+            p.classList.remove('active');
+          }
+        });
+
+        // 顯示詳細區塊
+        const section = document.getElementById('day-detail-section');
+        const title = document.getElementById('day-detail-title');
+        const stations = document.getElementById('day-detail-stations');
+
+        section.style.display = 'block';
+        title.textContent = `${dayData.date} · ${dayData.theme}`;
+
+        let html = '';
+        dayData.stations.forEach((station, idx) => {
+          const time = station.arriveTime || station.departTime || '--:--';
+          html += `
+            <div class="station-item">
+              <div class="station-time">${time}</div>
+              <div class="station-info">
+                <div class="station-name">${station.name}</div>
+                <div class="station-transport">${station.transport}</div>
+                <div class="station-detail">${station.detail}</div>
+                ${station.cost ? `<div class="station-cost">💰 ${station.cost}</div>` : ''}
+              </div>
+            </div>
+          `;
+        });
+        stations.innerHTML = html;
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      // 預設顯示第 1 天
+      if (window.itinerary) {
+        showDay(1);
+      }
+
+      // 3. 交通表
+      const tbody = document.getElementById('transport-table-body');
+      if (tbody && window.itinerary) {
+        let html = '';
+        const seen = new Set();
+        window.itinerary.forEach(day => {
+          day.stations.forEach(station => {
+            if (station.type === 'transport' && !seen.has(station.name + day.id)) {
+              seen.add(station.name + day.id);
+              html += `
+                <tr data-day="${day.id}">
+                  <td>${day.date}</td>
+                  <td>${station.name}</td>
+                  <td>${station.transport}</td>
+                  <td>${station.cost || '-'}</td>
+                </tr>
+              `;
+            }
+          });
+        });
+        tbody.innerHTML = html;
+      }
+    });
+  </script>
+</body>
+</html>

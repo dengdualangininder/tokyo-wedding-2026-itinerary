@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>東京婚紗之旅 2026 | 行程地圖</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="切換亮/暗主題">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      <path d="M12 2v20M8 12h16"/>
+    </svg>
+    <span class="sun">☀</span><span class="moon">🌙</span>
+  </button>
+
+  <div class="container">
+    <header class="hero">
+      <span class="tag">行程地圖</span>
+      <h1>景點位置</h1>
+      <p>點選地圖標記查看該站點資訊，或點選「開啟 Google Maps」導航。</p>
+    </header>
+
+    <section class="card" aria-label="地圖">
+      <h3>🗺️ 當日行程地圖</h3>
+      <div class="map-wrapper">
+        <div id="map-container"></div>
+      </div>
+      <p style="margin-top: var(--space-3); font-size: var(--text-xs); color: var(--color-text-muted);">
+        地圖資料來自 OpenStreetMap，點選標記後可開啟 Google Maps 導航。
+      </p>
+    </section>
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="主要導覽">
+    <a href="index.html" class="nav-item" aria-label="首頁">
+      <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/></svg>
+      <span class="label">Home</span>
+    </a>
+    <a href="itinerary.html" class="nav-item" aria-label="行程總覽">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <span class="label">Itinerary</span>
+    </a>
+    <a href="map.html" class="nav-item active" aria-label="地圖，目前頁面">
+      <svg viewBox="0 0 24 24"><polygon fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="3 6 12 2 21 6 12 23 3 6"/></svg>
+      <span class="label">Map</span>
+    </a>
+    <a href="budget.html" class="nav-item" aria-label="預算">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      <span class="label">Budget</span>
+    </a>
+    <a href="info.html" class="nav-item" aria-label="資訊">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+      <span class="label">Info</span>
+    </a>
+  </nav>
+
+  <script src="script.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!window.itinerary || !L) return;
+
+      const map = L.map('map-container', {
+        center: [35.68, 139.70],
+        zoom: 8,
+        zoomControl: true,
+        touchZoom: true,
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 13
+      }).addTo(map);
+
+      const typeColors = {
+        airport: '#b55444',
+        hotel: '#5a725c',
+        transport: '#b55444',
+        location: '#3498db',
+        shrine: '#b58344',
+        station: '#8a7d73',
+        shopping: '#2c3e50',
+        temple: '#b58344',
+        restaurant: '#2ecc71',
+        food: '#f1c40f'
+      };
+
+      const typeLabels = {
+        airport: '機場', hotel: '住宿', transport: '交通', location: '景點',
+        shrine: '神社', station: '車站', shopping: '購物', temple: '寺院',
+        restaurant: '餐廳', food: '美食'
+      };
+
+      const markers = {};
+      const dayLayers = {};
+
+      window.itinerary.forEach((day, dayIdx) => {
+        const latlngs = [];
+        const dayMarkers = [];
+
+        day.stations.forEach(station => {
+          const latlng = [station.lat, station.lng];
+          latlngs.push(latlng);
+
+          const markerColor = typeColors[station.type] || '#b55444';
+          const marker = L.circleMarker(latlng, {
+            radius: 7,
+            fillColor: markerColor,
+            color: '#ffffff',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.9
+          });
+
+          const popupContent = `
+            <div style="min-width: 200px;">
+              <div style="font-weight:600; color:var(--color-text-primary); font-size:var(--text-base); margin-bottom:var(--space-1);">${station.name}</div>
+              <div style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-2);">${station.arriveTime || station.departTime || '--:--'} · ${station.transport || ''}</div>
+              <div style="font-size:var(--text-sm); color:var(--color-text-secondary); margin-bottom:var(--space-2); line-height:1.4;">${station.detail}</div>
+              ${station.cost ? `<div style="font-size:var(--text-sm); font-weight:600; color:var(--color-success);">💰 ${station.cost}</div>` : ''}
+              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(station.name + ' ' + (station.detail || ''))}" target="_blank" rel="noopener" class="btn btn-outline" style="display:inline-block; padding:var(--space-2) var(--space-4); font-size:var(--text-xs); margin-top:var(--space-2);">開啟 Google Maps</a>
+            </div>
+          `;
+          marker.bindPopup(popupContent);
+          marker.addTo(map);
+          dayMarkers.push(marker);
+          markers[station.name + station.day] = marker;
+        });
+
+        if (latlngs.length > 1) {
+          const polyline = L.polyline(latlngs, {
+            color: dayIdx % 2 === 0 ? '#b55444' : '#5a725c',
+            weight: 3,
+            opacity: 0.6,
+            dashArray: '6, 6'
+          }).addTo(map);
+          dayLayers[day.id] = { polyline, markers: dayMarkers };
+        } else {
+          dayLayers[day.id] = { polyline: null, markers: dayMarkers };
+        }
+      });
+
+      window.showDayOnMap = function(dayNum) {
+        Object.entries(dayLayers).forEach(([dayId, layer]) => {
+          const isActive = parseInt(dayId) === dayNum;
+          if (layer.polyline) {
+            isActive ? layer.polyline.addTo(map) : map.removeLayer(layer.polyline);
+            layer.polyline.setStyle(isActive ? { opacity: 0.7 } : { opacity: 0.2 });
+          }
+          layer.markers.forEach(m => {
+            isActive ? m.setStyle({ radius: 7, opacity: 1 }) : m.setStyle({ radius: 5, opacity: 0.4 });
+          });
+        });
+
+        const firstDay = window.itinerary.find(d => d.id === dayNum);
+        if (firstDay && firstDay.stations[0]) {
+          map.setView([firstDay.stations[0].lat, firstDay.stations[0].lng], 10, { animate: true, duration: 1 });
+        }
+      };
+
+      setTimeout(() => window.showDayOnMap(1), 100);
+    });
+  </script>
+</body>
+</html>

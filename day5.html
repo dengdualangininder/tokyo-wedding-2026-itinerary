@@ -18,7 +18,9 @@
   </button>
 
   <div class="container">
-    <a href="index.html" class="back-btn">← 回總覽</a>
+    <a href="index.html" class="btn btn-outline" style="margin-bottom: var(--space-4); display: inline-flex; align-items: center; gap: var(--space-2);">
+      <span style="font-size: var(--text-xs);">← 回總覽</span>
+    </a>
 
     <header class="hero">
       <span class="tag">12/06 (日) · Day 5</span>
@@ -26,7 +28,7 @@
       <p>池袋購物 → 巢鴨銅鑼燒 → 成田機場 → 桃園返國</p>
     </header>
 
-    <section class="card">
+    <section class="card" aria-label="當天詳細行程">
       <h3>📋 當天詳細行程</h3>
       <div class="day-stations">
         <div class="station-item">
@@ -104,32 +106,34 @@
       </div>
     </section>
 
-    <section class="card">
+    <section class="card" aria-label="當天交通詳情">
       <h3>🚂 當天交通詳情</h3>
-      <table class="schedule-table">
-        <thead>
-          <tr><th>路線</th><th>交通工具</th><th>班次時間</th><th>車程</th><th>費用（雙人）</th><th>備註</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>和ごころ日暮里 → 日暮里站</td><td>步行</td><td>約 10:00 出發</td><td>約 8 分鐘</td><td>免費</td><td>旅館至車站步行即可</td></tr>
-          <tr><td>日暮里 → 池袋</td><td>JR 山手線內環線</td><td>約 10:10 出發，10:30 抵達</td><td>約 20 分鐘</td><td>¥400（¥200 × 2）</td><td>無轉乘，Suica 可用</td></tr>
-          <tr><td>池袋 → 巢鴨</td><td>JR 山手線（2 站，經大塚）</td><td>約 15:30 出發，15:35 抵達</td><td>約 5 分鐘</td><td>¥340（¥170 × 2）</td><td>經大塚，Suica 可用</td></tr>
-          <tr><td>巢鴨 → 池袋</td><td>JR 山手線（2 站，返回，經大塚）</td><td>約 17:00 出發，17:05 抵達</td><td>約 5 分鐘</td><td>¥340（¥170 × 2）</td><td>返回池袋搭 Skyliner</td></tr>
-          <tr><td>池袋 → 日暮里 → 成田機場</td><td>JR 山手線 + Skyliner</td><td>約 17:10 出發，約 18:50 抵達成田</td><td>約 1 小時 15 分鐘</td><td>~¥6,000（¥3,000 × 2）</td><td>於日暮里站轉乘 Skyliner，建議提前預約</td></tr>
-          <tr><td>成田機場 → 桃園機場</td><td>國際航班</td><td>19:55 起飛</td><td>約 3 小時 15 分鐘</td><td>機票含機票總價</td><td>19:55 起飛，23:10 抵達</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="card">
-      <h3>🗺️ 當天路線圖</h3>
-      <p class="subtitle">👆 手指可縮放、拖動地圖；點擊站點查看幾點搭乘哪班車</p>
-      <div class="map-wrapper">
-        <div id="map-container" style="height: 380px; width: 100%; border-radius: 12px; border: 1px solid var(--border);"></div>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead>
+            <tr><th>路線</th><th>交通工具</th><th>班次時間</th><th>車程</th><th>費用（雙人）</th><th>備註</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>和ごころ日暮里 → 日暮里站</td><td>步行</td><td>約 10:00 出發</td><td>約 8 分鐘</td><td>免費</td><td>旅館至車站步行即可</td></tr>
+            <tr><td>日暮里 → 池袋</td><td>JR 山手線內環線</td><td>約 10:10 出發，10:30 抵達</td><td>約 20 分鐘</td><td>¥400（¥200 × 2）</td><td>無轉乘，Suica 可用</td></tr>
+            <tr><td>池袋 → 巢鴨</td><td>JR 山手線（2 站，經大塚）</td><td>約 15:30 出發，15:35 抵達</td><td>約 5 分鐘</td><td>¥340（¥170 × 2）</td><td>經大塚，Suica 可用</td></tr>
+            <tr><td>巢鴨 → 池袋</td><td>JR 山手線（2 站，返回，經大塚）</td><td>約 17:00 出發，17:05 抵達</td><td>約 5 分鐘</td><td>¥340（¥170 × 2）</td><td>返回池袋搭 Skyliner</td></tr>
+            <tr><td>池袋 → 日暮里 → 成田機場</td><td>JR 山手線 + Skyliner</td><td>約 17:10 出發，約 18:50 抵達成田</td><td>約 1 小時 15 分鐘</td><td>~¥6,000（¥3,000 × 2）</td><td>於日暮里站轉乘 Skyliner，建議提前預約</td></tr>
+            <tr><td>成田機場 → 桃園機場</td><td>國際航班</td><td>19:55 起飛</td><td>約 3 小時 15 分鐘</td><td>機票含機票總價</td><td>19:55 起飛，23:10 抵達</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <section class="card">
+    <section class="card" aria-label="當天路線圖">
+      <h3>🗺️ 當天路線圖</h3>
+      <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: var(--space-3);">👆 手指可縮放、拖動地圖；點擊站點查看幾點搭乘哪班車</p>
+      <div class="map-wrapper">
+        <div id="map-container"></div>
+      </div>
+    </section>
+
+    <section class="card" aria-label="附近熱門景點">
       <h3>📍 附近熱門景點（池袋・巢鴨地區）</h3>
       <ul class="nearby-list">
         <li><strong>池袋陽光60瞭望台 TENBOU-PARK</strong> — 11:00-21:00（最後入場 20:30）· 平日大人 ¥700／土日祝 ¥900／最繁忙期 ¥1,200 · 東京市區全景觀景台</li>
@@ -142,10 +146,34 @@
       </ul>
     </section>
 
-    <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; text-align: center;">
+    <footer style="margin-top: var(--space-12); padding-top: var(--space-6); border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: var(--text-xs); text-align: center;">
       <p>東京婚紗之旅 2026 | 第 5 天 · 12/06 (日)</p>
     </footer>
   </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="主要導覽">
+    <a href="index.html" class="nav-item" aria-label="首頁">
+      <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/></svg>
+      <span class="label">Home</span>
+    </a>
+    <a href="itinerary.html" class="nav-item" aria-label="行程總覽">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <span class="label">Itinerary</span>
+    </a>
+    <a href="map.html" class="nav-item" aria-label="地圖">
+      <svg viewBox="0 0 24 24"><polygon fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="3 6 12 2 21 6 12 23 3 6"/></svg>
+      <span class="label">Map</span>
+    </a>
+    <a href="budget.html" class="nav-item" aria-label="預算">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      <span class="label">Budget</span>
+    </a>
+    <a href="info.html" class="nav-item" aria-label="資訊">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+      <span class="label">Info</span>
+    </a>
+  </nav>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
@@ -154,8 +182,8 @@
       const day5Stations = [
         { name: '日暮里 → 池袋', lat: 35.7292, lng: 139.7102, type: 'transport', time: '10:10 出發', transport: 'JR 山手線', detail: '從日暮里站搭乘 JR 山手線至池袋站，約 20 分鐘，約 10:30 抵達', cost: '~¥200 / 人' },
         { name: '池袋購物', lat: 35.7292, lng: 139.7102, type: 'shopping', time: '11:00 抵達', transport: '步行', detail: '池袋西武、PARCO、Sunshine City 購物', cost: '自由消費' },
-        { name: '巢鴨銅鑼燒', lat: 35.7358, lng: 139.7614, type: 'food', time: '15:40 抵達', transport: 'JR 山手線 2 站（經大塚）', detail: '巢鴨地藏通り商店街，品嚐銅鑼燒與傳統和菓子', cost: '¥500-1,000 / 人' },
-        { name: '巢鴨 → 池袋', lat: 35.7358, lng: 139.7614, type: 'transport', time: '17:00 出發', transport: 'JR 山手線 2 站（返回，經大塚）', detail: '從巢鴨站搭乘 JR 山手線返回池袋站，約 5 分鐘', cost: '~¥170 / 人' },
+        { name: '巢鴨銅鑼燒', lat: 35.7358, lng: 139.7314, type: 'food', time: '15:40 抵達', transport: 'JR 山手線 2 站（經大塚）', detail: '巢鴨地藏通り商店街，品嚐銅鑼燒與傳統和菓子', cost: '¥500-1,000 / 人' },
+        { name: '巢鴨 → 池袋', lat: 35.7358, lng: 139.7314, type: 'transport', time: '17:00 出發', transport: 'JR 山手線 2 站（返回，經大塚）', detail: '從巢鴨站搭乘 JR 山手線返回池袋站，約 5 分鐘', cost: '~¥170 / 人' },
         { name: '池袋 → 成田機場', lat: 35.7646, lng: 140.3864, type: 'transport', time: '17:10 出發', transport: 'JR 山手線 + Skyliner', detail: '從池袋站搭乘 JR 至日暮里，約 17:35 抵達日暮里，轉乘 Skyliner，約 18:50 抵達成田機場', cost: '~¥3,000 / 人' },
         { name: '成田機場', lat: 35.7646, lng: 140.3864, type: 'airport', time: '19:55 起飛', transport: '國際航班 → 桃園 (TPE)', detail: '19:55 從成田機場起飛，23:10 抵達桃園機場', cost: '機票含機票總價' }
       ];
@@ -173,9 +201,9 @@
       }).addTo(map);
 
       const typeColors = {
-        airport: '#e74c3c', hotel: '#27ae60', transport: '#d1495b',
-        location: '#3498db', shrine: '#f39c12', station: '#95a5a6',
-        shopping: '#2c3e50', temple: '#f39c12', restaurant: '#2ecc71', food: '#f1c40f'
+        airport: '#b55444', hotel: '#5a725c', transport: '#b55444',
+        location: '#3498db', shrine: '#b58344', station: '#8a7d73',
+        shopping: '#2c3e50', temple: '#b58344', restaurant: '#2ecc71', food: '#f1c40f'
       };
 
       const latlngs = [];
@@ -183,15 +211,22 @@
         const latlng = [station.lat, station.lng];
         latlngs.push(latlng);
         const marker = L.circleMarker(latlng, {
-          radius: 8, fillColor: typeColors[station.type] || '#d1495b',
+          radius: 7, fillColor: typeColors[station.type] || '#b55444',
           color: '#ffffff', weight: 2, opacity: 1, fillOpacity: 0.9
         });
-        marker.bindPopup(`\n          <div style="min-width: 200px;">\n            <h4 style="margin:0 0 6px 0; color: var(--accent); font-size: 0.95rem;">${station.name}</h4>\n            <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 4px;">${station.time}<br>${station.transport}</div>\n            <div style="font-size: 0.8rem; color: var(--fg); margin-bottom: 4px;">${station.detail}</div>\n            ${station.cost ? `<div style="font-size: 0.8rem; color: var(--success); font-weight: 600;">💰 ${station.cost}</div>` : ''}\n          </div>\n        `);
+        marker.bindPopup(`
+          <div style="min-width: 200px;">
+            <div style="font-weight:600; color:var(--color-text-primary); font-size:var(--text-base); margin-bottom:var(--space-1);">${station.name}</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-muted); margin-bottom:var(--space-2);">${station.time} · ${station.transport}</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); margin-bottom:var(--space-2); line-height:1.4;">${station.detail}</div>
+            ${station.cost ? `<div style="font-size:var(--text-sm); font-weight:600; color:var(--color-success);">💰 ${station.cost}</div>` : ''}
+          </div>
+        `);
         marker.addTo(map);
       });
 
       if (latlngs.length > 1) {
-        L.polyline(latlngs, { color: '#d1495b', weight: 3, opacity: 0.8, dashArray: '8, 8' }).addTo(map);
+        L.polyline(latlngs, { color: '#b55444', weight: 3, opacity: 0.6, dashArray: '6, 6' }).addTo(map);
         map.fitBounds(latlngs, { padding: [50, 50] });
       }
     });

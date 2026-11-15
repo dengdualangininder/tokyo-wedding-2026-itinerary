@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>東京婚紗之旅 2026 完整手冊</title>
+  <title>東京婚紗之旅 2026 | 旅程控制中心</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,186 +17,161 @@
   </button>
 
   <div class="container">
+    <!-- Hero -->
     <header class="hero">
       <span class="tag">東京婚紗之旅 2026</span>
-      <h1>2026年12月2-6日 五日遊完整手冊</h1>
-      <p>包含機票、住宿、婚紗試穿、富士山婚紗攝影、東京深度遊、購物攻略與餐廳預約</p>
+      <h1>旅程控制中心</h1>
+      <p id="today-summary">載入中…</p>
     </header>
 
-    <section class="card">
-      <h3>📅 五日行程總覽</h3>
-      <table class="schedule-table">
-        <thead>
-          <tr><th>日期</th><th>主題</th><th>亮點活動</th><th>前往詳情</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>12/02 (三)</td>
-            <td>抵達・婚紗試穿</td>
-            <td>成田抵達 → セントレービル婚紗店 → 和ごころ日暮里入住</td>
-            <td><a href="day1.html" class="day-link">查看詳情 →</a></td>
-          </tr>
-          <tr>
-            <td>12/03 (四)</td>
-            <td>富士山婚紗攝影</td>
-            <td>河口湖／精華湖全天婚紗攝影</td>
-            <td><a href="day2.html" class="day-link">查看詳情 →</a></td>
-          </tr>
-          <tr>
-            <td>12/04 (五)</td>
-            <td>鎌倉・橫濱</td>
-            <td>鶴岡八幡宮 → 小町通 → 港未來 → 中華街</td>
-            <td><a href="day3.html" class="day-link">查看詳情 →</a></td>
-          </tr>
-          <tr>
-            <td>12/05 (六)</td>
-            <td>東京市區深度遊</td>
-            <td>豪德寺（早上買招財貓）→ 小網神社 → 東京站 → 叙々苑 銀座コリドー店（午餐）→ 丸之內 → 銀座通 → 東京鐵塔 → 銀座晚餐</td>
-            <td><a href="day4.html" class="day-link">查看詳情 →</a></td>
-          </tr>
-          <tr>
-            <td>12/06 (日)</td>
-            <td>返程採買</td>
-            <td>池袋購物 → 巢鴨銅鑼燒 → 成田機場返國</td>
-            <td><a href="day5.html" class="day-link">查看詳情 →</a></td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- 今日行程摘要卡片 -->
+    <section class="card" aria-label="今日行程">
+      <h3>📅 今日行程</h3>
+      <div id="today-itinerary">
+        <p style="text-align:center; color:var(--color-text-muted); padding:var(--space-4) 0;">載入中…</p>
+      </div>
     </section>
 
-    <section class="card">
-      <h3>🚂 交通總表 (雙人)</h3>
-      <table class="schedule-table">
-        <thead>
-          <tr><th>日期</th><th>主要路線</th><th>交通工具</th><th>預估費用</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>12/02</td><td>桃園 → 成田 → 日暮里</td><td>國際航班 + Keisei Skyliner</td><td>機票 + ¥5,160 (¥2,580×2)</td></tr>
-          <tr><td>12/03</td><td>日暮里 ↔ 富士山 (河口湖)</td><td>JR 山手線 + JR 中央線 + 富士急行線 / 高速巴士</td><td>¥10,000-20,000 / 人</td></tr>
-          <tr><td>12/04</td><td>日暮里 ↔ 鎌倉 ↔ 橫濱</td><td>JR 常磐線快速「上野東京ライン」直達鎌倉（或 山手線→品川→橫須賀線）+ 江之島電鐵 + みなとみらい線</td><td>~¥6,000-8,000 (雙人)</td></tr>
-          <tr><td>12/05</td><td>東京市區巡迴</td><td>JR 山手線 + 小田急線 + JR 山手線 + 地下鉄</td><td>~¥3,000-4,000 (雙人)</td></tr>
-          <tr><td>12/06</td><td>池袋 → 成田 → 桃園</td><td>JR 山手線 + Keisei Skyliner + 國際航班</td><td>~¥6,000 (雙人) + 機票</td></tr>
-        </tbody>
-      </table>
-      <p><strong>預估本地交通總費 (雙人)</strong>：~¥30,000-45,000（不含國際機票）</p>
+    <!-- 五天行程快速入口 -->
+    <section class="card" aria-label="五日行程">
+      <h3>🗺️ 五日行程</h3>
+      <div class="timeline-points" id="dashboard-timeline">
+        <!-- 由 JS 動態生成 -->
+      </div>
     </section>
 
-    <section class="card">
-      <h3>💳 交通票券建議：JR Pass vs Suica/Pasmo 儲值卡</h3>
-      <table class="schedule-table">
-        <thead>
-          <tr><th>項目</th><th>JR Pass (全國版 7 日)</th><th>Suica / Pasmo 儲值卡</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>適用範圍</td><td>全國 JR 線（含新幹線、特急列車）</td><td>東京地區 JR、地鐵、私鐵、巴士</td></tr>
-          <tr><td>價格（約）</td><td>¥53,000 / 人</td><td>按金 ¥500 + 充值金額（實用制）</td></tr>
-          <tr><td>本行程適用性</td><td>⚠️ 不推薦（本行程多為地鐵與短途JR，JR Pass 未必回本）</td><td>✅ 推薦（本行程絕大部分為東京市區地鐵與短途JR，Suica 更彈性）</td></tr>
-          <tr><td>本行程預估交通費</td><td>—</td><td>雙人總計約 ¥30,000-45,000</td></tr>
-          <tr><td>購買方式</td><td>須於出國前線上預約，或指定車站購買</td><td>成田機場 JR 票務處、自動販賣機、便利商店購買</td></tr>
-        </tbody>
-      </table>
-      <p><strong>💡 建議</strong>：本行程為 5 天東京及近郊短途行程，絕大部分需搭乘東京地鐵（東京メトロ、都營地下鐵）與短途 JR（山手線、京濱東北線等），<strong>建議購買 Suica 或 Pasmo 儲值卡</strong>，比 JR Pass 更彈性且費用更低。JR Pass 適用於長途跨區移動（如東京↔京都、大阪），本行程並未包含長途新幹線移動，因此不建議購買。</p>
+    <!-- 預算與交通摘要 -->
+    <section class="card" aria-label="預算與交通">
+      <h3>💰 預算與交通</h3>
+      <div class="budget-grid">
+        <div class="budget-item">
+          <div class="budget-label">本地交通（雙人）</div>
+          <div class="budget-value">約 ¥30,000–45,000</div>
+          <div class="budget-note">含 Skyliner、JR、地鐵、江之電</div>
+        </div>
+        <div class="budget-item">
+          <div class="budget-label">餐飲（雙人，5 天）</div>
+          <div class="budget-value">約 ¥30,000–50,000</div>
+          <div class="budget-note">含叙々苑、中華街、銀座晚餐</div>
+        </div>
+        <div class="budget-item">
+          <div class="budget-label">門票與活動</div>
+          <div class="budget-value">約 ¥5,000–10,000</div>
+          <div class="budget-note">東京鐵塔、陽光60、鎌倉大佛</div>
+        </div>
+        <div class="budget-item">
+          <div class="budget-label">建議票券</div>
+          <div class="budget-value">Suica / Pasmo</div>
+          <div class="budget-note">較 JR Pass 更彈性划算</div>
+        </div>
+      </div>
     </section>
 
-    <section class="card">
-      <h3>📌 重要提醒</h3>
-      <ul class="nearby-list">
-        <li><strong>Skyliner 指定席</strong>：成田機場↔日暮里間建議提前線上預約指定席，避免當天坐滿</li>
-        <li><strong>富士急行線末班車</strong>：Day 2 河口湖返回日暮里時，請留意末班車時間（約 20:00-21:00，大月～河口湖段），避免錯過末班；行程 17:00 出發，餘裕充足</li>
-        <li><strong>地鐵末班車</strong>：東京地鐵多於 24:00 前收車，Day 4 銀座晚餐後返回日暮里請留意末班車</li>
-        <li><strong>Suica 儲值</strong>：建議於成田機場抵達後即購買並充值，所有 JR 與地鐵均可通用</li>
-      </ul>
+    <!-- 快捷導覽 -->
+    <section class="card" aria-label="快捷功能">
+      <h3>🔗 快捷功能</h3>
+      <div class="quick-actions">
+        <a href="day1.html" class="btn btn-outline btn-block">
+          <span>📍 Day 1：抵達・婚紗試穿</span>
+        </a>
+        <a href="day2.html" class="btn btn-outline btn-block">
+          <span>🗻 Day 2：富士山婚紗攝影</span>
+        </a>
+        <a href="day3.html" class="btn btn-outline btn-block">
+          <span>🏯 Day 3：鎌倉・橫濱</span>
+        </a>
+        <a href="day4.html" class="btn btn-outline btn-block">
+          <span>🗼 Day 4：東京市區深度遊</span>
+        </a>
+        <a href="day5.html" class="btn btn-outline btn-block">
+          <span>🛍️ Day 5：返程採買</span>
+        </a>
+        <a href="budget.html" class="btn btn-outline btn-block">
+          <span>💰 預算明細</span>
+        </a>
+        <a href="info.html" class="btn btn-outline btn-block">
+          <span>ℹ️ 旅遊資訊</span>
+        </a>
+      </div>
     </section>
 
-    <section class="card">
-      <h3>🚨 緊急聯絡（日本）</h3>
-      <ul class="nearby-list">
-        <li><strong>一般緊急電話</strong>：110（報警）、119（火災／急救）</li>
-        <li><strong>最近醫院</strong>：はせがわ病院（荒川区東日暮里 5-45-7），電話 (日) 03-3807-8866 / (夜) 03-3807-8953</li>
-        <li><strong>最近藥局</strong>：荒川区薬剤師會休日當番藥局（請當日查詢值班表）</li>
-        <li><strong>台北駐日經濟文化代表處</strong>：東京都港區白金台 5-20-2，代表號 03-3280-7811（內線 4），夜間警衛室 03-3280-7917，日本境內手機 080-1009-7179 / 080-1009-7436</li>
-        <li><strong>外交部緊急聯絡中心（台灣）</strong>：0800-085-095（24 小時）</li>
-        <li><strong>領事服務時間</strong>：09:00–11:30 / 13:00–16:00（週六日及館休日休館）</li>
-        <li><strong>建議</strong>：將上述電話存入手機通訊錄，並列印攜帶備份</li>
-      </ul>
-    </section>
-
-    <section class="card">
-      <h3>💰 預算總覽（雙人，預估）</h3>
-      <table class="schedule-table">
-        <thead>
-          <tr><th>項目</th><th>預估費用</th><th>備註</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>國際機票（TPE↔NRT，雙人）</td><td>待確認</td><td>請補充航空公司、航班號、行李額</td></tr>
-          <tr><td>住宿（和ごころ日暮里，5 晚）</td><td>待確認</td><td>請補充預約確認碼、房型、總價</td></tr>
-          <tr><td>婚紗試穿（セントレービル婚紗店）</td><td>待確認</td><td>請補充店家地址、電話、試穿費用</td></tr>
-          <tr><td>富士山婚紗攝影</td><td>待確認</td><td>請補充攝影師、場地、照片交付費用</td></tr>
-          <tr><td>本地交通總計（雙人）</td><td>約 ¥25,000–28,500</td><td>含 Skyliner、JR、地鐵、小田急、江之電等</td></tr>
-          <tr><td>餐飲預估（雙人，5 天）</td><td>約 ¥30,000–50,000</td><td>含叙々苑午餐、中華街晚餐、銀座晚餐等</td></tr>
-          <tr><td>門票與活動費（雙人）</td><td>約 ¥5,000–10,000</td><td>含東京鐵塔 ¥1,200/人、陽光60、鎌倉大佛等</td></tr>
-          <tr><td>購物預算（雙人）</td><td>自訂</td><td>池袋、鎌倉小町通、銀座購物</td></tr>
-          <tr><td>緊急備用金</td><td>總預算 10–15%</td><td>建議保留以備不時之需</td></tr>
-          <tr><td><strong>本地交通＋餐飲＋門票小計</strong></td><td><strong>約 ¥60,000–90,000</strong></td><td>不含國際機票、酒店、婚紗、攝影</td></tr>
-        </tbody>
-      </table>
-      <p><strong>貨幣兌換</strong>：建議於成田機場或台灣出發前兌換部分日圓，其餘使用信用卡（Visa/Mastercard 廣泛接受）與 Suica 儲值卡。</p>
-    </section>
-
-    <section class="card">
-      <h3>🛡️ 保險建議（旅遊保險 / 醫療險）</h3>
-      <ul class="nearby-list">
-        <li><strong>建議投保</strong>：台灣旅遊平安險（意外身故／失能、海外突發疾病醫療）＋ 旅遊不便險（班機延誤、行李延誤／遺失、行程取消）</li>
-        <li><strong>日本醫療費用提醒</strong>：無日本健保的外國旅客需全額自費，嚴重傷病可能達數十萬日圓以上，務必投保足額醫療險（建議醫療保額拉高）</li>
-        <li><strong>推薦方案</strong>：搭配東京海上日動「TOKIO OMOTENASHI POLICY」（抵達日本後可線上投保，需於入境 5 天內辦理）或台灣旅平險 + 不便險組合</li>
-        <li><strong>投保時機</strong>：務必於出境前完成，保障期間應涵蓋從離境到返台的完整時間</li>
-        <li><strong>理賠文件保留</strong>：診斷證明書、收據正本、英文翻譯，存電子檔並備份於手機離線可看處</li>
-        <li><strong>24 小時海外急難救助電話</strong>：請於投保後記錄於手機通訊錄</li>
-      </ul>
-    </section>
-
-    <section class="card">
-      <h3>🎒 出發前準備清單</h3>
-      <ul class="nearby-list">
-        <li><strong>行李</strong>：確認國際機票託運行李額度、隨身行李尺寸；婚紗禮服與攝影器材是否可託運；回程預留購物行李空間</li>
-        <li><strong>貨幣</strong>：JPY 兌換（機場、銀行、郵局 ATM）、建議攜帶部分現金、信用卡可用範圍</li>
-        <li><strong>SIM / 電話</strong>：eSIM 或實體 SIM 卡建議（日本 5G eSIM 三網覆蓋、1–30 天方案）、漫遊費用、緊急聯絡電話</li>
-        <li><strong>電壓插頭</strong>：日本電壓 100V（東日本頻率 50Hz）、A 型雙孔插座（與台灣相同，無需轉接頭；三孔插頭需 3 轉 2 轉接頭）、行動電源登機規定（100Wh 以下可上機艙）</li>
-        <li><strong>Visit Japan Web</strong>：入境前線上填寫海關申報</li>
-        <li><strong>保險保單</strong>：電子檔與 24 小時海外急難救助電話存於手機離線可看處</li>
-        <li><strong>緊急聯絡卡</strong>：列印並隨身攜帶（110/119、醫院、駐日代表處、外交部緊急中心）</li>
-      </ul>
-    </section>
-
-    <section class="card">
-      <h3>🛒 日本購物免稅・退稅攻略</h3>
-      <ul class="nearby-list">
-        <li><strong>新制（11/1 起）</strong>：你的行程全部適用「先付後退」— 結帳先付含稅價，離境海關查核後才退稅</li>
-        <li><strong>免稅門檻</strong>：同一家店、同一天，未稅合計滿 5,000 日圓以上</li>
-        <li><strong>退稅稅率</strong>：一般商品 10%、食品飲料 8%（扣手續費後實拿可能較低）</li>
-        <li><strong>關鍵流程</strong>：購物出示護照 → 先付含稅價 → 登記退款方式 → 出境託運前海關查核 → 退款入帳</li>
-        <li><strong>九大避雷</strong>：不要先開封消耗品、不要提前託運、90 天內出境、同一張收據內商品要全數攜出</li>
-        <li><strong>詳情</strong>：<a href="tax-refund.html" class="day-link">查看完整退稅攻略 →</a></li>
-      </ul>
-    </section>
-
-    <section class="card">
-      <h3>⚠️ 體貼細節與健康提醒</h3>
-      <ul class="nearby-list">
-        <li><strong>長時間步行提醒</strong>：請適時休息，避免過度疲勞，並留意自身身體狀況。</li>
-        <li><strong>行走距離</strong>：各日行程涉及步行，建議穿防滑鞋。</li>
-        <li><strong>惡劣天氣備案</strong>：12 月東京早晚較冷，河口湖與鎌倉氣溫更低，下雨或富士山被雲層遮蔽時請調整戶外攝影行程。</li>
-        <li><strong>穿著建議</strong>：羽絨服、保暖內層、襪子、帽子、圍巾、防滑鞋；12 月日落約 16:30–17:00，戶外攝影請留意時段。</li>
-      </ul>
-    </section>
-
-    <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; text-align: center;">
-      <p>東京婚紗之旅 2026 | 生成日期: 2026-10-27</p>
-      <p>固定限制: 機票 TPE↔NRT、住宿和ごころ日暮里、婚紗店優先、富士山攝影 12/3、鎌倉/橫濱 12/4、東京市區深度遊 12/5（豪德寺早上買招財貓、叙々苑午餐）、返程 12/6</p>
-      <p><strong>⚠️ 注意</strong>：本專案為行程規劃草稿，機票、酒店、婚紗店、攝影師等關鍵資訊尚待確認，出發前請再次驗證所有預約與票券。</p>
+    <footer style="margin-top: var(--space-12); padding-top: var(--space-6); border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: var(--text-xs); text-align: center;">
+      <p>東京婚紗之旅 2026 | 12/02 – 12/06</p>
+      <p style="margin-top: var(--space-2); font-size: var(--text-xs);">⚠️ 本專案為行程規劃草稿，出發前請再次驗證所有預約與票券。</p>
     </footer>
   </div>
 
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav" aria-label="主要導覽">
+    <a href="index.html" class="nav-item active" aria-label="首頁，目前頁面">
+      <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/></svg>
+      <span class="label">Home</span>
+    </a>
+    <a href="itinerary.html" class="nav-item" aria-label="行程總覽">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <span class="label">Itinerary</span>
+    </a>
+    <a href="map.html" class="nav-item" aria-label="地圖">
+      <svg viewBox="0 0 24 24"><polygon fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="3 6 12 2 21 6 12 23 3 6"/></svg>
+      <span class="label">Map</span>
+    </a>
+    <a href="budget.html" class="nav-item" aria-label="預算">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      <span class="label">Budget</span>
+    </a>
+    <a href="info.html" class="nav-item" aria-label="資訊">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+      <span class="label">Info</span>
+    </a>
+  </nav>
+
   <script src="script.js"></script>
+  <script>
+    // Dashboard 特有：偵測今日日期並高亮對應行程
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date();
+      const month = today.getMonth() + 1;
+      const day = today.getDate();
+
+      // 行程日期對應（12/02 ~ 12/06）
+      const dayMap = {
+        '12/2': 1, '12/3': 2, '12/4': 3, '12/5': 4, '12/6': 5
+      };
+      const key = month + '/' + day;
+      const dayNum = dayMap[key];
+
+      const summary = document.getElementById('today-summary');
+      const todayItinerary = document.getElementById('today-itinerary');
+
+      if (dayNum) {
+        summary.textContent = `今天是第 ${dayNum} 天（${key}），請點選下方對應行程查看詳情。`;
+
+        // 載入對應 day 的 station 資料（從 script.js 的 itinerary 陣列）
+        const dayData = window.itinerary ? window.itinerary.find(d => d.id === dayNum) : null;
+        if (dayData) {
+          let html = `<div class="station-item">
+            <div class="station-time">${dayData.stations[0]?.arriveTime || dayData.stations[0]?.departTime || '--:--'}</div>
+            <div class="station-info">
+              <div class="station-name">${dayData.stations[0]?.name}</div>
+              <div class="station-transport">${dayData.stations[0]?.transport}</div>
+              <div class="station-detail">${dayData.theme}</div>
+            </div>
+          </div>`;
+          todayItinerary.innerHTML = html;
+        }
+
+        // 高亮對應的 timeline point
+        const points = document.querySelectorAll('.timeline-point');
+        points.forEach((p, i) => {
+          if (i + 1 === dayNum) {
+            p.classList.add('active');
+          }
+        });
+      } else {
+        summary.textContent = '行程期間為 12/02 – 12/06，請從下方五日行程選擇查看詳情。';
+        todayItinerary.innerHTML = '<p style="text-align:center; color:var(--color-text-muted); padding:var(--space-4) 0;">今日無行程安排</p>';
+      }
+    });
+  </script>
 </body>
 </html>

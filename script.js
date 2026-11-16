@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 4
         },
         {
-          name: '銀座晚餐🍣🥩',
+          name: '銀座晚餐🍣🥩 鮨屋のうおきん 銀座店',
           code: 'GinzaDinner',
           lat: 35.6712,
           lng: 139.7620,
@@ -423,7 +423,7 @@ document.addEventListener('DOMContentLoaded', function() {
           arriveTime: '20:00',
           departTime: '21:30',
           transport: '從台場搭乘 計程車/地鐵 至銀座（約 30-40 分鐘），推薦銀座牛排或壽司，預約餐廳',
-          detail: '銀座地區晚餐🍣🥩，從台場煙火觀賞後直達銀座用餐',
+          detail: '銀座地區晚餐🍣🥩，推薦魚金（鮨屋のうおきん）銀座店壽司或銀座牛排，從台場煙火觀賞後直達銀座用餐',
           cost: '約 ¥8,000-15,000 / 人',
           day: 4
         },

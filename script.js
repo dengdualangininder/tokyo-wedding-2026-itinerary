@@ -81,15 +81,15 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 1
         },
         {
-          name: '豪德寺附近逛街🛍️（下北澤或豪德寺商店街）',
-          code: 'GotokujiArea',
-          lat: 35.6586,
-          lng: 139.6620,
+          name: '新宿逛街🛍️',
+          code: 'Shinjuku',
+          lat: 35.6896,
+          lng: 139.7006,
           type: 'shopping',
-          arriveTime: '14:30',
-          departTime: '16:00',
-          transport: '從豪德寺站搭乘小田急線 各站停車 一站至下北澤站（約 5 分鐘），或步行逛豪德寺商店街',
-          detail: '下北澤：古着店、咖啡館、雜貨店，年輕輕鬆街區；或留在豪德寺商店街逛招財貓甜點、咖啡館（RARASAND 招財貓雞蛋糕、MAHORO堂 蒼月銅鑼燒、AMAZING COFFEE 招財貓拿鐵）',
+          arriveTime: '14:40',
+          departTime: '17:00',
+          transport: '從豪德寺站搭乘小田急線 各站停車 回新宿站（約 20 分鐘），新宿站步行',
+          detail: '新宿伊勢丹、小田急百貨、高島屋、新宿御苑、歌舞伎町氛圍，年輕輕鬆街區，適合婚紗試穿後輕鬆散步',
           cost: '自由消費',
           day: 1
         },
@@ -99,24 +99,11 @@ document.addEventListener('DOMContentLoaded', function() {
           lat: 35.7265,
           lng: 139.7730,
           type: 'hotel',
-          arriveTime: '16:40',
-          departTime: '17:40',
-          transport: '從下北澤或豪德寺站搭乘小田急線→JR 山手線 返回日暮里站，步行返回旅館',
+          arriveTime: '17:40',
+          departTime: '19:00',
+          transport: 'JR 山手線 新宿站→日暮里站（約 25 分鐘），步行返回旅館',
           detail: '返回旅館休息，為晚餐與翌日富士山婚紗攝影儲備體力',
           cost: '免費（步行）',
-          day: 1
-        },
-        {
-          name: '東京站·丸之內仲通 🎄',
-          code: 'MarunouchiXmas',
-          lat: 35.6758,
-          lng: 139.7630,
-          type: 'location',
-          arriveTime: '18:10',
-          departTime: '19:10',
-          transport: 'JR 山手線 日暮里→東京站（約 20 分鐘），丸之內南口出口步行約 5 分鐘',
-          detail: '1.2 公里的丸之內仲通，200 多棵樹全是香檳金燈飾，正對紅磚車站隨手拍都是大片。聖誕燈飾點亮至晚上。',
-          cost: '免費入場',
           day: 1
         },
         {
@@ -376,6 +363,19 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 4
         },
         {
+          name: '東京站·丸之內仲通🎄',
+          code: 'MarunouchiXmas',
+          lat: 35.6758,
+          lng: 139.7630,
+          type: 'location',
+          arriveTime: '12:00',
+          departTime: '13:10',
+          transport: '從人形町站搭乘 東京メトロ日比谷線至東京站，丸之內南口出口步行約 5 分鐘',
+          detail: '1.2 公里的丸之內仲通，200 多棵樹全是香檳金燈飾，正對紅磚車站隨手拍都是大片。聖誕燈飾點亮至晚上。免費入場。',
+          cost: '免費入場',
+          day: 4
+        },
+        {
           name: '叙々苑 銀座コリドー店',
           code: 'Jojoen',
           lat: 35.6712,
@@ -402,15 +402,15 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 4
         },
         {
-          name: '台場彩虹煙火🎆',
+          name: '台場彩虹煙火🎆（彈性，雨天取消）',
           code: 'OdaibaFireworks',
           lat: 35.6257,
           lng: 139.7720,
           type: 'food',
           arriveTime: '17:50',
           departTime: '19:10',
-          transport: '東京鐵塔 → 乘車前往台場（約 30-40 分鐘），提前抵達預留煙火觀賞位置',
-          detail: '2026年12月5日（六）19:00 打上約 5 分鐘，約 1,300 發煙火，免費觀賞。雨天取消。建議 17:50 前抵達台場海濱公園。',
+          transport: '東京鐵塔 → 乘車前往台場（約 30-40 分鐘），視天氣與體力決定是否前往',
+          detail: '2026年12月5日（六）19:00 打上約 5 分鐘，約 1,300 發煙火，免費觀賞。雨天取消。如不順可跳過此站，直接前往銀座晚餐。',
           cost: '免費觀賞',
           day: 4
         },
@@ -422,8 +422,8 @@ document.addEventListener('DOMContentLoaded', function() {
           type: 'restaurant',
           arriveTime: '20:00',
           departTime: '21:30',
-          transport: '從台場搭乘 計程車/地鐵 至銀座（約 30-40 分鐘），推薦銀座牛排或壽司，預約餐廳',
-          detail: '銀座地區晚餐🍣🥩，推薦魚金（鮨屋のうおきん）銀座店壽司或銀座牛排，從台場煙火觀賞後直達銀座用餐',
+          transport: '從台場或東京鐵塔搭乘 計程車/地鐵 至銀座（約 30-40 分鐘），推薦銀座牛排或壽司，預約餐廳',
+          detail: '銀座地區晚餐🍣🥩，推薦魚金（鮨屋のうおきん）銀座店壽司或銀座牛排，預約餐廳',
           cost: '約 ¥8,000-15,000 / 人',
           day: 4
         },

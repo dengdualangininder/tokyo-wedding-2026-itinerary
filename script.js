@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
           arriveTime: '12:00',
           departTime: '13:30',
           transport: '步行',
-          detail: '鎌倉小町通美食街，嘗試鎌倉名物（如：吉次餅、晒煎餅），購買伴手禮',
+          detail: '鎌倉小町通美食街，嘗試鎌倉名物（如：吉次餅、晒煎餅），以及江之島名物紙片八爪魚與吻仔魚（しらす），購買伴手禮',
           cost: '自由消費',
           day: 3
         },

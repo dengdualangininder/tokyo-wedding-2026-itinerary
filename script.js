@@ -338,29 +338,29 @@ document.addEventListener('DOMContentLoaded', function() {
       weather: '晴 10-16°C',
       stations: [
         {
-          name: '豪德寺',
-          code: 'Gotokuji',
-          lat: 35.6566,
-          lng: 139.6481,
-          type: 'temple',
-          arriveTime: '09:00',
-          departTime: '10:00',
-          transport: 'JR 山手線→小田急小田原線 各站停車',
-          detail: 'JR 山手線 日暮里→新宿，轉小田急線各站停車至豪德寺站（快速/急行不停靠豪德寺）',
-          cost: '~¥400 / 人',
-          day: 4
-        },
-        {
           name: '小網神社',
           code: 'Komainami',
           lat: 35.6892,
           lng: 139.7737,
           type: 'shrine',
-          arriveTime: '10:30',
-          departTime: '11:30',
-          transport: '小田急線→JR 山手線→步行（人形町 日比谷線／淺草線）',
-          detail: '從豪德寺站搭乘小田急線各站停車至新宿站，轉乘 JR 山手線至有樂町站，步行約 15–20 分鐘至小網神社',
+          arriveTime: '09:00',
+          departTime: '10:30',
+          transport: 'JR 山手線 日暮里→上野，轉地鐵日比谷線 上野→人形町（約 20 分鐘）',
+          detail: '強運厄除、洗錢儀式（錢幣清洗祈福），社務所 09:00-17:00 受理御守與御朱印。建議早上先到，避開人潮。',
           cost: '免費 / 洗錢儀式 ¥100',
+          day: 4
+        },
+        {
+          name: '人形町／日本橋下町散步',
+          code: 'Ningyocho',
+          lat: 35.6860,
+          lng: 139.7760,
+          type: 'location',
+          arriveTime: '10:40',
+          departTime: '11:40',
+          transport: '從小網神社步行',
+          detail: '甘酒橫丁、人形町からくり櫓（每正時 11:00-19:00 演出）、日本橋五街道起點，下町懷舊氛圍',
+          cost: '免費',
           day: 4
         },
         {

@@ -94,16 +94,16 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 1
         },
         {
-          name: '新宿逛街🛍️',
-          code: 'Shinjuku',
-          lat: 35.6896,
-          lng: 139.7006,
-          type: 'shopping',
+          name: '新宿御苑看銀杏🍂',
+          code: 'ShinjukuGyoen',
+          lat: 35.6836,
+          lng: 139.7120,
+          type: 'location',
           arriveTime: '16:30',
           departTime: '18:30',
-          transport: '從婚紗店搭乘 JR 山手線 至 新宿站（約 25 分鐘），新宿站步行',
-          detail: '新宿伊勢丹、小田急百貨、高島屋、新宿御苑、歌舞伎町氛圍，年輕輕鬆街區',
-          cost: '自由消費',
+          transport: '從婚紗店搭乘 JR 山手線 至 新宿站，步行約 10 分鐘至新宿御苑',
+          detail: '新宿御苑銀杏黃葉，12月上旬尚可欣賞黃葉景觀，園內寧靜適合散步拍照',
+          cost: '入場費 ¥500 / 人',
           day: 1
         },
         {

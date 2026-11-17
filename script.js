@@ -211,16 +211,54 @@ document.addEventListener('DOMContentLoaded', function() {
           lng: 139.7730,
           type: 'transport',
           arriveTime: '20:00',
-          departTime: '',
+          departTime: '20:10',
           transport: '電巴士返回東京',
-          detail: '攝影結束後返回日暮里旅館，晚餐補充體力',
+          detail: '攝影結束後返回日暮里站，約 20:00 抵達',
           cost: '包含在電巴士費用',
+          day: 2
+        },
+        {
+          name: 'セントレービル婚紗店（拷貝資料）',
+          code: 'BridalCopy',
+          lat: 35.7265,
+          lng: 139.7730,
+          type: 'activity',
+          arriveTime: '20:10',
+          departTime: '21:00',
+          transport: '從日暮里站步行至婚紗店',
+          detail: '拍完婚紗後回婚紗店，用 USB 扣取攝影資料並確認檔案完整性，預約下階段試穿或後製進度',
+          cost: '未確認',
+          day: 2
+        },
+        {
+          name: '日暮里逛吃晚餐🍜',
+          code: 'NipporiDinner',
+          lat: 35.7265,
+          lng: 139.7730,
+          type: 'restaurant',
+          arriveTime: '21:10',
+          departTime: '22:30',
+          transport: '從婚紗店步行至日暮里站前餐廳',
+          detail: '拷完資料後在日暮里站前找一家居酒屋或拉麵店吃晚餐，補充體力，推薦酒処一合或酔助等個室居酒屋，約 ¥3,000-5,000/人',
+          cost: '約 ¥3,000-5,000 / 人',
+          day: 2
+        },
+        {
+          name: '和ごころ日暮里',
+          code: 'WagokoroNight',
+          lat: 35.7265,
+          lng: 139.7730,
+          type: 'hotel',
+          arriveTime: '22:40',
+          departTime: '',
+          transport: '從餐廳步行返回旅館',
+          detail: '用餐完畢後返回旅館，準備就寢，為翌日東京市區遊做準備',
+          cost: '免費（步行）',
           day: 2
         }
       ]
     },
     {
-      id: 3,
       date: '12/04 (五)',
       theme: '鎌倉・橫濱',
       weather: '晴 10-15°C',

@@ -42,6 +42,19 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 1
         },
         {
+          name: '和ごころ日暮里（放行李）',
+          code: 'WagokoroDrop',
+          lat: 35.7265,
+          lng: 139.7730,
+          type: 'hotel',
+          arriveTime: '08:30',
+          departTime: '08:50',
+          transport: '從日暮里站步行約 8 分鐘',
+          detail: '先將行李寄放在旅館，輕裝出發前往豪德寺買招福貓',
+          cost: '住宿已預訂',
+          day: 1
+        },
+        {
           name: '豪德寺',
           code: 'Gotokuji',
           lat: 35.6566,
@@ -85,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
           code: 'Bridal',
           lat: 35.7265,
           lng: 139.7730,
-          type: 'activity',
+          type: 'location',
           arriveTime: '14:00',
           departTime: '16:00',
           transport: '從旅館步行/搭車前往婚紗店',
@@ -198,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
           lng: 139.7730,
           type: 'transport',
           arriveTime: '20:00',
-          departTime: '17:00',
+          departTime: '',
           transport: '電巴士返回東京',
           detail: '攝影結束後返回日暮里旅館，晚餐補充體力',
           cost: '包含在電巴士費用',
@@ -357,8 +370,9 @@ document.addEventListener('DOMContentLoaded', function() {
           lng: 139.7671,
           type: 'station',
           arriveTime: '12:00',
-          departTime: '13:10',
+          departTime: '13:20',
           transport: '從人形町站搭乘 東京メトロ日比谷線至東京站，紅磚車站建築拍照，丸之內地下街',
+          detail: '東京車站紅磚站房與丸之內地下街，午間逛街與拍照留念',
           cost: '地鐵 ¥200 / 人',
           day: 4
         },

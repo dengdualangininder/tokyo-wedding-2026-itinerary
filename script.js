@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 1
         },
         {
-          name: '新宿逛逛🛍️',
+          name: '新宿逛逛🛍️☕',
           code: 'ShinjukuWalk',
           lat: 35.6896,
           lng: 139.7006,
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
           arriveTime: '10:40',
           departTime: '13:30',
           transport: '從豪德寺站搭乘小田急線 各站停車 回新宿站，步行至新宿三丁目/歌舞伎町',
-          detail: '新宿伊勢丹、小田急百貨、高島屋、新宿御苑外圍，年輕輕鬆街區，適合婚紗試穿後輕鬆散步',
+          detail: '新宿伊勢丹、小田急百貨、高島屋，新宿御苑外圍，年輕輕鬆街區。參考 Threads 美食地圖（@hck819 Part 1）：新宿地區甜點/咖啡廳，適合午茶與伴手禮',
           cost: '自由消費',
           day: 1
         },
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
           arriveTime: '14:00',
           departTime: '16:00',
           transport: '從新宿站搭乘 JR 山手線 至 上野站，轉 地鐵日比谷線 至 入谷站，步行約 5 分鐘',
-          detail: '下午試禮服，預約婚紗店試穿。⚠️ 禮服店名與地址尚無法於公開資料確認，請於出發前查證實際存在的禮服店並預約試穿。從入谷站到秋葉原僅 5 分鐘，試完可直接前往秋葉原。',
+          detail: '下午試禮服，預約禮服店試穿。⚠️ 禮服店名與地址尚無法於公開資料確認，請於出發前查證實際存在的禮服店並預約試穿。從入谷站到秋葉原僅 5 分鐘，試完可直接前往秋葉原。',
           cost: '未確認',
           day: 1
         },
@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', function() {
           arriveTime: '19:00',
           departTime: '20:00',
           transport: '從秋葉原站搭乘 JR 山手線 至 日暮里站，步行至餐廳',
-          detail: '試完禮服後在日暮里站前找一家居酒屋或拉麵店吃晚餐，補充體力，推薦酒処一合或酔助等個室居酒屋，約 ¥3,000-5,000/人',
-          cost: '約 ¥3,000-5,000 / 人',
+          detail: '試完禮服後在日暮里站前找一家晚餐店。參考 Threads 美食地圖（@hck819 Part 1）：拉麵百名店、燒肉百名店、鰻魚百名店、豬排百名店等，約 ¥3,000-6,000/人，推薦酒処一合或酔助等個室居酒屋',
+          cost: '約 ¥3,000-6,000 / 人',
           day: 1
         },
         {

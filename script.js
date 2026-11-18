@@ -68,15 +68,15 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 1
         },
         {
-          name: 'セントレービル婚紗店（拷貝資料）⚠️ 待確認',
-          code: 'BridalCopy',
+          name: 'セントレービル婚紗店（試婚紗）⚠️ 待確認',
+          code: 'BridalTryOn',
           lat: 35.7265,
           lng: 139.7730,
           type: 'activity',
           arriveTime: '14:00',
           departTime: '16:00',
           transport: '從新宿站搭乘 JR 山手線 至 日暮里站，步行至婚紗店',
-          detail: '拍完婚紗後回婚紗店，用 USB 扣取攝影資料並確認檔案完整性，預約下階段試穿或後製進度。⚠️ セントレービル婚紗店尚無法於公開資料確認，請於出發前查證實際存在的婚紗店並預約試穿',
+          detail: '下午試婚紗，預約婚紗店試穿。⚠️ セントレービル婚紗店尚無法於公開資料確認，請於出發前查證實際存在的婚紗店並預約試穿',
           cost: '未確認',
           day: 1
         },

@@ -56,6 +56,8 @@
       if (o.meal) parts.push('<span style="color:var(--color-text-muted)">用餐時間：</span>' + esc(o.meal));
       if (o.price) parts.push('<span style="color:var(--color-text-muted)">價格：</span>' + esc(o.price));
       if (o.source) parts.push('<span style="color:var(--color-text-muted)">來源：</span>' + esc(o.source));
+      if (o.reserve) parts.push('<span style="color:var(--color-text-muted)">預約：</span><a href="' + esc(o.reserve) + '" target="_blank" rel="noopener" style="color:#218e57;font-weight:700;text-decoration:underline;">📅 ' + esc(o.reserveLabel || '線上預約（官方）') + '</a>');
+      else if (o.walkin) parts.push('<span style="color:var(--color-text-muted)">預約：</span>不可預約，現場排隊');
       if (o.confirm) parts.push('<span style="color:#c0392b;font-weight:600;">⚠ 待確認：</span>' + esc(o.confirm));
       return '<div style="margin:0 0 ' + (dense ? '6px' : '10px') + ';">' +
                '<div style="font-weight:700;line-height:1.5;">' +

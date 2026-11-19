@@ -153,9 +153,9 @@
 
     // 預算摘要
     html += '<section class="card" aria-label="預算摘要"><h3 class="section-title">💰 預算摘要（雙人，本地）</h3><div class="budget-grid">' +
-              budgetItem('本地交通', '約 ¥30,000–45,000', 'Skyliner、JR、地鐵、江之電、湘南單軌') +
-              budgetItem('餐飲（5 天）', '約 ¥30,000–50,000', '含叙々苑、中華街、銀座晚餐') +
-              budgetItem('門票與活動', '約 ¥5,000–10,000', '東京鐵塔、陽光60、鎌倉大佛') +
+              budgetItem('本地交通', '約 ¥25,000–28,500', 'Skyliner、JR、地鐵、江之電、湘南單軌') +
+              budgetItem('餐飲（5 天）', '約 ¥30,000–50,000', '含叙々苑（午餐）、中華街、台場晚餐') +
+              budgetItem('門票與活動', '約 ¥5,000–10,000', '東京鐵塔、陽光60、鎌倉大佛、江之島') +
               budgetItem('建議票券', 'Suica / Pasmo', '比 JR Pass 更彈性划算') +
             '</div></section>';
 

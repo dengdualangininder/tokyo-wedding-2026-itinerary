@@ -1391,3 +1391,182 @@ button:focus-visible,
 @media (min-width: 1024px) {
   .day-title { font-size: var(--text-2xl); }
 }
+
+/* ==========================================================================
+   Data-driven rebuild additions: desktop top-nav, home quick links,
+   day pager, budget summary. Reuses existing tokens/classes elsewhere.
+   ========================================================================== */
+
+/* --- Desktop top navigation (mobile uses .bottom-nav) --- */
+.top-nav { display: none; }
+
+@media (min-width: 768px) {
+  .top-nav {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 140;
+    padding: var(--space-3) var(--space-6);
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-4);
+  }
+
+  [data-theme="dark"] .top-nav {
+    background: rgba(26, 26, 26, 0.9);
+  }
+
+  .top-nav__link {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+
+  .top-nav__link:hover,
+  .top-nav__link:focus-visible {
+    outline: none;
+    color: var(--color-accent);
+    background: var(--color-accent-light);
+  }
+
+  .top-nav__link.active {
+    color: var(--color-accent);
+    background: var(--color-accent-light);
+  }
+}
+
+/* --- Mobile: reserve space above the fixed bottom nav --- */
+@media (max-width: 767px) {
+  body { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* --- Home: quick links to each day --- */
+.day-quicknav {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chip:hover,
+.chip:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.chip strong {
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+}
+
+.chip > span {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.chip .chip__theme {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* --- Day page: prev / next pager --- */
+.day-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: var(--space-5) 0 var(--space-8);
+}
+
+.day-pager__link {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 48%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  transition: border-color 0.2s ease;
+}
+
+.day-pager__link:hover,
+.day-pager__link:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.day-pager__link span {
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  font-weight: var(--font-weight-medium);
+}
+
+.day-pager__link strong {
+  font-size: var(--text-sm);
+}
+
+.day-pager__link--next {
+  margin-left: auto;
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* --- Home: budget summary grid --- */
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+}
+
+.budget-item {
+  padding: var(--space-3);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.budget-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.budget-value {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 2px 0;
+}
+
+.budget-note {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.station-info { min-width: 0; }
+.station-name,
+.station-transport,
+.station-detail { overflow-wrap: anywhere; word-break: break-word; }

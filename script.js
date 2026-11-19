@@ -1,1051 +1,442 @@
-// Tokyo Wedding 2026 - Interactive Itinerary Script
-// 根據使用者選擇：方案 A（經典 SVG 路線圖）+ 流動線條動畫 + 四個資訊欄位（時間、交通工具、景點說明、費用票券）
+/* ==========================================================================
+   東京婚紗之旅 2026 — 共用渲染邏輯（唯一邏輯檔）
+   --------------------------------------------------------------------------
+   資料一律來自 data.js 的 window.ITINERARY / window.NAV。
+   每個頁面都是「薄殼」：只放一個容器節點，內容由這裡渲染。
+   想改行程 → 只改 data.js；想改導覽 → 只改 data.js 的 window.NAV。
+   ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', function() {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function () {
+  'use strict';
 
-  // ============================================================
-  // 資料：每日行程（包含幾點、交通工具、詳細說明、費用）
-  // 提升為 window.itinerary，供所有頁面共用
-  // ============================================================
-  window.itinerary = [
-    {
-      id: 1,
-      date: '12/02 (三)',
-      theme: '抵達・婚紗試穿',
-      weather: '晴 12-18°C',
-      stations: [
-        {
-          name: '成田機場',
-          code: 'NRT',
-          lat: 35.7646,
-          lng: 140.3864,
-          type: 'airport',
-          arriveTime: '06:35',
-          departTime: '02:30',
-          transport: '國際航班 TPE → NRT (桃園 02:30 → 成田 06:35)',
-          detail: '早上6點35分抵達成田機場，入境後領取行李',
-          cost: '機票含機票總價',
-          day: 1
-        },
-        {
-          name: '日暮里站',
-          code: 'Skyliner',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'transport',
-          arriveTime: '08:15',
-          departTime: '07:30',
-          transport: 'Skyliner 快速電車',
-          detail: '從成田機場第 3 航廈搭乘 Skyliner 至日暮里站，約 36 分鐘，無需轉乘',
-          cost: '¥2,580 / 人',
-          day: 1
-        },
-        {
-          name: '和ごころ日暮里（放行李）',
-          code: 'WagokoroDrop',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'hotel',
-          arriveTime: '08:30',
-          departTime: '08:50',
-          transport: '從日暮里站步行約 8 分鐘',
-          detail: '先將行李寄放在旅館，輕裝出發前往豪德寺買招福貓',
-          cost: '住宿已預訂',
-          day: 1
-        },
-        {
-          name: '新宿逛逛🛍️☕',
-          code: 'ShinjukuWalk',
-          lat: 35.6896,
-          lng: 139.7006,
-          type: 'shopping',
-          arriveTime: '10:40',
-          departTime: '12:50',
-          transport: '從豪德寺站搭乘小田急線 各站停車 回新宿站，步行至新宿三丁目/歌舞伎町',
-          detail: '新宿伊勢丹、小田急百貨、高島屋，新宿御苑外圍，年輕輕鬆街區。參考 Threads 美食地圖（@hck819 Part 1）：新宿地區甜點/咖啡廳，適合午茶與伴手禮',
-          cost: '自由消費',
-          day: 1
-        },
-        {
-          name: '人形町今半 壽喜燒午餐🥘',
-          code: 'ImahanSukiyaki',
-          lat: 35.6896,
-          lng: 139.7006,
-          type: 'restaurant',
-          arriveTime: '13:00',
-          departTime: '13:50',
-          transport: '從新宿站步行至新宿第一生命大樓',
-          detail: '人形町今半 新宿第一生命大樓店（百年壽喜燒老店，Google 地圖百名店）。【午餐限定】旬彩壽喜燒套餐：特上 80g ¥11,550 / 綜合拼盤 ¥13,310（12/30 前期間限定）。商業午餐，非吃到飽，建議提前訂位。',
-          cost: '約 ¥11,550-13,310 / 人',
-          day: 1
-        },
-        {
-          name: 'セントレービル婚紗店（試婚紗）⚠️ 待確認',
-          code: 'BridalTryOn',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'activity',
-          arriveTime: '14:00',
-          departTime: '16:00',
-          transport: '從新宿站搭乘 JR 山手線 至 日暮里站，步行至婚紗店',
-          detail: '下午試婚紗，預約婚紗店試穿。⚠️ セントレービル婚紗店尚無法於公開資料確認，請於出發前查證實際存在的婚紗店並預約試穿',
-          cost: '未確認',
-          day: 1
-        },
-        {
-          name: '秋葉原附近逛🎮（彈性）',
-          code: 'Akihabara',
-          lat: 35.6995,
-          lng: 139.7716,
-          type: 'shopping',
-          arriveTime: '16:30',
-          departTime: '18:30',
-          transport: '從日暮里站搭乘 JR 山手線 至 秋葉原站（約 15 分鐘）',
-          detail: '電氣街、動漫周邊、電玩店，夜晚霓虹燈景點，視體力與時間決定是否前往',
-          cost: '自由消費',
-          day: 1
-        },
-        {
-          name: '饗くろ喜 拉麵🍜',
-          code: 'Akakuroki',
-          lat: 35.6995,
-          lng: 139.7716,
-          type: 'restaurant',
-          arriveTime: '19:00',
-          departTime: '20:00',
-          transport: '從秋葉原站步行至拉麵店',
-          detail: 'Threads 美食地圖（@hck819 Part 1）拉麵百名店。秋葉原車站附近，試完婚紗後直接前往，不需額外移動',
-          cost: '約 ¥1,000-1,500 / 人',
-          day: 1
-        },
-        {
-          name: '和ごころ日暮里',
-          code: 'WagokoroNight',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'hotel',
-          arriveTime: '20:10',
-          departTime: '',
-          transport: '從秋葉原站搭乘 JR 山手線 至 日暮里站，步行返回旅館',
-          detail: '用餐完畢後返回旅館，準備就寢，為翌日 07:00 出發前往富士山婚紗攝影儲備體力',
-          cost: '免費（步行）',
-          day: 1
-        },
-        {
-          name: '和ごころ日暮里',
-          code: 'WagokoroNight',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'hotel',
-          arriveTime: '17:40',
-          departTime: '',
-          transport: '從晚餐步行返回',
-          detail: '用餐完畢後返回旅館，準備就寢，為翌日 07:00 出發前往富士山婚紗攝影儲備體力',
-          cost: '免費（步行）',
-          day: 1
-        }
-      ]
-    },
-    {
-      id: 2,
-      date: '12/03 (四)',
-      theme: '富士山婚紗攝影',
-      weather: '晴 5-12°C',
-      stations: [
-        {
-          name: '和ごころ日暮里',
-          code: 'Wagokoro',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'hotel',
-          arriveTime: '07:00',
-          departTime: '07:00',
-          transport: '從旅館出發前往富士山',
-          detail: '清晨從旅館出發，前往富士山婚紗攝影場地，保暖衣物必備',
-          cost: '',
-          day: 2
-        },
-        {
-          name: '日暮里站',
-          code: 'Nippori',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'transport',
-          arriveTime: '',
-          departTime: '07:15',
-          transport: 'JR 山手線內環線',
-          detail: '日暮里 → 新宿，約 25 分鐘，無需轉乘',
-          cost: '¥210 / 人',
-          day: 2
-        },
-        {
-          name: '新宿站',
-          code: 'Shinjuku',
-          lat: 35.6896,
-          lng: 139.7006,
-          type: 'transport',
-          arriveTime: '',
-          departTime: '07:45',
-          transport: 'JR 中央線 + 富士急行線',
-          detail: '新宿 → 大月 → 河口湖，約 1 小時 55 分鐘',
-          cost: '約 ¥2,250 / 人',
-          day: 2
-        },
-        {
-          name: '河口湖 / 精華湖',
-          code: 'Kawaguchiko',
-          lat: 35.5149,
-          lng: 138.7530,
-          type: 'location',
-          arriveTime: '09:40',
-          departTime: '17:00',
-          transport: '電巴士 / 租車',
-          detail: '富士山婚紗攝影全天，河口湖或精華湖取景，富士山為背景拍攝婚紗照',
-          cost: '¥10,000-20,000 / 人（電巴士）',
-          day: 2
-        },
-        { name: '和ごころ日暮里',
-          code: 'WagokoroReturn',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'transport',
-          arriveTime: '20:00',
-          departTime: '20:10',
-          transport: '電巴士返回東京',
-          detail: '攝影結束後返回日暮里站，約 20:00 抵達',
-          cost: '包含在電巴士費用',
-          day: 2
-        },
-        {
-          name: 'セントレービル婚紗店（拷貝資料）',
-          code: 'BridalCopy',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'activity',
-          arriveTime: '20:10',
-          departTime: '21:00',
-          transport: '從日暮里站步行至婚紗店',
-          detail: '拍完婚紗後回婚紗店，用 USB 扣取攝影資料並確認檔案完整性，預約下階段試穿或後製進度',
-          cost: '未確認',
-          day: 2
-        },
-        {
-          name: 'Kama Maru 居酒屋晚餐🍻',
-          code: 'KamaMaru',
-          lat: 35.7272,
-          lng: 139.7720,
-          type: 'restaurant',
-          arriveTime: '21:10',
-          departTime: '22:30',
-          transport: '從婚紗店步行至日暮里站前餐廳（約 2 分鐘）',
-          detail: '拷完資料後在日暮里站前 Kama Maru 居酒屋吃晚餐，補充體力。日暮里站步行 2 分鐘，可於 KKday 線上預約座位，約 ¥3,000-3,999 / 人',
-          cost: '約 ¥3,000-3,999 / 人',
-          day: 2
-        },
-        {
-          name: '和ごころ日暮里',
-          code: 'WagokoroNight',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'hotel',
-          arriveTime: '22:40',
-          departTime: '',
-          transport: '從餐廳步行返回旅館',
-          detail: '用餐完畢後返回旅館，準備就寢，為翌日東京市區遊做準備',
-          cost: '免費（步行）',
-          day: 2
-        }
-      ]
-    },
-    {
-      date: '12/04 (五)',
-      theme: '鎌倉・橫濱',
-      weather: '晴 10-15°C',
-      stations: [
-        {
-          name: '日暮里 → 鎌倉',
-          code: 'JR',
-          lat: 35.3176,
-          lng: 139.4596,
-          type: 'transport',
-          arriveTime: '09:20',
-          departTime: '08:15',
-          transport: 'JR 常磐線快速「上野東京ライン」直達鎌倉（或 山手線→品川→橫須賀線）',
-          detail: '從日暮里站搭乘 JR 常磐線快速「上野東京ライン」直達鎌倉站，約 1 小時（部份班次於大船站轉橫須賀線）；或 JR 山手線至品川轉橫須賀線，約 1 小時 15 分',
-          cost: '~¥1,000 / 人',
-          day: 3
-        },
-        {
-          name: '鶴岡八幡宮',
-          code: 'Tsurugaoka',
-          lat: 35.3274,
-          lng: 139.5395,
-          type: 'shrine',
-          arriveTime: '10:00',
-          departTime: '11:30',
-          transport: '從鎌倉站步行 10 分鐘',
-          detail: '鎌倉最重要的神社，參拜並祈求婚姻美滿，年輕情侶熱門拍照點',
-          cost: '免費',
-          day: 3
-        },
-        {
-          name: '小町通しらす丼午餐🍚',
-          code: 'KomachiShirasu',
-          lat: 35.3189,
-          lng: 139.5355,
-          type: 'restaurant',
-          arriveTime: '12:00',
-          departTime: '13:30',
-          transport: '步行',
-          detail: '鎌倉小町通美食街，品嚐江之島名物しらす丼（吻仔魚飯），推薦 Wasai Yakura Komachidori（約 ¥1,430 / 人），同時購買鎌倉名物伴手禮',
-          cost: '約 ¥1,430 / 人',
-          day: 3
-        },
-        {
-          name: '御成站',
-          code: 'Onari',
-          lat: 35.3167,
-          lng: 139.5430,
-          type: 'transport',
-          arriveTime: '13:50',
-          departTime: '',
-          transport: '江之島電鐵 鎌倉→御成',
-          detail: '從鎌倉站搭乘江之島電鐵至御成站，約 2 分鐘（御成站為江之電車站，並非 JR 車站）',
-          cost: '¥200 / 人（江之電）',
-          day: 3
-        },
-        {
-          name: '港未來',
-          code: 'MinatoMirai',
-          lat: 35.4565,
-          lng: 139.6350,
-          type: 'location',
-          arriveTime: '14:40',
-          departTime: '17:00',
-          transport: '江之島電鐵 御成→鎌倉，JR 橫須賀線 鎌倉→橫濱，みなとみらい線 橫濱→港未來',
-          detail: '從御成站搭乘江之島電鐵返回鎌倉站，轉乘 JR 橫須賀線至橫濱站，再轉乘 みなとみらい線至港未來站，欣賞海港夜景與橫濱摩天輪',
-          cost: 'JR+江之電 ~¥800 / 人',
-          day: 3
-        },
-        {
-          name: '赤レンガ倉庫聖誕市集🎄',
-          code: 'AkarengaXmas',
-          lat: 35.4437,
-          lng: 139.6398,
-          type: 'location',
-          arriveTime: '17:10',
-          departTime: '18:20',
-          transport: '從港未來站步行約 10-15 分鐘',
-          detail: '橫濱赤レンガ倉庫 Christmas Market 2026，逛免費區「Christmas Village」寶可夢燈飾與聖誕市集外圍（主會場門票 ¥500 起）',
-          cost: '免費區免費；主會場 ¥500 起',
-          day: 3
-        },
-        {
-          name: '中華街',
-          code: 'Chinatown',
-          lat: 35.4437,
-          lng: 139.6440,
-          type: 'restaurant',
-          arriveTime: '18:50',
-          departTime: '21:00',
-          transport: '步行 / みなとみらい線',
-          detail: '橫濱中華街晚餐（原 18:00 順延 50 分鐘），點選正宗廣東料理或上海小籠包',
-          cost: '¥5,000-8,000 / 人',
-          day: 3
-        },
-        {
-          name: '和ごころ日暮里',
-          code: 'Wagokoro',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'hotel',
-          arriveTime: '22:00',
-          departTime: '',
-          transport: 'JR 京濱東北線 / 山手線',
-          detail: '中華街 → 日暮里站 → 步行返回旅館',
-          cost: '~¥1,000 / 人（JR+地鐵）',
-          day: 3
-        }
-      ]
-    },
-    {
-      id: 4,
-      date: '12/05 (六)',
-      theme: '東京市區深度遊',
-      weather: '晴 10-16°C',
-      stations: [
-        {
-          name: '小網神社',
-          code: 'Komainami',
-          lat: 35.6892,
-          lng: 139.7737,
-          type: 'shrine',
-          arriveTime: '09:00',
-          departTime: '10:30',
-          transport: 'JR 山手線 日暮里→上野，轉地鐵日比谷線 上野→人形町（約 20 分鐘）',
-          detail: '強運厄除、洗錢儀式（錢幣清洗祈福），社務所 09:00-17:00 受理御守與御朱印。建議早上先到，避開人潮。',
-          cost: '免費 / 洗錢儀式 ¥100',
-          day: 4
-        },
-        {
-          name: '人形町／日本橋下町散步',
-          code: 'Ningyocho',
-          lat: 35.6860,
-          lng: 139.7760,
-          type: 'location',
-          arriveTime: '10:40',
-          departTime: '11:40',
-          transport: '從小網神社步行',
-          detail: '甘酒橫丁、人形町からくり櫓（每正時 11:00-19:00 演出）、日本橋五街道起點，下町懷舊氛圍',
-          cost: '免費',
-          day: 4
-        },
-        {
-          name: '東京站',
-          code: 'TokyoSta',
-          lat: 35.6812,
-          lng: 139.7671,
-          type: 'station',
-          arriveTime: '12:00',
-          departTime: '13:20',
-          transport: '從人形町站搭乘 東京メトロ日比谷線至東京站，紅磚車站建築拍照，丸之內地下街',
-          detail: '東京車站紅磚站房與丸之內地下街，午間逛街與拍照留念',
-          cost: '地鐵 ¥200 / 人',
-          day: 4
-        },
-        {
-          name: '東京站·丸之內仲通🎄',
-          code: 'MarunouchiXmas',
-          lat: 35.6758,
-          lng: 139.7630,
-          type: 'location',
-          arriveTime: '12:00',
-          departTime: '13:10',
-          transport: '從人形町站搭乘 東京メトロ日比谷線至東京站，丸之內南口出口步行約 5 分鐘',
-          detail: '1.2 公里的丸之內仲通，200 多棵樹全是香檳金燈飾，正對紅磚車站隨手拍都是大片。聖誕燈飾點亮至晚上。免費入場。',
-          cost: '免費入場',
-          day: 4
-        },
-        {
-          name: '叙々苑 銀座コリドー店',
-          code: 'Jojoen',
-          lat: 35.6712,
-          lng: 139.7620,
-          type: 'restaurant',
-          arriveTime: '13:30',
-          departTime: '15:20',
-          transport: '地鐵銀座站 / 東銀座站',
-          detail: '午間燒肉套餐（週六請確認店內午餐供應），CP值高，避免晚餐高價時段',
-          cost: '午餐 約 ¥3,500-4,000 / 人',
-          day: 4
-        },
-        {
-          name: '東京鐵塔',
-          code: 'TokyoTower',
-          lat: 35.6586,
-          lng: 139.7454,
-          type: 'location',
-          arriveTime: '15:40',
-          departTime: '17:10',
-          transport: '從銀座站搭乘 地鐵日比谷線 至 神谷町站，步行約 5 分鐘',
-          detail: '東京象徵性地標觀景台，看日落→夜景轉換，欣賞都市全景，觀景台咖啡廳可坐下休息',
-          cost: '大觀景台 ¥1,500 / 人（2026 年官方票價）',
-          day: 4
-        },
-        {
-          name: '台場彩虹煙火🎆（彈性，雨天取消）',
-          code: 'OdaibaFireworks',
-          lat: 35.6257,
-          lng: 139.7720,
-          type: 'food',
-          arriveTime: '17:50',
-          departTime: '19:10',
-          transport: '東京鐵塔 → 乘車前往台場（約 30-40 分鐘），視天氣與體力決定是否前往',
-          detail: '2026年12月5日（六）19:00 打上約 5 分鐘，約 1,300 發煙火，免費觀賞。雨天取消。如不順可跳過此站，直接前往銀座晚餐。',
-          cost: '免費觀賞',
-          day: 4
-        },
-        {
-          name: '銀座晚餐🍣🥩 鮨屋のうおきん 銀座店',
-          code: 'GinzaDinner',
-          lat: 35.6712,
-          lng: 139.7620,
-          type: 'restaurant',
-          arriveTime: '20:00',
-          departTime: '21:30',
-          transport: '從台場或東京鐵塔搭乘 計程車/地鐵 至銀座（約 30-40 分鐘），推薦銀座牛排或壽司，預約餐廳',
-          detail: '銀座地區晚餐🍣🥩，推薦魚金（鮨屋のうおきん）銀座店壽司或銀座牛排，預約餐廳',
-          cost: '約 ¥8,000-15,000 / 人',
-          day: 4
-        },
-        {
-          name: '和ごころ日暮里',
-          code: 'Wagokoro',
-          lat: 35.7265,
-          lng: 139.7730,
-          type: 'hotel',
-          arriveTime: '22:10',
-          departTime: '',
-          transport: '從銀座站搭乘 地鐵銀座線 / 日比谷線 → JR 山手線 日暮里站，步行返回旅館',
-          detail: '銀座 → 日暮里站 → 步行返回旅館，結束第 4 天行程，末班車緩衝充足',
-          cost: '~¥300 / 人（地鐵+JR）',
-          day: 4
-        }
-      ]
-    },
-    {
-      id: 5,
-      date: '12/06 (日)',
-      theme: '返程採買',
-      weather: '晴 8-14°C',
-      stations: [
-        {
-          name: '日暮里 → 池袋',
-          code: 'Yamanote',
-          lat: 35.7292,
-          lng: 139.7102,
-          type: 'transport',
-          arriveTime: '10:30',
-          departTime: '10:10',
-          transport: 'JR 山手線',
-          detail: '從日暮里站搭乘 JR 山手線至池袋站，約 20 分鐘',
-          cost: '~¥200 / 人',
-          day: 5
-        },
-        {
-          name: '池袋購物',
-          code: 'Ikebukuro',
-          lat: 35.7292,
-          lng: 139.7102,
-          type: 'shopping',
-          arriveTime: '11:00',
-          departTime: '15:30',
-          transport: '步行',
-          detail: '池袋西武、PARCO、Sunshine City 購物，Onitsuka Tiger、GoPro、Chanel 等',
-          cost: '自由消費',
-          day: 5
-        },
-        {
-          name: '巢鴨銅鑼燒',
-          code: 'Sugamo',
-          lat: 35.7358,
-          lng: 139.7314,
-          type: 'food',
-          arriveTime: '15:40',
-          departTime: '16:20',
-          transport: 'JR 山手線 2 站（經大塚）',
-          detail: '巢鴨地藏通り商店街，品嚐銅鑼燒與傳統和菓子',
-          cost: '¥500-1,000 / 人',
-          day: 5
-        },
-        {
-          name: '日暮里 → 成田機場',
-          code: 'SkylinerReturn',
-          lat: 35.7646,
-          lng: 140.3864,
-          type: 'transport',
-          arriveTime: '18:15',
-          departTime: '16:40',
-          transport: 'JR 山手線 巢鴨→日暮里（約 5 分鐘），轉乘 Skyliner 快速電車 日暮里→成田機場（約 36 分鐘）',
-          detail: '從巢鴨站搭乘 JR 山手線至日暮里站，轉乘 Skyliner 前往成田機場，約 18:15 抵達，留足國際線值機緩衝',
-          cost: '~¥3,000 / 人',
-          day: 5
-        },
-        {
-          name: '成田機場',
-          code: 'NRT',
-          lat: 35.7646,
-          lng: 140.3864,
-          type: 'airport',
-          arriveTime: '',
-          departTime: '19:55',
-          transport: '國際航班 → 桃園 (TPE)',
-          detail: '18:15 抵達成田機場，約 95 分鐘值機緩衝，19:55 起飛，23:10 抵達桃園機場',
-          cost: '機票含機票總價',
-          day: 5
-        }
-      ]
+  var IT = window.ITINERARY || [];
+  var NAV = window.NAV || [];
+
+  var TYPE_LABELS = {
+    airport: '機場', hotel: '住宿', transport: '交通', location: '景點',
+    shrine: '神社', station: '車站', shopping: '購物', temple: '寺院',
+    restaurant: '餐廳', food: '美食', activity: '活動'
+  };
+  var TYPE_COLORS = {
+    airport: '#b55444', hotel: '#5a725c', transport: '#b55444',
+    location: '#3498db', shrine: '#b58344', station: '#8a7d73',
+    shopping: '#2c3e50', temple: '#b58344', restaurant: '#2ecc71',
+    food: '#f1c40f', activity: '#8a7d73'
+  };
+
+  var ICONS = {
+    home: '<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/>',
+    list: '<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/>',
+    map: '<polygon fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="3 6 12 2 21 6 12 23 3 6"/>',
+    budget: '<line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>',
+    info: '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>'
+  };
+
+  function esc(t) {
+    if (t === null || t === undefined) return '';
+    return String(t)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  }
+  function svg(name) { return '<svg viewBox="0 0 24 24">' + (ICONS[name] || ICONS.info) + '</svg>'; }
+  function findDay(id) { return IT.find(function (d) { return d.id === id; }); }
+  function currentFile() { var p = location.pathname.split('/').pop(); return p || 'index.html'; }
+  function stationTime(s) { return s.arriveTime || s.departTime || '--:--'; }
+  function stationTimeWord(s) { return s.arriveTime ? '抵達' : (s.departTime ? '出發' : '—'); }
+
+  function detectToday() {
+    var t = new Date();
+    var key = (t.getMonth() + 1) + '/' + t.getDate();
+    var map = { '12/2': 1, '12/3': 2, '12/4': 3, '12/5': 4, '12/6': 5 };
+    return map[key];
+  }
+
+  // ---- 共用：單一旅程站點卡片（首頁 / 每日頁）----
+  function stationItemHTML(s) {
+    var color = TYPE_COLORS[s.type] || '#8a7d73';
+    var cost = (s.cost && String(s.cost).trim()) ? '<div class="station-cost">💰 ' + esc(s.cost) + '</div>' : '';
+    return '' +
+      '<div class="station-item">' +
+        '<div class="station-time">' + esc(stationTime(s)) + '</div>' +
+        '<div class="station-info">' +
+          '<div class="station-name">' + esc(s.name) + '</div>' +
+          '<div class="station-transport" style="color:' + color + '">' + esc(TYPE_LABELS[s.type] || '站點') + ' · ' + esc(s.transport) + '</div>' +
+          '<div class="station-detail">' + esc(s.detail) + '</div>' +
+          cost +
+        '</div>' +
+      '</div>';
+  }
+
+  // ---- 導覽（桌機 + 手機共用一份 NAV）----
+  function navActive(href) {
+    var f = currentFile();
+    if (href === 'itinerary.html') return f === 'itinerary.html' || /^day[1-5]\.html$/.test(f);
+    if (href === 'info.html') return f === 'info.html' || f === 'tax-refund.html';
+    return f === href;
+  }
+  function renderNav() {
+    var root = document.getElementById('nav-root');
+    if (!root) return;
+    var top = '<nav class="top-nav" aria-label="主要導覽">';
+    var bot = '<nav class="bottom-nav" aria-label="主要導覽">';
+    NAV.forEach(function (item) {
+      var active = navActive(item.href) ? ' active' : '';
+      top += '<a href="' + item.href + '" class="top-nav__link' + active + '">' + esc(item.label) + '</a>';
+      bot += '<a href="' + item.href + '" class="nav-item' + active + '" aria-label="' + esc(item.label) + '">' +
+             svg(item.icon) + '<span class="label">' + esc(item.label) + '</span></a>';
+    });
+    top += '</nav>';
+    bot += '</nav>';
+    root.innerHTML = top + bot;
+  }
+
+  // ---- 首頁 ----
+  function renderHome() {
+    var root = document.getElementById('home-root');
+    if (!root) return;
+    var todayNum = detectToday();
+    var html = '';
+
+    html += '<header class="hero hero--compact">' +
+              '<span class="tag tag--small">東京婚紗之旅 2026</span>' +
+              '<h1>五日行程總覽</h1>' +
+              '<p class="hero--sub">' + esc(IT.map(function (d) { return d.date + ' ' + d.theme; }).join(' → ')) + '</p>' +
+            '</header>';
+
+    // 每日快速入口
+    html += '<section class="card"><h3 class="section-title">🗓️ 快速前往每日行程</h3><div class="day-quicknav">';
+    IT.forEach(function (d) {
+      html += '<a class="chip" href="day' + d.id + '.html">' +
+                '<strong>Day ' + d.id + '</strong>' +
+                '<span>' + esc(d.date) + '</span>' +
+                '<span class="chip__theme">' + esc(d.theme) + '</span>' +
+              '</a>';
+    });
+    html += '</div></section>';
+
+    // 今日行程
+    html += '<section class="card card--today" aria-label="今日行程"><h3 class="section-title">📅 今日行程</h3>';
+    if (todayNum) {
+      var t = findDay(todayNum);
+      html += '<div class="today-day-badge">今天是第 ' + todayNum + ' 天</div><div class="today-stations">';
+      t.stations.forEach(function (s) {
+        var color = TYPE_COLORS[s.type] || '#8a7d73';
+        html += '<div class="today-station">' +
+                  '<div class="today-time">' + esc(stationTime(s)) + '</div>' +
+                  '<div class="today-info"><div class="today-name">' + esc(s.name) + '</div>' +
+                  '<div class="today-type" style="background:' + color + '20;color:' + color + '">' + esc(TYPE_LABELS[s.type] || '站點') + '</div>' +
+                  (s.cost ? '<div class="today-cost">💰 ' + esc(s.cost) + '</div>' : '') +
+                  '</div></div>';
+      });
+      html += '</div>';
+    } else {
+      html += '<p style="text-align:center;color:var(--color-text-muted);padding:var(--space-4) 0;">行程期間為 12/02–12/06，今日無行程安排。</p>';
     }
-  ];
-const itinerary = window.itinerary;
+    html += '</section>';
 
-// ============================================================
-  // 資料結構規範（AX / DX）與驗證
-  // 每個 station 必須包含：name, code, lat, lng, type, transport, detail, day
-  // 可選：arriveTime, departTime, cost
-  // ============================================================
-  const STATION_TYPES = [
-    'airport', 'hotel', 'transport', 'location', 'shrine',
-    'station', 'shopping', 'temple', 'restaurant', 'food'
-  ];
+    // 五日詳情
+    html += '<section class="card card--all-days" aria-label="五日行程詳情"><h3 class="section-title">🗺️ 五日行程詳情</h3>';
+    IT.forEach(function (d) {
+      var isToday = todayNum === d.id;
+      html += '<div class="day-section" id="day-' + d.id + '">';
+      html += '<div class="day-header">' +
+                '<span class="day-badge' + (isToday ? ' today-badge' : '') + '">Day ' + d.id + (isToday ? ' · 今天' : '') + '</span>' +
+                '<span class="day-date">' + esc(d.date) + '</span>' +
+                '<h2 class="day-title">' + esc(d.theme) + '</h2>' +
+                '<p class="day-weather">🌤️ ' + esc(d.weather || '') + '</p>' +
+              '</div>';
+      html += '<div class="day-stations">' + d.stations.map(stationItemHTML).join('') + '</div>';
+      html += '<a class="btn btn-outline" style="margin-top:var(--space-3);" href="day' + d.id + '.html">查看 Day ' + d.id + ' 完整頁面（地圖・交通・附近景點）→</a>';
+      html += '</div>';
+    });
+    html += '</section>';
 
-  function validateItinerary(data) {
-    const errors = [];
-    const warnings = [];
+    // 預算摘要
+    html += '<section class="card" aria-label="預算摘要"><h3 class="section-title">💰 預算摘要（雙人，本地）</h3><div class="budget-grid">' +
+              budgetItem('本地交通', '約 ¥30,000–45,000', 'Skyliner、JR、地鐵、江之電、湘南單軌') +
+              budgetItem('餐飲（5 天）', '約 ¥30,000–50,000', '含叙々苑、中華街、銀座晚餐') +
+              budgetItem('門票與活動', '約 ¥5,000–10,000', '東京鐵塔、陽光60、鎌倉大佛') +
+              budgetItem('建議票券', 'Suica / Pasmo', '比 JR Pass 更彈性划算') +
+            '</div></section>';
 
-    if (!Array.isArray(data)) {
-      errors.push('itinerary 必須是陣列');
-      return { errors, warnings };
-    }
+    root.innerHTML = html;
+  }
+  function budgetItem(label, value, note) {
+    return '<div class="budget-item"><div class="budget-label">' + esc(label) + '</div>' +
+           '<div class="budget-value">' + esc(value) + '</div>' +
+           '<div class="budget-note">' + esc(note) + '</div></div>';
+  }
 
-    data.forEach((day, dayIdx) => {
-      const dayNum = dayIdx + 1;
+  // ---- 行程頁（互動時間軸）----
+  function renderItinerary() {
+    var root = document.getElementById('itinerary-root');
+    if (!root) return;
+    root.innerHTML =
+      '<header class="hero hero--compact">' +
+        '<span class="tag tag--small">五日行程總覽</span>' +
+        '<h1>行程時間軸</h1>' +
+        '<p class="hero--sub">點選任一天查看該日詳細行程，或切換至地圖查看景點位置。</p>' +
+      '</header>' +
+      '<section class="card card--date-nav" aria-label="五日行程日期導覽">' +
+        '<div class="date-nav-header"><h2 class="date-nav-title">📅 五日行程日期導覽</h2><span class="date-nav-hint">橫向滑動查看更多天數</span></div>' +
+        '<div class="date-scroll"><div class="date-scroll-track" id="date-track"></div></div>' +
+      '</section>' +
+      '<section class="card card--itinerary" aria-label="當日行程詳情">' +
+        '<div class="day-header" id="it-day-header"></div>' +
+        '<div class="station-list" id="it-station-list"></div>' +
+      '</section>' +
+      '<section class="card card--transport" aria-label="當日交通資訊">' +
+        '<h2 class="section-title">🚂 今日交通資訊</h2>' +
+        '<div class="transport-list" id="it-transport"></div>' +
+      '</section>';
 
-      if (!day.id || typeof day.id !== 'number') {
-        errors.push(`Day ${dayNum}: 缺少 id 欄位`);
-      }
-      if (!day.date) {
-        errors.push(`Day ${dayNum}: 缺少 date 欄位`);
-      }
-      if (!day.theme) {
-        errors.push(`Day ${dayNum}: 缺少 theme 欄位`);
-      }
-      if (!day.weather) {
-        warnings.push(`Day ${dayNum}: 建議補充 weather 欄位`);
-      }
+    var track = document.getElementById('date-track');
+    var header = document.getElementById('it-day-header');
+    var list = document.getElementById('it-station-list');
+    var transport = document.getElementById('it-transport');
 
-      if (!Array.isArray(day.stations)) {
-        errors.push(`Day ${dayNum}: stations 必須是陣列`);
-        return;
-      }
+    track.innerHTML = IT.map(function (d, i) {
+      return '<button class="date-card' + (i === 0 ? ' active' : '') + '" type="button" role="option" aria-selected="' + (i === 0) + '" data-day="' + d.id + '">' +
+               '<div class="date-card-day">Day ' + d.id + '</div>' +
+               '<div class="date-card-date">' + esc(d.date) + '</div>' +
+               '<div class="date-card-theme">' + esc(d.theme) + '</div>' +
+               '<div class="date-card-count">' + d.stations.length + ' 個站點</div>' +
+             '</button>';
+    }).join('');
 
-      day.stations.forEach((station, stationIdx) => {
-        const stationLabel = `Day ${dayNum} 站點 ${stationIdx + 1}`;
-
-        if (!station.name) {
-          errors.push(`${stationLabel}: 缺少 name 欄位`);
-        }
-        if (!station.code) {
-          warnings.push(`${stationLabel}: 建議補充 code 欄位`);
-        }
-        if (typeof station.lat !== 'number' || typeof station.lng !== 'number') {
-          errors.push(`${stationLabel}: lat/lng 必須是數字`);
-        }
-        if (!STATION_TYPES.includes(station.type)) {
-          warnings.push(`${stationLabel}: type "${station.type}" 不在規範內 ${STATION_TYPES.join(', ')}`);
-        }
-        if (!station.transport) {
-          warnings.push(`${stationLabel}: 建議補充 transport 欄位`);
-        }
-        if (!station.detail) {
-          warnings.push(`${stationLabel}: 建議補充 detail 欄位`);
-        }
-        if (!station.day) {
-          station.day = day.id;
-        }
+    function renderDayDetail(id) {
+      var d = findDay(id);
+      if (!d) return;
+      Array.prototype.forEach.call(track.querySelectorAll('.date-card'), function (c) {
+        var on = parseInt(c.getAttribute('data-day'), 10) === id;
+        c.classList.toggle('active', on);
+        c.setAttribute('aria-selected', on);
       });
-    });
+      header.innerHTML =
+        '<div class="day-meta"><span class="day-badge">Day ' + d.id + '</span><span class="day-date">' + esc(d.date) + '</span></div>' +
+        '<h1 class="day-title">' + esc(d.theme) + '</h1>' +
+        '<p class="day-summary">' + d.stations.length + ' 個行程站點 · ' + esc(d.weather || '') + '</p>';
+      list.innerHTML = d.stations.map(function (s, idx) {
+        var color = TYPE_COLORS[s.type] || '#8a7d73';
+        var hasCost = s.cost && String(s.cost).trim();
+        var detail = '';
+        if (s.transport) detail += '<div class="detail-row"><span class="detail-label">🚇 交通方式</span><span class="detail-value">' + esc(s.transport) + '</span></div>';
+        if (hasCost) detail += '<div class="detail-row detail-row--cost"><span class="detail-label">💰 預估費用</span><span class="detail-value cost-value">' + esc(s.cost) + '</span></div>';
+        if (s.detail) detail += '<div class="detail-row"><span class="detail-label">📝 詳細說明</span><span class="detail-value detail-value--text">' + esc(s.detail) + '</span></div>';
+        return '<div class="station-card">' +
+          '<button class="station-toggle" type="button" aria-expanded="false">' +
+            '<div class="station-row">' +
+              '<div class="station-time"><span class="station-time-val">' + esc(stationTime(s)) + '</span><span class="station-time-label">' + stationTimeWord(s) + '</span></div>' +
+              '<div class="station-main"><span class="station-type-pill" style="background:' + color + '20;color:' + color + '">' + esc(TYPE_LABELS[s.type] || '站點') + '</span><h3 class="station-name">' + esc(s.name) + '</h3></div>' +
+              '<svg class="station-chevron" viewBox="0 0 24 24" width="18" height="18"><polyline points="6 9 12 15 18 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+            '</div>' +
+            '<div class="station-detail-panel" hidden>' + detail + '</div>' +
+          '</button></div>';
+      }).join('');
 
-    return { errors, warnings };
-  }
-
-  // 執行驗證（開發時可見，生產環境靜默）
-  const validation = validateItinerary(itinerary);
-  if (validation.errors.length > 0) {
-    console.error('[Itinerary 驗證失敗]', validation.errors);
-  }
-  if (validation.warnings.length > 0) {
-    console.warn('[Itinerary 警告]', validation.warnings);
-  }
-
-  // ============================================================
-  // 初始化：產生時間軸、地圖、日程卡片、交通表
-  // ============================================================
-  function initTimeline() {
-    const container = document.getElementById('timeline-container');
-    if (!container) return;
-
-    let html = '<div class="timeline-points">';
-    itinerary.forEach((day, i) => {
-      const isActive = i === 0 ? 'active' : '';
-      html += `
-        <div class="timeline-point ${isActive}"
-             role="button"
-             tabindex="0"
-             aria-label="前往 ${day.date} - ${day.theme}"
-             data-day="${day.id}">
-          <div class="point-number">${i + 1}</div>
-          <div class="point-label">${day.date}</div>
-        </div>
-      `;
-    });
-    html += '</div>';
-    container.innerHTML = html;
-
-    // 綁定點擊事件
-    document.querySelectorAll('.timeline-point').forEach((point, i) => {
-      point.addEventListener('click', () => activateDay(i + 1));
-      point.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          activateDay(i + 1);
-        }
-      });
-    });
-  }
-
-  function initMap() {
-    const mapContainer = document.getElementById('map-container');
-    const legendContainer = document.getElementById('map-legend');
-    if (!mapContainer || !legendContainer) return;
-
-    // 初始化 Leaflet 地圖（中心點約在東京附近）
-    const map = L.map('map-container', {
-      center: [35.68, 139.70],
-      zoom: 8,
-      zoomControl: true,
-      touchZoom: true,
-      scrollWheelZoom: false
-    });
-
-    // 加入 OpenStreetMap 圖磚（免費，無需 API Key）
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-      maxZoom: 13
-    }).addTo(map);
-
-    // 存放每日路線圖層與標記
-    const dayLayers = {};
-    const markers = {};
-
-    // 地圖圖例顏色
-    const typeColors = {
-      airport: '#e74c3c',
-      hotel: '#27ae60',
-      transport: '#d1495b',
-      location: '#3498db',
-      shrine: '#f39c12',
-      station: '#95a5a6',
-      shopping: '#2c3e50',
-      temple: '#f39c12',
-      restaurant: '#2ecc71',
-      food: '#f1c40f'
-    };
-
-    const typeLabels = {
-      airport: '機場', hotel: '住宿', transport: '交通', location: '景點',
-      shrine: '神社', station: '車站', shopping: '購物', temple: '寺院',
-      restaurant: '餐廳', food: '美食'
-    };
-
-    // 建立每日路線與標記
-    itinerary.forEach((day, dayIdx) => {
-      const lineColor = dayIdx % 2 === 0 ? '#d1495b' : '#3498db';
-      const latlngs = [];
-      const dayMarkers = [];
-
-      day.stations.forEach(station => {
-        const latlng = [station.lat, station.lng];
-        latlngs.push(latlng);
-
-        // 建立標記
-        const markerColor = typeColors[station.type] || '#d1495b';
-        const marker = L.circleMarker(latlng, {
-          radius: 8,
-          fillColor: markerColor,
-          color: '#ffffff',
-          weight: 2,
-          opacity: 1,
-          fillOpacity: 0.9
-        });
-
-        // Popup 內容（包含四個資訊欄位）
-        const popupContent = `
-          <div style="min-width: 200px;">
-            <h4 style="margin:0 0 6px 0; color: var(--accent); font-size: 0.95rem;">
-              ${station.name}
-            </h4>
-            <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 4px;">
-              ${station.arriveTime || station.departTime || '--:--'}
-              ${station.transport ? '<br>' + station.transport : ''}
-            </div>
-            <div style="font-size: 0.8rem; color: var(--fg); margin-bottom: 4px;">
-              ${station.detail}
-            </div>
-            ${station.cost ? `<div style="font-size: 0.8rem; color: var(--success); font-weight: 600;">💰 ${station.cost}</div>` : ''}
-          </div>
-        `;
-
-        marker.bindPopup(popupContent);
-        marker.on('click', () => activateDay(station.day));
-        marker.addTo(map);
-        dayMarkers.push(marker);
-        markers[station.name + station.day] = marker;
-      });
-
-      // 建立路線線條
-      if (latlngs.length > 1) {
-        const polyline = L.polyline(latlngs, {
-          color: lineColor,
-          weight: 3,
-          opacity: 0.8,
-          dashArray: '8, 8'
-        }).addTo(map);
-        dayLayers[day.id] = { polyline, markers: dayMarkers };
-      } else {
-        dayLayers[day.id] = { polyline: null, markers: dayMarkers };
-      }
-    });
-
-    // 顯示指定天數的地圖圖層
-    window.showDayOnMap = function(dayNum) {
-      Object.entries(dayLayers).forEach(([dayId, layer]) => {
-        const isActive = parseInt(dayId) === dayNum;
-        if (layer.polyline) {
-          isActive ? layer.polyline.addTo(map) : map.removeLayer(layer.polyline);
-          layer.polyline.setStyle(isActive ? { opacity: 0.8 } : { opacity: 0.2 });
-        }
-        layer.markers.forEach(m => {
-          isActive ? m.setStyle({ radius: 8, opacity: 1 }) : m.setStyle({ radius: 5, opacity: 0.4 });
+      // 展開/收合
+      Array.prototype.forEach.call(list.querySelectorAll('.station-toggle'), function (btn) {
+        btn.addEventListener('click', function () {
+          var panel = btn.querySelector('.station-detail-panel');
+          var chev = btn.querySelector('.station-chevron');
+          var open = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!open));
+          panel.hidden = open;
+          if (chev) chev.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
         });
       });
 
-      // 地圖中心移到當天第一個站點
-      const firstDay = itinerary.find(d => d.id === dayNum);
-      if (firstDay && firstDay.stations[0]) {
-        map.setView([firstDay.stations[0].lat, firstDay.stations[0].lng], 10, { animate: true, duration: 1 });
-      }
-    };
-
-    // 地圖圖例
-    let legendHtml = '<div class="legend-title">圖例</div>';
-    Object.entries(typeColors).forEach(([type, color]) => {
-      legendHtml += `
-        <div class="legend-item">
-          <span class="legend-dot" style="background: ${color}"></span>
-          <span class="legend-text">${typeLabels[type]}</span>
-        </div>
-      `;
-    });
-    legendContainer.innerHTML = legendHtml;
-
-    // 初始顯示第 1 天
-    setTimeout(() => window.showDayOnMap(1), 100);
-  }
-
-  function initDayCards() {
-    const container = document.getElementById('day-grid');
-    if (!container) return;
-
-    let html = '';
-    itinerary.forEach((day, i) => {
-      const isActive = i === 0 ? 'active' : '';
-      html += `
-        <div class="day-card ${isActive} delay-${i + 1}" data-day="${day.id}" id="day-card-${day.id}">
-          <div class="day-header">
-            <span class="day-badge">${day.date}</span>
-            <h3>${day.theme}</h3>
-            <span class="weather-badge">🌤️ ${day.weather}</span>
-          </div>
-          <div class="day-stations">
-            ${day.stations.map(station => `
-              <div class="station-item" data-station="${station.name}">
-                <div class="station-time">${station.arriveTime || station.departTime || '--:--'}</div>
-                <div class="station-info">
-                  <div class="station-name">${station.name}</div>
-                  <div class="station-transport">${station.transport}</div>
-                  <div class="station-detail">${station.detail}</div>
-                  ${station.cost ? `<div class="station-cost">💰 ${station.cost}</div>` : ''}
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `;
-    });
-    container.innerHTML = html;
-  }
-
-  function initTransportTable() {
-    const tbody = document.getElementById('transport-table-body');
-    if (!tbody) return;
-
-    let html = '';
-    const seen = new Set();
-    itinerary.forEach(day => {
-      day.stations.forEach(station => {
-        if (station.type === 'transport' && !seen.has(station.name)) {
-          seen.add(station.name);
-          html += `\n            <tr data-day="${day.id}">
-              <td>${day.date}</td>
-              <td>${station.name}</td>
-              <td>${station.transport}</td>
-              <td>${station.cost || '-'}</td>
-            </tr>
-          `;
+      // 交通卡片
+      var seen = {};
+      var tHTML = '';
+      d.stations.forEach(function (s) {
+        if (s.type === 'transport' && !seen[s.name]) {
+          seen[s.name] = true;
+          tHTML += '<div class="transport-card">' +
+                     '<div class="transport-from-to"><span class="transport-time">' + esc(stationTime(s)) + '</span><span class="transport-name">' + esc(s.name) + '</span></div>' +
+                     '<div class="transport-detail">' + esc(s.transport) + '</div>' +
+                     (s.cost ? '<div class="transport-cost">💰 ' + esc(s.cost) + '</div>' : '') +
+                   '</div>';
         }
       });
-    });
-    tbody.innerHTML = html;
-
-    // 自動將所有 schedule-table 包入 .table-wrap，支援行動裝置橫向滾動
-    document.querySelectorAll('table.schedule-table').forEach(table => {
-      if (!table.parentElement.classList.contains('table-wrap')) {
-        const wrap = document.createElement('div');
-        wrap.className = 'table-wrap';
-        table.parentNode.insertBefore(wrap, table);
-        wrap.appendChild(table);
-      }
-    });
-  }
-
-  // ============================================================
-  // 當天切換邏輯
-  // ============================================================
-  function activateDay(dayNum) {
-    // 派發狀態機變更事件（AX / DX：讓外部監聽器可響應日程切換）
-    const event = new CustomEvent('daychange', {
-      detail: { dayNum, day: itinerary.find(d => d.id === dayNum) },
-      bubbles: true,
-      cancelable: true
-    });
-    document.dispatchEvent(event);
-
-    // 時間軸點擊
-    document.querySelectorAll('.timeline-point').forEach((p, i) => {
-      if (i + 1 === dayNum) {
-        p.classList.add('active');
-        p.setAttribute('aria-selected', 'true');
-      } else {
-        p.classList.remove('active');
-        p.setAttribute('aria-selected', 'false');
-      }
-    });
-
-    // 日程卡片切換
-    document.querySelectorAll('.day-card').forEach(card => {
-      if (parseInt(card.getAttribute('data-day')) === dayNum) {
-        card.classList.add('active');
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } else {
-        card.classList.remove('active');
-      }
-    });
-
-    // 地圖路線與站點高亮（Leaflet）
-    if (typeof window.showDayOnMap === 'function') {
-      window.showDayOnMap(dayNum);
+      transport.innerHTML = tHTML || '<p class="empty-msg">今日無交通移動安排</p>';
     }
 
-    // 交通表切換
-    document.querySelectorAll('#transport-table-body tr').forEach(row => {
-      if (parseInt(row.getAttribute('data-day')) === dayNum) {
-        row.style.display = '';
-        row.style.animation = 'fadeIn 0.3s ease';
-      } else {
-        row.style.display = 'none';
-      }
+    Array.prototype.forEach.call(track.querySelectorAll('.date-card'), function (card) {
+      card.addEventListener('click', function () { renderDayDetail(parseInt(card.getAttribute('data-day'), 10)); });
     });
+    renderDayDetail(IT[0] ? IT[0].id : 1);
   }
 
-  // ============================================================
-  // 主題切換
-  // ============================================================
-  function initThemeToggle() {
-    const toggle = document.getElementById('themeToggle');
+  // ---- 每日頁 ----
+  function renderDay() {
+    var root = document.getElementById('day-root');
+    if (!root) return;
+    var id = parseInt(root.getAttribute('data-day'), 10);
+    var d = findDay(id);
+    if (!d) { root.innerHTML = '<p style="text-align:center;padding:var(--space-8) 0;">找不到此行程。</p>'; return; }
+    var idx = IT.indexOf(d);
+    var prev = IT[idx - 1];
+    var next = IT[idx + 1];
+    var route = d.stations.map(function (s) { return s.name; }).join(' → ');
+
+    var html = '';
+    html += '<a href="index.html" class="btn btn-outline" style="margin-bottom:var(--space-4);display:inline-flex;align-items:center;gap:var(--space-2);"><span style="font-size:var(--text-xs);">← 回總覽</span></a>';
+    html += '<header class="hero"><span class="tag">' + esc(d.date) + ' · Day ' + d.id + '</span><h1>' + esc(d.theme) + '</h1><p>' + esc(route) + '</p></header>';
+
+    html += '<section class="card" aria-label="當天詳細行程"><h3>📋 當天詳細行程</h3><div class="day-stations">' + d.stations.map(stationItemHTML).join('') + '</div></section>';
+
+    // 交通表
+    html += '<section class="card" aria-label="當天交通詳情"><h3>🚂 當天交通詳情</h3><div class="table-wrap"><table class="schedule-table"><thead><tr><th>站點</th><th>交通方式</th><th>時間</th><th>費用（雙人/人）</th></tr></thead><tbody>';
+    d.stations.forEach(function (s) {
+      if (s.type === 'transport') {
+        html += '<tr><td>' + esc(s.name) + '</td><td>' + esc(s.transport) + '</td><td>' + esc(stationTime(s)) + '</td><td>' + esc(s.cost || '-') + '</td></tr>';
+      }
+    });
+    html += '</tbody></table></div></section>';
+
+    // 地圖
+    html += '<section class="card" aria-label="當天路線圖"><h3>🗺️ 當天路線圖</h3><p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-3);">👆 手指可縮放、拖動地圖；點擊站點查看細節</p><div class="map-wrapper"><div id="map-container"></div></div></section>';
+
+    // 附近景點
+    if (d.nearby && d.nearby.length) {
+      html += '<section class="card" aria-label="附近熱門景點"><h3>📍 附近熱門景點</h3><ul class="nearby-list">' +
+              d.nearby.map(function (item) { return '<li>' + item + '</li>'; }).join('') +
+              '</ul></section>';
+    }
+
+    // 上一天 / 下一天
+    html += '<nav class="day-pager" aria-label="行程切換">';
+    html += prev ? '<a class="day-pager__link day-pager__link--prev" href="day' + prev.id + '.html"><span>← Day ' + prev.id + '</span><strong>' + esc(prev.theme) + '</strong></a>' : '<span></span>';
+    html += next ? '<a class="day-pager__link day-pager__link--next" href="day' + next.id + '.html"><span>Day ' + next.id + ' →</span><strong>' + esc(next.theme) + '</strong></a>' : '<span></span>';
+    html += '</nav>';
+
+    root.innerHTML = html;
+    drawDayMap(d);
+  }
+
+  // ---- 地圖頁（全 5 天）----
+  function renderMapPage() {
+    var root = document.getElementById('map-root');
+    if (!root) return;
+    root.innerHTML =
+      '<header class="hero"><span class="tag">行程地圖</span><h1>景點位置</h1><p>點選地圖標記查看該站點資訊。</p></header>' +
+      '<section class="card" aria-label="地圖"><h3>🗺️ 全部行程地圖</h3>' +
+        '<div class="map-wrapper"><div id="map-container"></div><div class="map-legend" id="map-legend"></div></div>' +
+        '<p style="margin-top:var(--space-3);font-size:var(--text-xs);color:var(--color-text-muted);">地圖資料來自 OpenStreetMap。</p>' +
+      '</section>';
+    drawFullMap();
+  }
+
+  // ---- Leaflet 繪圖 ----
+  function drawDayMap(d) {
+    var L = window.L;
+    var el = document.getElementById('map-container');
+    if (!el) return;
+    if (!L) { el.innerHTML = '<p style="padding:var(--space-4);text-align:center;color:var(--color-text-muted);">地圖載入失敗（無法連線 Leaflet）。</p>'; return; }
+    var map = L.map(el, { center: [35.68, 139.7], zoom: 10, touchZoom: true, scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors', maxZoom: 18 }).addTo(map);
+    var latlngs = [];
+    d.stations.forEach(function (s) {
+      if (typeof s.lat !== 'number' || typeof s.lng !== 'number') return;
+      var ll = [s.lat, s.lng];
+      latlngs.push(ll);
+      L.circleMarker(ll, { radius: 7, fillColor: TYPE_COLORS[s.type] || '#b55444', color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.9 })
+        .bindPopup(popupHTML(s)).addTo(map);
+    });
+    if (latlngs.length > 1) {
+      L.polyline(latlngs, { color: '#b55444', weight: 3, opacity: 0.6, dashArray: '6,6' }).addTo(map);
+      map.fitBounds(latlngs, { padding: [50, 50] });
+    }
+  }
+
+  function drawFullMap() {
+    var L = window.L;
+    var el = document.getElementById('map-container');
+    var legend = document.getElementById('map-legend');
+    if (!el) return;
+    if (!L) { el.innerHTML = '<p style="padding:var(--space-4);text-align:center;color:var(--color-text-muted);">地圖載入失敗（無法連線 Leaflet）。</p>'; return; }
+    var map = L.map(el, { center: [35.68, 139.7], zoom: 8, touchZoom: true, scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors', maxZoom: 18 }).addTo(map);
+    var colors = ['#b55444', '#3498db', '#5a725c', '#b58344', '#8a7d73'];
+    IT.forEach(function (d, i) {
+      var latlngs = [];
+      d.stations.forEach(function (s) {
+        if (typeof s.lat !== 'number' || typeof s.lng !== 'number') return;
+        var ll = [s.lat, s.lng];
+        latlngs.push(ll);
+        L.circleMarker(ll, { radius: 7, fillColor: TYPE_COLORS[s.type] || '#b55444', color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.9 })
+          .bindPopup('<b>Day ' + d.id + '</b><br>' + popupHTML(s)).addTo(map);
+      });
+      if (latlngs.length > 1) L.polyline(latlngs, { color: colors[i % colors.length], weight: 3, opacity: 0.7, dashArray: '8,8' }).addTo(map);
+    });
+    if (legend) {
+      var lh = '<div class="legend-title">圖例</div>';
+      Object.keys(TYPE_LABELS).forEach(function (type) {
+        lh += '<div class="legend-item"><span class="legend-dot" style="background:' + (TYPE_COLORS[type] || '#888') + '"></span><span class="legend-text">' + esc(TYPE_LABELS[type]) + '</span></div>';
+      });
+      legend.innerHTML = lh;
+    }
+  }
+
+  function popupHTML(s) {
+    var color = TYPE_COLORS[s.type] || '#b55444';
+    return '<div style="min-width:190px;">' +
+      '<div style="font-weight:600;color:var(--color-text-primary);margin-bottom:4px;">' + esc(s.name) + '</div>' +
+      '<div style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:4px;">' + esc(stationTime(s)) + ' · ' + esc(s.transport) + '</div>' +
+      '<div style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.4;">' + esc(s.detail) + '</div>' +
+      (s.cost ? '<div style="font-size:var(--text-sm);font-weight:600;color:var(--color-success);margin-top:4px;">💰 ' + esc(s.cost) + '</div>' : '') +
+      '</div>';
+  }
+
+  // ---- 主題切換 ----
+  function initTheme() {
+    var toggle = document.getElementById('themeToggle');
     if (!toggle) return;
-
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    function updateToggle(isDark) {
+    var sun = toggle.querySelector('.sun');
+    var moon = toggle.querySelector('.moon');
+    function apply(isDark) {
       if (isDark) {
         document.documentElement.setAttribute('data-theme', 'dark');
-        toggle.querySelector('.sun').style.display = 'none';
-        toggle.querySelector('.moon').style.display = 'inline';
-        toggle.setAttribute('aria-pressed', 'true');
+        if (sun) sun.style.display = 'none';
+        if (moon) moon.style.display = 'inline';
         toggle.setAttribute('aria-label', '切換至淺色主題');
-        localStorage.setItem('theme', 'dark');
+        try { localStorage.setItem('theme', 'dark'); } catch (e) {}
       } else {
         document.documentElement.removeAttribute('data-theme');
-        toggle.querySelector('.sun').style.display = 'inline';
-        toggle.querySelector('.moon').style.display = 'none';
-        toggle.setAttribute('aria-pressed', 'false');
+        if (sun) sun.style.display = 'inline';
+        if (moon) moon.style.display = 'none';
         toggle.setAttribute('aria-label', '切換至深色主題');
-        localStorage.setItem('theme', 'light');
+        try { localStorage.setItem('theme', 'light'); } catch (e) {}
       }
     }
-
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      updateToggle(true);
-    } else {
-      updateToggle(false);
-    }
-
-    toggle.addEventListener('click', function() {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      updateToggle(!isDark);
-    });
-
-    // 鍵盤 Enter/Space 支援
-    toggle.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        updateToggle(!isDark);
-      }
+    var saved;
+    try { saved = localStorage.getItem('theme'); } catch (e) { saved = null; }
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    apply(saved === 'dark' || (!saved && prefersDark));
+    toggle.addEventListener('click', function () {
+      apply(!(document.documentElement.getAttribute('data-theme') === 'dark'));
     });
   }
 
-  // ============================================================
-  // 入場動畫
-  // ============================================================
-  function initAnimations() {
-    const hero = document.querySelector('.hero');
-    if (hero && !prefersReducedMotion) {
-      hero.style.opacity = '0';
-      hero.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        hero.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        hero.style.opacity = '1';
-        hero.style.transform = 'translateY(0)';
-      }, 100);
-    }
-
-    // 觀察器觸發卡片動畫
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.day-card').forEach(card => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(20px)';
-      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      observer.observe(card);
-    });
-  }
-
-  // ============================================================
-  // 啟動所有模組
-  // ============================================================
+  // ---- 啟動 ----
   function init() {
     document.documentElement.classList.remove('no-js');
-
-    const modules = [
-      { name: 'Timeline', fn: initTimeline },
-      { name: 'Map', fn: initMap },
-      { name: 'DayCards', fn: initDayCards },
-      { name: 'TransportTable', fn: initTransportTable },
-      { name: 'ThemeToggle', fn: initThemeToggle },
-      { name: 'Animations', fn: initAnimations }
-    ];
-
-    modules.forEach(({ name, fn }) => {
-      try {
-        fn();
-      } catch (err) {
-        console.error(`[Itinerary] 初始化失敗：${name}`, err);
-      }
-    });
-
-    activateDay(1); // 預設顯示第 1 天
+    renderNav();
+    initTheme();
+    try {
+      if (document.getElementById('home-root')) renderHome();
+      if (document.getElementById('itinerary-root')) renderItinerary();
+      if (document.getElementById('day-root')) renderDay();
+      if (document.getElementById('map-root')) renderMapPage();
+    } catch (err) {
+      console.error('[Tokyo Wedding] 渲染失敗', err);
+    }
   }
 
-  init();
-});
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

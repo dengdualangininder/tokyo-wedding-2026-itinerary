@@ -44,6 +44,34 @@
   function stationTime(s) { return s.arriveTime || s.departTime || '--:--'; }
   function stationTimeWord(s) { return s.arriveTime ? '抵達' : (s.departTime ? '出發' : '—'); }
 
+  // ---- 共用：用餐「二選一」區塊 ----
+  // data.js 的 station 可帶 alternatives: { note, options: [{ name, tag, source, fit, travel, meal, price, confirm }] }
+  var ALT_DEFAULT_NOTE = '二選一：選一家，不要兩家都吃';
+  function alternativesHTML(alt, dense) {
+    if (!alt || !alt.options || !alt.options.length) return '';
+    var rows = alt.options.map(function (o, i) {
+      var parts = [];
+      if (o.fit) parts.push('<span style="color:var(--color-text-muted)">為何順路：</span>' + esc(o.fit));
+      if (o.travel) parts.push('<span style="color:var(--color-text-muted)">交通：</span>' + esc(o.travel));
+      if (o.meal) parts.push('<span style="color:var(--color-text-muted)">用餐時間：</span>' + esc(o.meal));
+      if (o.price) parts.push('<span style="color:var(--color-text-muted)">價格：</span>' + esc(o.price));
+      if (o.source) parts.push('<span style="color:var(--color-text-muted)">來源：</span>' + esc(o.source));
+      if (o.confirm) parts.push('<span style="color:#c0392b;font-weight:600;">⚠ 待確認：</span>' + esc(o.confirm));
+      return '<div style="margin:0 0 ' + (dense ? '6px' : '10px') + ';">' +
+               '<div style="font-weight:700;line-height:1.5;">' +
+                 esc((i === 0 ? 'A｜' : 'B｜') + o.name) +
+                 (o.tag ? ' <span style="display:inline-block;padding:0 7px;border-radius:9px;background:#2ecc71;color:#fff;font-size:11px;font-weight:600;vertical-align:middle;">' + esc(o.tag) + '</span>' : '') +
+               '</div>' +
+               (parts.length ? '<div style="font-size:' + (dense ? '12px' : '12.5px') + ';line-height:1.6;margin-top:2px;">' + parts.join('<br>') + '</div>' : '') +
+             '</div>';
+    }).join('');
+    return '<div style="margin-top:10px;padding:10px 12px;border-left:3px solid #2ecc71;background:rgba(46,204,113,0.08);border-radius:6px;">' +
+             '<div style="font-size:12px;font-weight:700;color:#218e57;margin-bottom:8px;">🍽️ ' + esc(alt.note || ALT_DEFAULT_NOTE) + '</div>' +
+             rows +
+             '<div style="font-size:11px;color:var(--color-text-muted);margin-top:2px;">標「未驗證／待確認」的營業時間、價格、分店資訊，出發前請自行再確認。</div>' +
+           '</div>';
+  }
+
   function detectToday() {
     var t = new Date();
     var key = (t.getMonth() + 1) + '/' + t.getDate();
@@ -63,6 +91,7 @@
           '<div class="station-transport" style="color:' + color + '">' + esc(TYPE_LABELS[s.type] || '站點') + ' · ' + esc(s.transport) + '</div>' +
           '<div class="station-detail">' + esc(s.detail) + '</div>' +
           cost +
+          alternativesHTML(s.alternatives) +
         '</div>' +
       '</div>';
   }
@@ -154,7 +183,7 @@
     // 預算摘要
     html += '<section class="card" aria-label="預算摘要"><h3 class="section-title">💰 預算摘要（雙人，本地）</h3><div class="budget-grid">' +
               budgetItem('本地交通', '約 ¥25,000–28,500', 'Skyliner、JR、地鐵、江之電、湘南單軌') +
-              budgetItem('餐飲（5 天）', '約 ¥30,000–50,000', '含叙々苑（午餐）、中華街、台場晚餐') +
+              budgetItem('餐飲（5 天）', '約 ¥30,000–50,000', '含叙々苑（午間燒肉）、壽喜燒或拉麵、中華街、台場晚餐；每餐二選一，選燒肉／壽喜燒時取區間上緣') +
               budgetItem('門票與活動', '約 ¥5,000–10,000', '東京鐵塔、陽光60、鎌倉大佛、江之島') +
               budgetItem('建議票券', 'Suica / Pasmo', '比 JR Pass 更彈性划算') +
             '</div></section>';
@@ -223,6 +252,7 @@
         if (s.transport) detail += '<div class="detail-row"><span class="detail-label">🚇 交通方式</span><span class="detail-value">' + esc(s.transport) + '</span></div>';
         if (hasCost) detail += '<div class="detail-row detail-row--cost"><span class="detail-label">💰 預估費用</span><span class="detail-value cost-value">' + esc(s.cost) + '</span></div>';
         if (s.detail) detail += '<div class="detail-row"><span class="detail-label">📝 詳細說明</span><span class="detail-value detail-value--text">' + esc(s.detail) + '</span></div>';
+        if (s.alternatives) detail += '<div class="detail-row"><span class="detail-label">🍽️ 餐飲選項</span><span class="detail-value detail-value--text">' + alternativesHTML(s.alternatives, true) + '</span></div>';
         return '<div class="station-card">' +
           '<button class="station-toggle" type="button" aria-expanded="false">' +
             '<div class="station-row">' +
@@ -386,6 +416,7 @@
       '<div style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:4px;">' + esc(stationTime(s)) + ' · ' + esc(s.transport) + '</div>' +
       '<div style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.4;">' + esc(s.detail) + '</div>' +
       (s.cost ? '<div style="font-size:var(--text-sm);font-weight:600;color:var(--color-success);margin-top:4px;">💰 ' + esc(s.cost) + '</div>' : '') +
+      (s.alternatives ? '<div style="font-size:var(--text-sm);color:#218e57;margin-top:4px;">🍽️ ' + esc(s.alternatives.note || ALT_DEFAULT_NOTE) + '</div>' : '') +
       '</div>';
   }
 

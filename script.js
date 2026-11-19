@@ -231,16 +231,16 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 2
         },
         {
-          name: '日暮里逛吃晚餐🍜',
-          code: 'NipporiDinner',
-          lat: 35.7265,
-          lng: 139.7730,
+          name: 'Kama Maru 居酒屋晚餐🍻',
+          code: 'KamaMaru',
+          lat: 35.7272,
+          lng: 139.7720,
           type: 'restaurant',
           arriveTime: '21:10',
           departTime: '22:30',
-          transport: '從婚紗店步行至日暮里站前餐廳',
-          detail: '拷完資料後在日暮里站前找一家居酒屋或拉麵店吃晚餐，補充體力，推薦酒処一合或酔助等個室居酒屋，約 ¥3,000-5,000/人',
-          cost: '約 ¥3,000-5,000 / 人',
+          transport: '從婚紗店步行至日暮里站前餐廳（約 2 分鐘）',
+          detail: '拷完資料後在日暮里站前 Kama Maru 居酒屋吃晚餐，補充體力。日暮里站步行 2 分鐘，可於 KKday 線上預約座位，約 ¥3,000-3,999 / 人',
+          cost: '約 ¥3,000-3,999 / 人',
           day: 2
         },
         {
@@ -290,16 +290,16 @@ document.addEventListener('DOMContentLoaded', function() {
           day: 3
         },
         {
-          name: '小町通',
-          code: 'Komachi',
+          name: '小町通しらす丼午餐🍚',
+          code: 'KomachiShirasu',
           lat: 35.3189,
           lng: 139.5355,
-          type: 'shopping',
+          type: 'restaurant',
           arriveTime: '12:00',
           departTime: '13:30',
           transport: '步行',
-          detail: '鎌倉小町通美食街，嘗試鎌倉名物（如：吉次餅、晒煎餅），以及江之島名物紙片八爪魚與吻仔魚（しらす），購買伴手禮',
-          cost: '自由消費',
+          detail: '鎌倉小町通美食街，品嚐江之島名物しらす丼（吻仔魚飯），推薦 Wasai Yakura Komachidori（約 ¥1,430 / 人），同時購買鎌倉名物伴手禮',
+          cost: '約 ¥1,430 / 人',
           day: 3
         },
         {

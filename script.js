@@ -85,11 +85,15 @@
   function stationItemHTML(s) {
     var color = TYPE_COLORS[s.type] || '#8a7d73';
     var cost = (s.cost && String(s.cost).trim()) ? '<div class="station-cost">💰 ' + esc(s.cost) + '</div>' : '';
+    var stay = (s.type !== 'transport' && s.arriveTime && s.departTime)
+      ? '<div class="station-stay" style="font-size:var(--text-xs);color:var(--color-text-muted);font-weight:600;">🕐 ' + esc(s.arriveTime) + ' – ' + esc(s.departTime) + '</div>'
+      : '';
     return '' +
       '<div class="station-item">' +
         '<div class="station-time">' + esc(stationTime(s)) + '</div>' +
         '<div class="station-info">' +
           '<div class="station-name">' + esc(s.name) + '</div>' +
+          stay +
           '<div class="station-transport" style="color:' + color + '">' + esc(TYPE_LABELS[s.type] || '站點') + ' · ' + esc(s.transport) + '</div>' +
           '<div class="station-detail">' + esc(s.detail) + '</div>' +
           cost +
@@ -251,6 +255,7 @@
         var color = TYPE_COLORS[s.type] || '#8a7d73';
         var hasCost = s.cost && String(s.cost).trim();
         var detail = '';
+        if (s.type !== 'transport' && s.arriveTime && s.departTime) detail += '<div class="detail-row"><span class="detail-label">🕐 停留</span><span class="detail-value">' + esc(s.arriveTime) + ' – ' + esc(s.departTime) + '</span></div>';
         if (s.transport) detail += '<div class="detail-row"><span class="detail-label">🚇 交通方式</span><span class="detail-value">' + esc(s.transport) + '</span></div>';
         if (hasCost) detail += '<div class="detail-row detail-row--cost"><span class="detail-label">💰 預估費用</span><span class="detail-value cost-value">' + esc(s.cost) + '</span></div>';
         if (s.detail) detail += '<div class="detail-row"><span class="detail-label">📝 詳細說明</span><span class="detail-value detail-value--text">' + esc(s.detail) + '</span></div>';

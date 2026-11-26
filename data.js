@@ -191,7 +191,7 @@ window.ITINERARY = [
         "cost": "二選一（見下方選項）",
         "day": 1,
         "alternatives": {
-          "note": "晚餐二選一：A 鴨to葱 或 B 六厘舍上野（選一家，不要兩家都吃）",
+          "note": "晚餐三選一：A 鴨to葱 或 B 六厘舍上野 或 C 極·goku 上野店（選一家，不要兩家都吃）",
           "options": [
             {
               "name": "らーめん 鴨 to 葱（上野）",
@@ -215,6 +215,18 @@ window.ITINERARY = [
               "price": "未驗證（本次未取得店內價目）",
               "walkin": true,
               "confirm": "官方無預約服務，現場排隊；價位未取得；尖峰時段可能排隊"
+            },
+            {
+              "name": "極·goku 上野店（A5和牛壽喜燒）",
+              "tag": "壽喜燒／和牛",
+              "source": "官方頁面 wagyusukiyaki.goku.bayrock.co.jp／食べログ，地址 東京都台東区上野4丁目5-7 F.U.Assets 1F，電話 03-6457-7234",
+              "fit": "JR 上野 徒歩 3 分，與拉麵店同一上野區域；吃完直接回日暮里（JR 約 4-5 分），不動線",
+              "travel": "秋葉原→上野 JR 約 4 分；上野店→日暮里 JR 約 4-5 分",
+              "meal": "約 60 分鐘（官方滯在 1 小時）",
+              "price": "單人 ¥4,800（含稅）",
+              "confirm": "需預約，官方預約頁 https://wagyusukiyaki.goku.bayrock.co.jp/reserve/；當日 22:00 前可預約；營業 11:00-23:00（L.O. 22:00）",
+              "reserve": "https://wagyusukiyaki.goku.bayrock.co.jp/reserve/",
+              "reserveLabel": "官方預約頁（goku）"
             }
           ]
         }
@@ -394,7 +406,7 @@ window.ITINERARY = [
         "cost": "二選一（見下方選項）",
         "day": 2,
         "alternatives": {
-          "note": "晚餐二選一：A Kama Maru 或 B 日暮里站圈其他居酒屋（選一家，不要兩家都吃）",
+          "note": "晚餐三選一：A Kama Maru 或 B 日暮里站圈其他居酒屋 或 C 極·goku 上野店（選一家，不要兩家都吃）",
           "options": [
             {
               "name": "Kama Maru 居酒屋（日暮里）",
@@ -415,6 +427,18 @@ window.ITINERARY = [
               "meal": "約 80 分鐘",
               "price": "未驗證",
               "confirm": "價位未取得；酔助在該清單標示為週六日時段，12/03 為週四，前往前須確認是否營業"
+            },
+            {
+              "name": "極·goku 上野店（A5和牛壽喜燒）",
+              "tag": "壽喜燒／和牛",
+              "source": "官方頁面 wagyusukiyaki.goku.bayrock.co.jp／食べログ，地址 東京都台東区上野4丁目5-7 F.U.Assets 1F，電話 03-6457-7234",
+              "fit": "日暮里站搭 JR 山手線一站到上野（約 4-5 分），與 Day 1 同一家分店；收工後順路去上野吃，吃完同線回日暮里旅館",
+              "travel": "日暮里→上野 JR 約 4-5 分；上野店→日暮里 JR 約 4-5 分",
+              "meal": "約 60 分鐘（官方滯在 1 小時）",
+              "price": "單人 ¥4,800（含稅）",
+              "confirm": "需預約，官方預約頁 https://wagyusukiyaki.goku.bayrock.co.jp/reserve/；當日 22:00 前可預約；營業 11:00-23:00（L.O. 22:00）",
+              "reserve": "https://wagyusukiyaki.goku.bayrock.co.jp/reserve/",
+              "reserveLabel": "官方預約頁（goku）"
             }
           ]
         }
@@ -882,7 +906,7 @@ window.ITINERARY = [
         "cost": "二選一（見下方選項）",
         "day": 4,
         "alternatives": {
-          "note": "晚餐二選一：A 浜松町／新橋 或 B 日暮里站周邊（選一家，不要兩家都吃）",
+          "note": "晚餐三選一：A 浜松町／新橋 或 B 日暮里站周邊 或 C 極·goku 銀座店（選一家，不要兩家都吃）",
           "options": [
             {
               "name": "浜松町／新橋一帶餐廳（現場選店）",
@@ -903,6 +927,18 @@ window.ITINERARY = [
               "meal": "約 80 分鐘",
               "price": "未驗證",
               "confirm": "未指定店家，價位與營業時間未查證"
+            },
+            {
+              "name": "極·goku 銀座店（A5和牛壽喜燒）",
+              "tag": "壽喜燒／和牛",
+              "source": "官方頁面 wagyusukiyaki.goku.bayrock.co.jp／食べログ，地址 東京都中央区銀座８丁目２−１４ 銀座竜王ビル 1階，電話 070-3206-1079",
+              "fit": "從增上寺／東京塔市集步行約 15-20 分或搭地鐵至銀座；吃完銀座→日暮里 約 20-25 分，時間較緊，建議若選此店需提前預約並控制用餐時間",
+              "travel": "增上寺→銀座店 步行 15-20 分或地鐵；銀座店→日暮里 約 20-25 分",
+              "meal": "約 60 分鐘（官方滯在 1 小時）",
+              "price": "單人 ¥4,800（含稅）",
+              "confirm": "需預約，官方預約頁 https://wagyusukiyaki.goku.bayrock.co.jp/reserve/；當日 22:00 前可預約；營業 11:00-23:00（L.O. 22:00）；時間較緊，建議提前到店",
+              "reserve": "https://wagyusukiyaki.goku.bayrock.co.jp/reserve/",
+              "reserveLabel": "官方預約頁（goku）"
             }
           ]
         }

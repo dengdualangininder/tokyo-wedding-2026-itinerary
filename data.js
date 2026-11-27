@@ -86,6 +86,19 @@ window.ITINERARY = [
         "day": 1
       },
       {
+        "name": "東京皇居散步",
+        "code": "KyoImperialPalace",
+        "lat": 35.6852,
+        "lng": 139.7556,
+        "type": "location",
+        "arriveTime": "12:30",
+        "departTime": "14:00",
+        "transport": "人形町→皇居 步行約 15 分，或 東京メトロ 半藏門線 人形町→半藏門 約 5 分",
+        "detail": "東京皇居外苑、東御庭散步，免費。12 月點燈。",
+        "cost": "免費",
+        "day": 1
+      },
+      {
         "name": "Day 1 午餐（二選一）🍚",
         "code": "ShinjukuLunch",
         "lat": 35.6749,
@@ -127,17 +140,55 @@ window.ITINERARY = [
         }
       },
       {
-        "name": "秋葉原附近逛🎮（彈性）",
-        "code": "Akihabara",
-        "lat": 35.6995,
-        "lng": 139.7716,
-        "type": "shopping",
+        "name": "人形町今半午餐（或極味屋/日本橋一里）",
+        "code": "ImahanLunch",
+        "lat": 35.686,
+        "lng": 139.776,
+        "type": "restaurant",
         "arriveTime": "11:40",
         "departTime": "12:30",
-        "transport": "東京車站→秋葉原 JR 山手線 約 5 分",
-        "detail": "電氣街、動漫周邊、電玩店。🛒 指定採買：Insta360 Flow 2 Pro（ヨドバシAkiba 或 ビックカメラ 秋葉原，兩家都在電氣街、營業至 22:00，現場比價）。✅ 店舖位置：Yodobashi Akiba 〒101-0028 神田花岡町1-1 / Bic Camera 〒101-0021 外神田4-1-1；營業時間 10:00–22:00；Online 庫存「在庫残少」（Yodobashi）/「在庫のある店舗 24/15」（Bic Camera）→分店庫存未驗證。",
-        "cost": "自由消費",
-        "day": 1
+        "transport": "東京車站→人形町 東京メトロ日比谷線 約 5 分，或步行約 10 分",
+        "detail": "人形町今半（すき焼き）或 東京車站極味屋（漢堡排）或 日本橋一里（黒毛和牛壽喜燒，只能現場排隊）。三選一，不要兩家都吃。",
+        "cost": "四選一（見下方選項）",
+        "day": 1,
+        "alternatives": {
+          "note": "午餐四選一：A 人形町今半 或 B 東京車站極味屋 或 C 日本橋一里 或 D 六厘舍上野（選一家，不要兩家都吃）",
+          "options": [
+            {
+              "name": "人形町今半 人形町本店",
+              "tag": "壽喜燒",
+              "source": "官方 restaurant.imahan.com/honten/",
+              "fit": "小網神社步行約 3 分，吃完往東京車站/皇居方向，動線順暢",
+              "travel": "小網神社步行 3–5 分",
+              "meal": "約 80–90 分鐘",
+              "price": "午餐 5,940 円起（稅込，官方；另加服務費 12%、個室料）",
+              "reserve": "https://www.tablecheck.com/shops/imahanhonten/reserve",
+              "reserveLabel": "官方預約（TableCheck）",
+              "confirm": "週六午餐結束時間官方兩處說法不一（15:00 或 16:00）；不定休，請出發前再確認"
+            },
+            {
+              "name": "極味や 東京駅店",
+              "tag": "漢堡排",
+              "source": "kiwamiya.com／gransta.jp",
+              "fit": "東京站 グランスタ八重北「八重北食堂」改札外，與東京車站/丸之內散步同一區域",
+              "travel": "東京車站站內步行約 3 分",
+              "meal": "約 40–50 分鐘",
+              "price": "S ¥1,298 起（未重新查證）",
+              "confirm": "不可預約、排隊制；尖峰排隊時間未驗證"
+            },
+            {
+              "name": "黒毛和牛壽喜燒 日本橋一里（只能現場排）",
+              "tag": "壽喜燒／和牛",
+              "source": "用戶指定：黒毛和牛壽喜燒 日本橋一里，位於日本橋區域，僅可現場排隊，不接受預約",
+              "fit": "Day 1 已在日本橋/東京站區域（小網神社、東京車站），順路可去",
+              "travel": "東京車站→日本橋 約 10 分",
+              "meal": "約 60-90 分鐘（現場排隊時間不定）",
+              "price": "單人約 ¥5,000-8,000（依部位與套餐而定，未驗證）",
+              "confirm": "僅現場排隊，無預約；需自行查詢當日營業時間與排隊情況；建議提早到店避免尖峰",
+              "walkin": true
+            }
+          ]
+        }
       },
       {
         "name": "東京國立博物館（東博）",
@@ -145,23 +196,36 @@ window.ITINERARY = [
         "lat": 35.7188,
         "lng": 139.7765,
         "type": "museum",
-        "arriveTime": "14:00",
-        "departTime": "14:45",
-        "transport": "秋葉原→上野 JR 約 5 分，JR 上野駅公園口步行 10 分",
+        "arriveTime": "14:30",
+        "departTime": "16:00",
+        "transport": "セントレービル（台東区）→ 上野公園 歩行約 10–15 分",
         "detail": "✅ 12/02（三）開館：9:30–17:00、⚠️ 最後入館 16:30。2026/11/30–12/31 本館 17–20 室與東洋館閉室整備，當天只能看本館 2F「日本美術の流れ」＋1F 雕刻/刀劍/陶磁。門票：東博コレクション展 大人 ¥1,000；線上日時指定券 e-tix.jp/tnm。來源：tnm.jp 来館案内、e-tix.jp/tnm",
         "cost": "¥1,000 / 人",
         "day": 1
       },
       {
-        "name": "OS Drug 上野店（阿美橫町採買）",
-        "code": "OsDrugUeno",
+        "name": "秋葉原 Big Camera 買東西🎮",
+        "code": "Akihabara",
+        "lat": 35.6995,
+        "lng": 139.7716,
+        "type": "shopping",
+        "arriveTime": "16:00",
+        "departTime": "17:00",
+        "transport": "上野→秋葉原 JR 山手線 約 5 分",
+        "detail": "電氣街、動漫周邊、電玩店。🛒 指定採買：Insta360 Flow 2 Pro（ヨドバシAkiba 或 ビックカメラ 秋葉原，兩家都在電氣街、營業至 22:00，現場比價）。✅ 店舖位置：Yodobashi Akiba 〒101-0028 神田花岡町1-1 / Bic Camera 〒101-0021 外神田4-1-1；營業時間 10:00–22:00；Online 庫存「在庫残少」（Yodobashi）/「在庫のある店舗 24/15」（Bic Camera）→分店庫存未驗證。",
+        "cost": "自由消費",
+        "day": 1
+      },
+      {
+        "name": "阿美橫町採買🛒",
+        "code": "Ameyoko",
         "lat": 35.7107,
         "lng": 139.7745,
         "type": "shopping",
-        "arriveTime": "14:50",
-        "departTime": "15:10",
-        "transport": "上野站公園口步行約 10 分，或從秋葉原搭 JR 約 4 分",
-        "detail": "指定採買：OS Drug（OSドラッグ）藥妝免稅。✅ 官方確認：上野店存在，東京都台東區上野6-11-5，營業 10:00–19:45。14:50 到達仍在營業時間內。來源：osdrug.com/sub1.htm（A/B 报告已核）",
+        "arriveTime": "17:00",
+        "departTime": "17:30",
+        "transport": "秋葉原→上野 JR 約 4 分",
+        "detail": "阿美橫町（アメ横）採買，藥妝、食品、伴手禮。OS Drug 上野店（上野6-11-5，營業 10:00–19:45）可在此買藥妝免稅。",
         "cost": "自由消費",
         "day": 1
       },
@@ -171,10 +235,10 @@ window.ITINERARY = [
         "lat": 35.7138,
         "lng": 139.7773,
         "type": "restaurant",
-        "arriveTime": "16:00",
-        "departTime": "17:00",
+        "arriveTime": "18:10",
+        "departTime": "19:00",
         "transport": "秋葉原→上野 JR 約 4 分；若選日本橋一里，秋葉原→東京→日本橋 約 15 分",
-        "detail": "原本排的「饗くろ喜」19:00 不可行：該店僅 11:00–15:00 營業，且位置在浅草橋、不在秋葉原，已移除。改為秋葉原→上野 4 分鐘的兩家拉麵二選一，或日本橋一里現場排隊壽喜燒，吃完上野→日暮里 4-5 分直接回旅館。",
+        "detail": "晚餐：上野拉麵 或 極·goku 上野店 或 黑毛和牛壽喜燒 日本橋一里（三選一）。若選日本橋一里，需現場排隊，時間較不確定。吃完上野→日暮里 JR 約 4-5 分直接回旅館。",
         "cost": "四選一（見下方選項）",
         "day": 1,
         "alternatives": {

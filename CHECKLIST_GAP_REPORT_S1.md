@@ -1,5 +1,7 @@
 # 東京婚紗之旅 2026 — 缺漏與遺漏項目檢查報告 (S1/5)
 
+> **歷史檢查快照（2026-11-06）**：本報告保留當日檢查結果，後續行程已有更新；本文中的路線、班次與費用不代表目前安排。請以 [data.js](./data.js)、[每日行程頁](./day1.html) 與 [交通指南](./transport-guide.md) 為準。
+
 **檢查範圍**：`/home/ubuntu/tokyo-wedding-2026-itinerary/`  
 **檢查檔案**：`index.html`、`day1~day5.html`、`script.js`、`transport-guide.md`、`style.css`  
 **行程日期**：2026 年 12 月 2–6 日（5 天 4 夜）  

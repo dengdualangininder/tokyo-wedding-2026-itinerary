@@ -1,5 +1,7 @@
 # 東京婚紗行程專案 — 完整性與使用者體驗檢查報告 (S5/5)
 
+> **歷史檢查快照（2026-11-06）**：本報告保留當日檢查結果，後續行程已有更新；本文中的路線、班次與費用不代表目前安排。請以 [data.js](./data.js)、[每日行程頁](./day1.html) 與 [交通指南](./transport-guide.md) 為準。
+
 **專案路徑**：`/home/ubuntu/tokyo-wedding-2026-itinerary`
 **檢查檔案**：`index.html`, `day1–5.html`, `transport-guide.md`, `script.js`, `style.css`
 **行程**：2026/12/02(三)–12/06(日)，共 5 天，雙人，住宿 和ごころ日暮里

@@ -45,7 +45,7 @@
   function stationTimeWord(s) { return s.arriveTime ? '抵達' : (s.departTime ? '出發' : '—'); }
 
   // ---- 共用：用餐「二選一」區塊 ----
-  // data.js 的 station 可帶 alternatives: { note, options: [{ name, tag, source, fit, travel, meal, price, confirm }] }
+  // data.js 的 station 可帶 alternatives: { note, label, icon, options: [{ name, tag, source, fit, travel, meal, price, confirm }] }
   var ALT_DEFAULT_NOTE = '二選一：選一家，不要兩家都吃';
   function alternativesHTML(alt, dense) {
     if (!alt || !alt.options || !alt.options.length) return '';
@@ -68,7 +68,7 @@
              '</div>';
     }).join('');
     return '<div style="margin-top:10px;padding:10px 12px;border-left:3px solid #2ecc71;background:rgba(46,204,113,0.08);border-radius:6px;">' +
-             '<div style="font-size:12px;font-weight:700;color:#218e57;margin-bottom:8px;">🍽️ ' + esc(alt.note || ALT_DEFAULT_NOTE) + '</div>' +
+             '<div style="font-size:12px;font-weight:700;color:#218e57;margin-bottom:8px;">' + esc(alt.icon || '🍽️') + ' ' + esc(alt.note || ALT_DEFAULT_NOTE) + '</div>' +
              rows +
              '<div style="font-size:11px;color:var(--color-text-muted);margin-top:2px;">標「未驗證／待確認」的營業時間、價格、分店資訊，出發前請自行再確認。</div>' +
            '</div>';
@@ -259,7 +259,7 @@
         if (s.transport) detail += '<div class="detail-row"><span class="detail-label">🚇 交通方式</span><span class="detail-value">' + esc(s.transport) + '</span></div>';
         if (hasCost) detail += '<div class="detail-row detail-row--cost"><span class="detail-label">💰 預估費用</span><span class="detail-value cost-value">' + esc(s.cost) + '</span></div>';
         if (s.detail) detail += '<div class="detail-row"><span class="detail-label">📝 詳細說明</span><span class="detail-value detail-value--text">' + esc(s.detail) + '</span></div>';
-        if (s.alternatives) detail += '<div class="detail-row"><span class="detail-label">🍽️ 餐飲選項</span><span class="detail-value detail-value--text">' + alternativesHTML(s.alternatives, true) + '</span></div>';
+        if (s.alternatives) detail += '<div class="detail-row"><span class="detail-label">' + esc(s.alternatives.icon || '🍽️') + ' ' + esc(s.alternatives.label || '餐飲選項') + '</span><span class="detail-value detail-value--text">' + alternativesHTML(s.alternatives, true) + '</span></div>';
         return '<div class="station-card">' +
           '<button class="station-toggle" type="button" aria-expanded="false">' +
             '<div class="station-row">' +
@@ -423,7 +423,7 @@
       '<div style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:4px;">' + esc(stationTime(s)) + ' · ' + esc(s.transport) + '</div>' +
       '<div style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.4;">' + esc(s.detail) + '</div>' +
       (s.cost ? '<div style="font-size:var(--text-sm);font-weight:600;color:var(--color-success);margin-top:4px;">💰 ' + esc(s.cost) + '</div>' : '') +
-      (s.alternatives ? '<div style="font-size:var(--text-sm);color:#218e57;margin-top:4px;">🍽️ ' + esc(s.alternatives.note || ALT_DEFAULT_NOTE) + '</div>' : '') +
+      (s.alternatives ? '<div style="font-size:var(--text-sm);color:#218e57;margin-top:4px;">' + esc(s.alternatives.icon || '🍽️') + ' ' + esc(s.alternatives.note || ALT_DEFAULT_NOTE) + '</div>' : '') +
       '</div>';
   }
 
